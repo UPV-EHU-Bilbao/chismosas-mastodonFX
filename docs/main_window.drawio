@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-16T20:27:37.861Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="tjUijkPj3DSetgCBNpYs" version="20.8.22" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2023-03-16T20:29:51.047Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="pZnfuWShw_IyBtMOXf45" version="20.8.22" type="github" pages="2">
   <diagram name="Page-1" id="c9db0220-8083-56f3-ca83-edcdcd058819">
     <mxGraphModel dx="1335" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="826" pageHeight="1169" background="none" math="0" shadow="0">
       <root>
@@ -210,7 +210,7 @@
         <mxCell id="N-TFuY7IFR2lQCASgAa9-1" value="Notific." style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fillColor=default;gradientColor=none;" vertex="1" parent="1">
           <mxGeometry x="60" y="140" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="N-TFuY7IFR2lQCASgAa9-2" value="Profile" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fillColor=default;gradientColor=none;" vertex="1" parent="1">
+        <mxCell id="N-TFuY7IFR2lQCASgAa9-2" value="Profile" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fillColor=default;gradientColor=none;fontStyle=1;labelBorderColor=none;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="60" y="190" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="N-TFuY7IFR2lQCASgAa9-4" value="Timeline" style="rounded=1;whiteSpace=wrap;html=1;fillStyle=cross-hatch;fillColor=default;gradientColor=none;" vertex="1" parent="1">
