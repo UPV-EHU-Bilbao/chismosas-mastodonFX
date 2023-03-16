@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-03-16T22:11:39.344Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="3oHCsDstVh32Bb7G1kiY" version="21.0.6" type="github">
+<mxfile host="app.diagrams.net" modified="2023-03-16T22:18:14.429Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="ETBEnnTcq10BP3gt-G-4" version="21.0.6" type="github">
   <diagram name="Página-1" id="clSKfbIbrm-G46F0gqga">
     <mxGraphModel dx="3000" dy="1774" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="1">
       <root>
@@ -27,8 +27,8 @@
         </mxCell>
         <mxCell id="SU3SuYScUBmW4pT_DL9_-19" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="570" y="370" as="sourcePoint" />
-            <mxPoint x="1750" y="370" as="targetPoint" />
+            <mxPoint x="560" y="330" as="sourcePoint" />
+            <mxPoint x="1750" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="SU3SuYScUBmW4pT_DL9_-20" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;shape=mxgraph.ios7.icons.user;perimeter=rectanglePerimeter;verticalAlign=top;strokeColor=#0080F0;labelBackgroundColor=#ffffff;strokeWidth=2;shadow=0;dashed=0;" vertex="1" parent="1">
@@ -103,7 +103,7 @@
         <mxCell id="SU3SuYScUBmW4pT_DL9_-47" value="500" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=30;" vertex="1" parent="1">
           <mxGeometry x="2210" y="1427.45" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="SU3SuYScUBmW4pT_DL9_-48" value="What are yor thoughts?" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=35;fontColor=#696969;" vertex="1" parent="1">
+        <mxCell id="SU3SuYScUBmW4pT_DL9_-48" value="What are your thoughts?" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=35;fontColor=#696969;" vertex="1" parent="1">
           <mxGeometry x="1790" y="1230" width="420" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SU3SuYScUBmW4pT_DL9_-49" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn2.iconfinder.com/data/icons/emoji-line/32/emoji_14-128.png" vertex="1" parent="1">
@@ -195,6 +195,12 @@
         </mxCell>
         <mxCell id="SU3SuYScUBmW4pT_DL9_-86" value="Following" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;strokeColor=#0055ff;strokeWidth=5;fillColor=none;fontColor=#000000;whiteSpace=wrap;align=center;verticalAlign=middle;spacingLeft=0;fontStyle=1;fontSize=44;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="1360" y="1472.5" width="321" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="SU3SuYScUBmW4pT_DL9_-87" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=12;fillColor=#0050ef;strokeColor=#001DBC;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="320" as="sourcePoint" />
+            <mxPoint x="960" y="320" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
