@@ -1,8 +1,8 @@
-package ehu.eus.chismosas.mastodonfx.businesslogic;
+package eus.ehu.chismosas.mastodonfx.businesslogic;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import ehu.eus.chismosas.mastodonfx.domain.*;
+import eus.ehu.chismosas.mastodonfx.domain.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

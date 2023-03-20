@@ -1,4 +1,4 @@
-package ehu.eus.chismosas.mastodonfx.domain;
+package eus.ehu.chismosas.mastodonfx.domain;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-module ehu.eus.chismosas.mastodonfx {
+module eus.ehu.chismosas.mastodonfx {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
     requires okhttp3;
 
 
-    exports ehu.eus.chismosas.mastodonfx.presentation;
-    opens ehu.eus.chismosas.mastodonfx.presentation to javafx.fxml;
+    exports eus.ehu.chismosas.mastodonfx.presentation;
+    opens eus.ehu.chismosas.mastodonfx.presentation to javafx.fxml;
 }

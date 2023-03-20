@@ -1,4 +1,4 @@
-package ehu.eus.chismosas.mastodonfx.presentation;
+package eus.ehu.chismosas.mastodonfx.presentation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
