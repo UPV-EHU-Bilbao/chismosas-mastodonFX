@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class MainController {
+    private final String userID = System.getenv("ID");
 
     @FXML
     private Button bookmarksBtn;

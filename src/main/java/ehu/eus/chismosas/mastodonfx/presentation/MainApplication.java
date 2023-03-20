@@ -15,6 +15,7 @@ public class MainApplication extends Application {
         stage.setTitle("MastodonFX");
         stage.setScene(scene);
         stage.show();
+        stage.requestFocus();
     }
 
     public static void main(String[] args) {
