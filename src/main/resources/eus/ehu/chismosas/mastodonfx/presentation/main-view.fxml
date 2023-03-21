@@ -2,9 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,119 +17,208 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="756.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="756.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
    <center>
-      <Pane fx:id="contentPane" prefHeight="318.0" prefWidth="374.0" style="-fx-background-color: #2f3238;"
-            BorderPane.alignment="CENTER">
-         <ListView fx:id="tootList" layoutY="-1.0" prefHeight="319.0" prefWidth="390.0"
-                   style="-fx-background-color: #18181b;"/>
-         <Line endX="285.3999938964844" endY="9.179115295410156E-6" layoutX="101.0" layoutY="1.0" startX="-100.0"
-               stroke="#797979"/>
-      </Pane>
+      <Pane fx:id="contentPane" prefHeight="318.0" prefWidth="374.0" style="-fx-background-color: #2f3238;" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <Pane prefHeight="82.0" prefWidth="559.0" BorderPane.alignment="CENTER">
-         <TextField fx:id="searcher" layoutX="550.0" layoutY="29.0" prefHeight="11.0" prefWidth="196.0"
-                    promptText="Search"/>
-         <Pane fx:id="titlePane" layoutX="179.0" prefHeight="81.0" prefWidth="363.0"/>
-         <ImageView id="bellImg" fitHeight="55.0" fitWidth="53.0" layoutX="6.0" layoutY="17.0" pickOnBounds="true"
-                    preserveRatio="true">
-            <Image url="@icons/logo.png"/>
+      <Pane prefHeight="147.0" prefWidth="756.0" BorderPane.alignment="CENTER">
+         <ImageView id="bellImg" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" x="20.0">
+            <Image url="@icons/logo.png" />
+            <effect>
+               <DropShadow offsetX="5.0" offsetY="5.0" />
+            </effect>
          </ImageView>
+         <Pane layoutX="173.0" prefHeight="149.0" prefWidth="368.0" style="-fx-border-color: #000000;">
+            <children>
+               <Button fx:id="followingBtn" layoutX="59.0" layoutY="98.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="84.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Button>
+               <Button fx:id="followersBtn" layoutX="234.0" layoutY="98.0" mnemonicParsing="false" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Button>
+               <ImageView fx:id="profilePic" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@icons/user.png" />
+                  </image>
+               </ImageView>
+               <Label fx:id="userNameLabel" layoutX="83.0" layoutY="22.0" text="\@username" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <Label fx:id="displayNameLabel" layoutX="83.0" layoutY="47.0" text="username" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+         <TextField fx:id="searcher" disable="true" layoutX="559.0" layoutY="38.0" prefHeight="25.0" prefWidth="180.0" promptText="Search" style="-fx-background-color: #282c37;" />
+         <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="63.0" opacity="0.4" prefHeight="39.0" prefWidth="137.0" style="-fx-background-color: #18181b;">
+            <items>
+               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@icons/settings.png" />
+                  </image>
+               </ImageView>
+               <Label prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+                  <padding>
+                     <Insets left="10.0" />
+                  </padding>
+               </Label>
+            </items>
+         </ToolBar>
+         <Line endX="73.5" layoutX="85.0" layoutY="114.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
       </Pane>
    </top>
    <right>
-      <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
-         <Line endX="43.49993896484375" endY="-204.39999389648438" layoutX="-43.0" layoutY="123.0"
-               startX="43.49995422363281" startY="195.60000610351562" stroke="#797979"/>
-         <TextArea fx:id="newToot" layoutX="8.0" layoutY="106.0" prefHeight="158.0" prefWidth="200.0"/>
+      <Pane prefHeight="318.0" prefWidth="216.0" style="-fx-border-color: #18181b  #18181b  #18181b #000000;" BorderPane.alignment="CENTER">
+         <TextArea fx:id="newToot" disable="true" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
+         <Button disable="true" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" style="-fx-background-color: #5c4de3;" text="Publish!" textFill="WHITE">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Button>
       </Pane>
    </right>
    <left>
-      <GridPane BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="33.5" minWidth="26.5" prefWidth="33.5"/>
-            <ColumnConstraints hgrow="SOMETIMES"/>
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-         </rowConstraints>
-         <BorderPane.margin>
-            <Insets left="20.0"/>
-         </BorderPane.margin>
-         <Button fx:id="notificationsBtn" alignment="BASELINE_LEFT" contentDisplay="RIGHT" mnemonicParsing="false"
-                 prefHeight="30.0" prefWidth="124.0" style="-fx-background-color: #18181b;" text="Notifications"
-                 textFill="WHITE" GridPane.columnIndex="1">
-            <font>
-               <Font size="14.0"/>
-            </font>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@icons/bell.png"/>
-         </ImageView>
-         <Button fx:id="profileBtn" alignment="BASELINE_LEFT" contentDisplay="RIGHT" mnemonicParsing="false"
-                 prefHeight="30.0" prefWidth="124.0" style="-fx-background-color: #18181b;" text="Profile"
-                 textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <font>
-               <Font size="14.0"/>
-            </font>
-            <effect>
-               <DropShadow/>
-            </effect>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
-                    GridPane.rowIndex="1">
-            <Image url="@icons/user.png"/>
-         </ImageView>
-         <Button fx:id="msgBtn" alignment="BOTTOM_LEFT" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0"
-                 prefWidth="124.0" style="-fx-background-color: #18181b;" text="Messages" textFill="WHITE"
-                 GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <font>
-               <Font size="14.0"/>
-            </font>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
-                    GridPane.rowIndex="2">
-            <Image url="@icons/msg.png"/>
-         </ImageView>
-         <Button fx:id="exploreBtn" alignment="BASELINE_LEFT" contentDisplay="RIGHT" mnemonicParsing="false"
-                 prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: #18181b;" text="Explore"
-                 textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
-            <font>
-               <Font size="14.0"/>
-            </font>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
-                    GridPane.rowIndex="3">
-            <Image url="@icons/explore.png"/>
-         </ImageView>
-         <Button fx:id="bookmarksBtn" alignment="BASELINE_LEFT" contentDisplay="RIGHT" mnemonicParsing="false"
-                 prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: #18181b;" text="Bookmarks"
-                 textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
-            <font>
-               <Font size="14.0"/>
-            </font>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
-                    GridPane.rowIndex="4">
-            <Image url="@icons/bookmark.png"/>
-         </ImageView>
-         <Button fx:id="favsBtn" alignment="BASELINE_LEFT" contentDisplay="RIGHT" mnemonicParsing="false"
-                 prefHeight="30.0" prefWidth="124.0" style="-fx-background-color: #18181b;" text="Favourites"
-                 textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
-            <font>
-               <Font size="14.0"/>
-            </font>
-         </Button>
-         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
-                    GridPane.rowIndex="5">
-            <Image url="@icons/fav.png"/>
-         </ImageView>
-      </GridPane>
+      <Pane prefHeight="318.0" prefWidth="174.0" style="-fx-border-color: #18181b #000000  #18181b  #18181b;" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane layoutX="19.0" layoutY="14.0" prefHeight="302.0" prefWidth="137.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ToolBar fx:id="profileBtn" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+                    <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/user.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="64.0" text="Profile" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                    </items>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ToolBar>
+                  <ToolBar fx:id="notificationsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="2">
+                     <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/bell.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="91.0" text="Notifications" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+                  <ToolBar fx:id="msgBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="3">
+                     <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/msg.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="91.0" text="Messages" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+                  <ToolBar fx:id="exploreBtn" opacity="0.4" prefHeight="25.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="4">
+                     <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/explore.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="91.0" text="Explore" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+                  <ToolBar fx:id="bookmarksBtn" opacity="0.4" prefHeight="24.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="5">
+                     <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/bookmark.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="91.0" text="Bookmarks" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+                  <ToolBar fx:id="favsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="6">
+                     <items>
+                        <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <Image url="@icons/fav.png" />
+                        </ImageView>
+                        <Label prefHeight="20.0" prefWidth="91.0" text="Favourites" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+                  <ToolBar fx:id="favsBtn1" disable="true" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;">
+                     <items>
+                        <ImageView id="bellImg" disable="true" fitHeight="24.0" fitWidth="24.0" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/home.png" />
+                           </image>
+                        </ImageView>
+                        <Label disable="true" prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </items>
+                  </ToolBar>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
    </left>
 </BorderPane>
