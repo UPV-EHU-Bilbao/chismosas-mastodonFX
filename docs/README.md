@@ -1,2 +1,4 @@
 # Mockup diagrams
-Here are the mockup diagrams of how the application will look
+Here are
+- The mockup diagrams for the User Interface, using [diagrams.net](https://app.diagrams.net) (.drawio)
+- The use case diagram and domain model, using [StarUML](https://staruml.io) (.mdj)
