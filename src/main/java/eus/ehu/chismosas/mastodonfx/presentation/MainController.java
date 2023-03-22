@@ -7,50 +7,68 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
 import java.util.List;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.*;
+import social.bigbone.api.exception.BigBoneRequestException;
 
 public class MainController {
     private final String userID = System.getenv("ID");
 
     @FXML
-    private Button bookmarksBtn;
+    private ToolBar bookmarksBtn;
 
     @FXML
     private Pane contentPane;
 
     @FXML
-    private Button exploreBtn;
+    private Label displayNameLabel;
 
     @FXML
-    private Button favsBtn;
+    private ToolBar exploreBtn;
 
     @FXML
-    private Button msgBtn;
+    private ToolBar favsBtn;
+
+    @FXML
+    private ToolBar favsBtn1;
+
+    @FXML
+    private Button followersBtn;
+
+    @FXML
+    private Button followingBtn;
+
+    @FXML
+    private ToolBar msgBtn;
 
     @FXML
     private TextArea newToot;
 
     @FXML
-    private Button notificationsBtn;
+    private ToolBar notificationsBtn;
 
     @FXML
-    private Button profileBtn;
+    private ToolBar profileBtn;
+
+    @FXML
+    private ImageView profilePic;
 
     @FXML
     private TextField searcher;
 
     @FXML
-    private Pane titlePane;
+    private ToolBar settingsBtn;
 
     @FXML
-    private ListView<Status> tootList;
+    private Label userNameLabel;
 
     private FXMLLoader loader;
+
+    private ListView tootList;
+
 
     @FXML
     void initialize() {
@@ -65,7 +83,12 @@ public class MainController {
     }
 
     public void showList(){
-        List<Status> statusList = BusinessLogic.getStatuses("109897298389421503");
+        List<Status> statusList = null;
+        try {
+            statusList = BusinessLogic.getStatuses("109897298389421503");
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
 
         ObservableList<Status> items = FXCollections.observableArrayList(statusList);
 
