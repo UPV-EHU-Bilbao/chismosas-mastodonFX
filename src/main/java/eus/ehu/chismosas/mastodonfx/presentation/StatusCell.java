@@ -1,6 +1,5 @@
-package ehu.eus.chismosas.mastodonfx.businesslogic;
+package eus.ehu.chismosas.mastodonfx.presentation;
 
-import ehu.eus.chismosas.mastodonfx.domain.Status;
 import javafx.scene.control.ListCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import social.bigbone.api.entity.Status;
+
 
 public class StatusCell extends ListCell<Status> {
     private FXMLLoader loader;
@@ -45,7 +46,7 @@ public class StatusCell extends ListCell<Status> {
         }
 
 
-        id.setText(item.id);
+        id.setText(item.getId());
        // ability.setText(item.getAbility());
        // picture.setImage(new Image(item.getPicture()));
 

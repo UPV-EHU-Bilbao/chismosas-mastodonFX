@@ -1,24 +1,18 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
-import ehu.eus.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import ehu.eus.chismosas.mastodonfx.businesslogic.StatusCell;
-import ehu.eus.chismosas.mastodonfx.domain.Status;
+import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+
 import java.util.List;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.Node;
-
-
-import java.io.IOException;
-import java.util.List;
+import social.bigbone.api.entity.*;
 
 public class MainController {
     private final String userID = System.getenv("ID");
