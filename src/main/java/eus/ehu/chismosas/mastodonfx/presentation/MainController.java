@@ -6,15 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-import java.util.AbstractCollection;
 import java.util.List;
 
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.*;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -71,7 +68,7 @@ public class MainController {
 
     private FXMLLoader loader;
 
-    private ListView<Status> tootList;
+    private ListView<Status> tootListView;
 
     private ListView<Account> accountListView;
 
@@ -97,10 +94,10 @@ public class MainController {
 
         ObservableList<Status> items = FXCollections.observableArrayList(statusList);
 
-        if (tootList != null) {
-            tootList.setItems(items);
+        if (tootListView != null) {
+            tootListView.setItems(items);
 
-            tootList.setCellFactory(param -> {
+            tootListView.setCellFactory(param -> {
                 var cell = new StatusCell();
                 //cell.setOnMousecClicked((evt) -> {
                // Status status = cell.getItem();
@@ -114,7 +111,7 @@ public class MainController {
             });
         }
 
-        tootList.getItems().addAll(statusList);
+        tootListView.getItems().addAll(statusList);
     }
 
 
