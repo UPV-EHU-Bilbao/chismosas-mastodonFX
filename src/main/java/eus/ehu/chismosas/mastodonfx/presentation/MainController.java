@@ -70,12 +70,9 @@ public class MainController {
 
     private ListView<Status> tootListView;
 
-    private ListView<Account> accountListView;
+    private ListView<Account> followersListView;
+    private ListView<Account> followingListView;
 
-    /**
-     * Initialize the main view
-     * @return void
-     */
     @FXML
     void initialize() {
         /*List<Status> statusList = Utils.getStatusList("109897298389421503");
@@ -87,10 +84,7 @@ public class MainController {
         //Status status = BusinessLogic.getStatuses("109897298389421503").get(0);
         //showList();
     }
-    /**
-     * Show the list of toots
-     * @return void
-     */
+
     public void showStatusList(){
         List<Status> statusList = null;
         try {
@@ -121,25 +115,50 @@ public class MainController {
         tootListView.getItems().addAll(statusList);
     }
 
-    /**
-     * Show the list of following
-     * @return void
-     */
-    public void showFollowingList(){
-
+    public void showFollowignList(){
+        List<Account> accountList = null;
         try {
-             List<Account> accountList = BusinessLogic.getFollowing(userID);
-             ObservableList<Account> following = FXCollections.observableList(accountList);
+             accountList = BusinessLogic.getFollowing(userID);
+
         }
         catch (BigBoneRequestException e){
             throw new RuntimeException(e);
         }
+        ObservableList<Account> following = FXCollections.observableList(accountList);
 
-        if ()
+        if (followingListView != null){
+            followingListView.setItems(following);
+            followingListView.setCellFactory(param -> {
+                var cell = new AccountCell();
+                return cell;
+            });
+        }
 
+        followingListView.getItems().addAll(accountList);
 
     }
 
+    public void showFollowersList(){
+        List<Account> accountList = null;
+        try {
+            accountList = BusinessLogic.getFollowers(userID);
 
+        }
+        catch (BigBoneRequestException e){
+            throw new RuntimeException(e);
+        }
+        ObservableList<Account> followers = FXCollections.observableList(accountList);
+
+        if (followersListView != null){
+            followersListView.setItems(followers);
+            followersListView.setCellFactory(param -> {
+                var cell = new AccountCell();
+                return cell;
+            });
+        }
+
+        followersListView.getItems().addAll(accountList);
+
+    }
 
 }
