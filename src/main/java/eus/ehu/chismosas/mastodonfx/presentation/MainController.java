@@ -10,6 +10,7 @@ import java.util.List;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import social.bigbone.api.entity.*;
@@ -79,15 +80,15 @@ public class MainController {
      */
     @FXML
     void initialize() {
-        /*List<Status> statusList = Utils.getStatusList("109897298389421503");
-        webEngine = content.getEngine();
-        webEngine.loadContent(statusList.get(0).content);
-        author.setText(statusList.get(0).account.username);
-        date.setText(statusList.get(0).created_at);*/
+        tootListView = new ListView<>();
+        followersListView = new ListView<>();
+        followingListView = new ListView<>();
+        showStatusList();
+        //showFollowersList();
+        //showFollowingList();
+        mainPane.setCenter(tootListView);
+        setProfile();
 
-        //Status status = BusinessLogic.getStatuses("109897298389421503").get(0);
-
-        //showList();
     }
     /**
      * Show the list of statuses
@@ -148,7 +149,6 @@ public class MainController {
         List<Account> accountList = null;
         try {
             accountList = BusinessLogic.getFollowers(userID);
-
         }
         catch (BigBoneRequestException e){
             throw new RuntimeException(e);
@@ -165,6 +165,16 @@ public class MainController {
 
         followersListView.getItems().addAll(accountList);
 
+    }
+
+    public void setProfile(){
+        Account account = null;
+
+        account = BusinessLogic.getAccount(userID);
+
+        profilePic.setImage(new Image(account.getAvatar()));
+        userNameLabel.setText(account.getUsername());
+        displayNameLabel.setText(account.getDisplayName());
     }
 
 }

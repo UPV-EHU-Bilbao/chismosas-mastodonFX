@@ -45,4 +45,13 @@ public class BusinessLogic {
         return request.execute().getPart();
     }
 
+    public static Account getAccount(String userID) {
+        var request = client.accounts().getAccount(userID);
+        try {
+            return request.execute();
+        } catch (BigBoneRequestException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.Status;
 
@@ -14,10 +16,19 @@ public class StatusCell extends ListCell<Status> {
     private FXMLLoader loader;
 
     @FXML
+    private ImageView avatar;
+
+    @FXML
     private Label content;
 
     @FXML
     private Label date;
+
+    @FXML
+    private Label displayName;
+
+    @FXML
+    private Label userName;
 
     @Override
     /**
@@ -36,7 +47,7 @@ public class StatusCell extends ListCell<Status> {
         }
 
         if (loader == null) {
-            loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            loader = new FXMLLoader(getClass().getResource("status.fxml"));
             loader.setController(this);
             try {
                 loader.load();
@@ -47,6 +58,9 @@ public class StatusCell extends ListCell<Status> {
 
         content.setText(item.getContent());
         date.setText(item.getCreatedAt());
+        displayName.setText(item.getAccount().getDisplayName());
+        userName.setText(item.getAccount().getUsername());
+        avatar.setImage(new Image(item.getAccount().getAvatar()));
 
         setText(null);
         setGraphic(loader.getRoot());

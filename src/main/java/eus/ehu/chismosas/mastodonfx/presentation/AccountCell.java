@@ -17,6 +17,12 @@ public class AccountCell extends ListCell<Account> {
     private ImageView avatar;
 
     @FXML
+    private Label content;
+
+    @FXML
+    private Label date;
+
+    @FXML
     private Label displayName;
 
     @FXML
