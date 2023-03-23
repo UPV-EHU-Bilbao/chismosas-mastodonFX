@@ -6,10 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
+import java.util.AbstractCollection;
 import java.util.List;
 
+import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.*;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -19,9 +23,6 @@ public class MainController {
 
     @FXML
     private ToolBar bookmarksBtn;
-
-    @FXML
-    private Pane contentPane;
 
     @FXML
     private Label displayNameLabel;
@@ -40,6 +41,9 @@ public class MainController {
 
     @FXML
     private Button followingBtn;
+
+    @FXML
+    private BorderPane mainPane;
 
     @FXML
     private ToolBar msgBtn;
@@ -67,8 +71,9 @@ public class MainController {
 
     private FXMLLoader loader;
 
-    private ListView tootList;
+    private ListView<Status> tootList;
 
+    private ListView<Account> accountListView;
 
     @FXML
     void initialize() {
@@ -79,7 +84,7 @@ public class MainController {
         date.setText(statusList.get(0).created_at);*/
 
         //Status status = BusinessLogic.getStatuses("109897298389421503").get(0);
-        showList();
+        //showList();
     }
 
     public void showList(){
@@ -94,13 +99,14 @@ public class MainController {
 
         if (tootList != null) {
             tootList.setItems(items);
+
             tootList.setCellFactory(param -> {
                 var cell = new StatusCell();
                 //cell.setOnMousecClicked((evt) -> {
-                //Status status = cell.getItem();
-                //if (status != null) System.out.println("Status's data: " + status);
+               // Status status = cell.getItem();
+               // if (status != null) System.out.println("Status's data: " + status);
 
-            //});
+          //
 
                 return cell;
 
