@@ -11,6 +11,16 @@ import social.bigbone.api.entity.Status;
 
 public class StatusCell extends ListCell<Status> {
     private FXMLLoader loader;
+    @FXML
+    private Label content;
+    @FXML
+    private Label date;
+
+    @FXML
+    private SplitPane splitPane;
+
+
+
 
     @Override
     protected void updateItem(Status item, boolean empty) {
@@ -34,6 +44,9 @@ public class StatusCell extends ListCell<Status> {
         }
         FXMLLoader accountLoader = new FXMLLoader(getClass().getResource("account.fxml"));
         splitPane.getItems().set(0, );
+
+        content.setText(item.getContent());
+        date.setText(item.getCreatedAt());
 
         setText(null);
         //setGraphic(listItem);
