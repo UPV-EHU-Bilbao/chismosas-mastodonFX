@@ -26,7 +26,7 @@
                <DropShadow offsetX="5.0" offsetY="5.0" />
             </effect>
          </ImageView>
-         <Pane layoutX="173.0" prefHeight="149.0" prefWidth="368.0" style="-fx-border-color: #000000;">
+         <Pane layoutX="173.0" maxWidth="1.7976931348623157E308" prefHeight="149.0" prefWidth="368.0" style="-fx-border-color: #000000;">
             <children>
                <Button fx:id="followingBtn" layoutX="59.0" layoutY="98.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="84.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE">
                   <font>

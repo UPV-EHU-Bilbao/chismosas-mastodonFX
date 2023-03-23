@@ -84,9 +84,9 @@ public class MainController {
         followersListView = new ListView<>();
         followingListView = new ListView<>();
         showStatusList();
-        //showFollowersList();
-        //showFollowingList();
-        mainPane.setCenter(tootListView);
+        showFollowersList();
+        showFollowingList();
+        mainPane.setCenter(followersListView);
         setProfile();
 
     }
@@ -95,7 +95,7 @@ public class MainController {
      * @return void
      */
     public void showStatusList(){
-        List<Status> statusList = null;
+        List<Status> statusList;
         try {
             statusList = BusinessLogic.getStatuses(userID);
         } catch (BigBoneRequestException e) {
@@ -117,60 +117,45 @@ public class MainController {
     }
     /**
      * Show the list of followings
-     * @return void
      */
     public void showFollowingList(){
-        List<Account> accountList = null;
+
         try {
-             accountList = BusinessLogic.getFollowing(userID);
-
-        }
-        catch (BigBoneRequestException e){
-            throw new RuntimeException(e);
-        }
-        ObservableList<Account> following = FXCollections.observableList(accountList);
-
-        if (followingListView != null){
+           List<Account> accountList = BusinessLogic.getFollowing(userID);
+           ObservableList<Account> following = FXCollections.observableList(accountList);
             followingListView.setItems(following);
             followingListView.setCellFactory(param -> {
                 var cell = new AccountCell();
                 return cell;
             });
         }
-
-        followingListView.getItems().addAll(accountList);
-
+        catch (BigBoneRequestException e){
+            System.out.println("Could not get followings");
+        }
     }
+
     /**
      * Show the list of followers
      * @return void
      */
     public void showFollowersList(){
-        List<Account> accountList = null;
-        try {
-            accountList = BusinessLogic.getFollowers(userID);
-        }
-        catch (BigBoneRequestException e){
-            throw new RuntimeException(e);
-        }
-        ObservableList<Account> followers = FXCollections.observableList(accountList);
 
-        if (followersListView != null){
+        try {
+            List<Account> accountList = BusinessLogic.getFollowers(userID);
+            ObservableList<Account> followers = FXCollections.observableList(accountList);
             followersListView.setItems(followers);
             followersListView.setCellFactory(param -> {
                 var cell = new AccountCell();
                 return cell;
             });
         }
-
-        followersListView.getItems().addAll(accountList);
-
+        catch (BigBoneRequestException e) {
+            System.out.println("Could not get followers");;
+        }
     }
 
-    public void setProfile(){
-        Account account = null;
-
-        account = BusinessLogic.getAccount(userID);
+    public void setProfile() {
+        Account account = BusinessLogic.getAccount(userID);
 
         profilePic.setImage(new Image(account.getAvatar()));
         userNameLabel.setText(account.getUsername());
