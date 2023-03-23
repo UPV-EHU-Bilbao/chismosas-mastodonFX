@@ -25,6 +25,12 @@ public class AccountCell extends ListCell<Account> {
     private FXMLLoader loader;
 
     @Override
+    /**
+     * Update the account in the item list
+     * @param item, account to update
+     * @param empty, if the list is empty
+     * @return void
+     */
     protected void updateItem(Account item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {

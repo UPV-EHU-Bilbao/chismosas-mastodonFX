@@ -19,10 +19,6 @@ public class BusinessLogic {
      * Get statuses from a user
      * @param id User id to get statuses from
      * @return List of statuses
-     */    /**
-     *This method gets the statuses of an account by giving the id
-     *@param id
-     *@return a list of statuses
      */
     public static List<Status> getStatuses(String id) throws BigBoneRequestException {
         var request = client.accounts().getStatuses(id);

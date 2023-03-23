@@ -72,6 +72,10 @@ public class MainController {
 
     private ListView<Account> accountListView;
 
+    /**
+     * Initialize the main view
+     * @return void
+     */
     @FXML
     void initialize() {
         /*List<Status> statusList = Utils.getStatusList("109897298389421503");
@@ -83,7 +87,10 @@ public class MainController {
         //Status status = BusinessLogic.getStatuses("109897298389421503").get(0);
         //showList();
     }
-
+    /**
+     * Show the list of toots
+     * @return void
+     */
     public void showStatusList(){
         List<Status> statusList = null;
         try {
@@ -114,7 +121,11 @@ public class MainController {
         tootListView.getItems().addAll(statusList);
     }
 
-    public void showFollowignList(){
+    /**
+     * Show the list of following
+     * @return void
+     */
+    public void showFollowingList(){
 
         try {
              List<Account> accountList = BusinessLogic.getFollowing(userID);
