@@ -84,10 +84,10 @@ public class MainController {
         //showList();
     }
 
-    public void showList(){
+    public void showStatusList(){
         List<Status> statusList = null;
         try {
-            statusList = BusinessLogic.getStatuses("109897298389421503");
+            statusList = BusinessLogic.getStatuses(userID);
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -113,6 +113,22 @@ public class MainController {
 
         tootListView.getItems().addAll(statusList);
     }
+
+    public void showFollowignList(){
+
+        try {
+             List<Account> accountList = BusinessLogic.getFollowing(userID);
+             ObservableList<Account> following = FXCollections.observableList(accountList);
+        }
+        catch (BigBoneRequestException e){
+            throw new RuntimeException(e);
+        }
+
+        if ()
+
+
+    }
+
 
 
 }
