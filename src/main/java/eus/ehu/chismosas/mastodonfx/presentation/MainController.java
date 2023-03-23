@@ -73,6 +73,10 @@ public class MainController {
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
 
+    /**
+     * Initialize the main controller
+     * @return void
+     */
     @FXML
     void initialize() {
         /*List<Status> statusList = Utils.getStatusList("109897298389421503");
@@ -82,9 +86,13 @@ public class MainController {
         date.setText(statusList.get(0).created_at);*/
 
         //Status status = BusinessLogic.getStatuses("109897298389421503").get(0);
+
         //showList();
     }
-
+    /**
+     * Show the list of statuses
+     * @return void
+     */
     public void showStatusList(){
         List<Status> statusList = null;
         try {
@@ -106,8 +114,11 @@ public class MainController {
 
         tootListView.getItems().addAll(statusList);
     }
-
-    public void showFollowignList(){
+    /**
+     * Show the list of followings
+     * @return void
+     */
+    public void showFollowingList(){
         List<Account> accountList = null;
         try {
              accountList = BusinessLogic.getFollowing(userID);
@@ -129,7 +140,10 @@ public class MainController {
         followingListView.getItems().addAll(accountList);
 
     }
-
+    /**
+     * Show the list of followers
+     * @return void
+     */
     public void showFollowersList(){
         List<Account> accountList = null;
         try {
