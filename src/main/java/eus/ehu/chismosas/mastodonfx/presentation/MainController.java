@@ -100,15 +100,7 @@ public class MainController {
 
             tootListView.setCellFactory(param -> {
                 var cell = new StatusCell();
-                //cell.setOnMousecClicked((evt) -> {
-               // Status status = cell.getItem();
-               // if (status != null) System.out.println("Status's data: " + status);
-
-          //
-
                 return cell;
-
-
             });
         }
 
