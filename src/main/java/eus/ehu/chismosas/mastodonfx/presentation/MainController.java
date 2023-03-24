@@ -155,8 +155,6 @@ public class MainController {
                 return cell;
             });
         }
-
-        tootListView.getItems().addAll(statusList);
     }
     /**
      * Show the list of followings
@@ -187,13 +185,10 @@ public class MainController {
             List<Account> accountList = BusinessLogic.getFollowers(userID);
             ObservableList<Account> followers = FXCollections.observableList(accountList);
             followersListView.setItems(followers);
-            followersListView.setCellFactory(param -> {
-                var cell = new AccountCell();
-                return cell;
-            });
+            followersListView.setCellFactory(param -> new AccountCell());
         }
         catch (BigBoneRequestException e) {
-            System.out.println("Could not get followers");;
+            System.out.println("Could not get followers");
         }
     }
 
