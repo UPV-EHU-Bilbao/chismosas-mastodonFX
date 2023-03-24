@@ -3,24 +3,18 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
-import java.util.List;
-
-import javafx.scene.control.ListView;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import social.bigbone.api.entity.*;
+import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
+
+import java.util.List;
 
 public class MainController {
     private final String userID = System.getenv("ID");
@@ -84,7 +78,6 @@ public class MainController {
 
     /**
      * Initialize the main controller
-     * @return void
      */
     @FXML
     void initialize() {
@@ -102,58 +95,53 @@ public class MainController {
     }
 
     @FXML
-    void mouseFollowers(ActionEvent event) { sceneSwitch("Followers"); }
+    void mouseFollowers() { sceneSwitch("Followers"); }
 
     @FXML
-    void mouseFollowing(ActionEvent event) {
+    void mouseFollowing() {
         sceneSwitch("Following");
     }
 
     @FXML
-    void mouseProfile(MouseEvent event) {
+    void mouseProfile() {
         sceneSwitch("Toots");
     }
 
     private void sceneSwitch(String scene){
-        switch (scene){
-            case "Followers": mainPane.setCenter(followersListView);
-            followersBtn.setEffect(dropShadow);
-            followingBtn.setEffect(null);
-            profileBtn.setEffect(null);
-            break;
-            case "Following": mainPane.setCenter(followingListView);
-            followingBtn.setEffect(dropShadow);
-            followersBtn.setEffect(null);
-            profileBtn.setEffect(null);
-            break;
-            case "Toots": mainPane.setCenter(tootListView);
-            profileBtn.setEffect(dropShadow);
-            followersBtn.setEffect(null);
-            followingBtn.setEffect(null);
-            break;
+        switch (scene) {
+            case "Followers" -> {
+                mainPane.setCenter(followersListView);
+                followersBtn.setEffect(dropShadow);
+                followingBtn.setEffect(null);
+                profileBtn.setEffect(null);
+            }
+            case "Following" -> {
+                mainPane.setCenter(followingListView);
+                followingBtn.setEffect(dropShadow);
+                followersBtn.setEffect(null);
+                profileBtn.setEffect(null);
+            }
+            case "Toots" -> {
+                mainPane.setCenter(tootListView);
+                profileBtn.setEffect(dropShadow);
+                followersBtn.setEffect(null);
+                followingBtn.setEffect(null);
+            }
         }
     }
     /**
      * Show the list of statuses
-     * @return void
      */
     public void showStatusList(){
-        List<Status> statusList;
         try {
-            statusList = BusinessLogic.getStatuses(userID);
+            var statusList = BusinessLogic.getStatuses(userID);
+            // Remove status without content until we can show media
+            statusList.removeIf(status -> status.getContent().equals(""));
+            var items = FXCollections.observableArrayList(statusList);
+            tootListView.setItems(items);
+            tootListView.setCellFactory(param -> new StatusCell());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
-        }
-
-        ObservableList<Status> items = FXCollections.observableArrayList(statusList);
-
-        if (tootListView != null) {
-            tootListView.setItems(items);
-
-            tootListView.setCellFactory(param -> {
-                var cell = new StatusCell();
-                return cell;
-            });
         }
     }
     /**
@@ -165,10 +153,7 @@ public class MainController {
            List<Account> accountList = BusinessLogic.getFollowing(userID);
            ObservableList<Account> following = FXCollections.observableList(accountList);
             followingListView.setItems(following);
-            followingListView.setCellFactory(param -> {
-                var cell = new AccountCell();
-                return cell;
-            });
+            followingListView.setCellFactory(param -> new AccountCell());
         }
         catch (BigBoneRequestException e){
             System.out.println("Could not get followings");
@@ -177,7 +162,6 @@ public class MainController {
 
     /**
      * Show the list of followers
-     * @return void
      */
     public void showFollowersList(){
 
