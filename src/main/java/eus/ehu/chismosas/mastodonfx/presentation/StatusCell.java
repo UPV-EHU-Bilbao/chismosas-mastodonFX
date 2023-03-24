@@ -31,6 +31,30 @@ public class StatusCell extends ListCell<Status> {
     @FXML
     private Label userName;
 
+    @FXML
+    private Label bookmark;
+
+    @FXML
+    private Label comment;
+
+    @FXML
+    private Label like;
+
+    @FXML
+    private Label retweet;
+
+    @FXML
+    private ImageView bookmarkBtn;
+
+    @FXML
+    private ImageView commentBtn;
+
+    @FXML
+    private ImageView likeBtn;
+
+    @FXML
+    private ImageView retweetBtn;
+
     @Override
     /**
      * Update the status in the item list
@@ -62,6 +86,11 @@ public class StatusCell extends ListCell<Status> {
         displayName.setText(item.getAccount().getDisplayName());
         userName.setText(item.getAccount().getUsername());
         avatar.setImage(new Image(item.getAccount().getAvatar()));
+
+        like.setText(String.valueOf(item.getFavouritesCount()));
+        retweet.setText(String.valueOf(item.getReblogsCount()));
+        comment.setText(String.valueOf(item.getRepliesCount()));
+
 
         setText(null);
         setGraphic(loader.getRoot());
