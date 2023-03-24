@@ -80,6 +80,8 @@ public class MainController {
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
 
+    private DropShadow dropShadow;
+
     /**
      * Initialize the main controller
      * @return void
@@ -89,11 +91,13 @@ public class MainController {
         tootListView = new ListView<>();
         followersListView = new ListView<>();
         followingListView = new ListView<>();
+        dropShadow = new DropShadow();
         showStatusList();
         showFollowersList();
         showFollowingList();
         mainPane.setCenter(tootListView);
         setProfile();
+        dropShadow = new DropShadow();
 
     }
 
@@ -112,18 +116,21 @@ public class MainController {
 
     private void sceneSwitch(String scene){
         switch (scene){
-            case "Followers" -> mainPane.setCenter(followersListView);
-            followersBtn.setEffect(DropShadow);
+            case "Followers": mainPane.setCenter(followersListView);
+            followersBtn.setEffect(dropShadow);
             followingBtn.setEffect(null);
             profileBtn.setEffect(null);
-            case "Following" -> mainPane.setCenter(followingListView);
-            followingBtn.setEffect(DropShadow);
+            break;
+            case "Following": mainPane.setCenter(followingListView);
+            followingBtn.setEffect(dropShadow);
             followersBtn.setEffect(null);
             profileBtn.setEffect(null);
-            case "Toots" -> mainPane.setCenter(tootListView);
-            profileBtn.setEffect(DropShadow);
+            break;
+            case "Toots": mainPane.setCenter(tootListView);
+            profileBtn.setEffect(dropShadow);
             followersBtn.setEffect(null);
             followingBtn.setEffect(null);
+            break;
         }
     }
     /**
