@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="340.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
@@ -31,6 +32,9 @@
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
         </Label>
         <Label fx:id="userName" text="\@username" textFill="#000000c2">
             <font>
@@ -43,12 +47,9 @@
             </font>
         </Label>
     </HBox>
-    <Label fx:id="content" text="Libero totam aperiam numquam ea vitae ipsum. Expedita ipsum quibusdam velit qui quo autem molestiae quia. Debitis voluptatibus voluptatem qui error ad hic. Quo commodi aliquid eius. Libero totam aperiam numquam ea vitae ipsum. Expedita ipsum quibusdam velit qui quo autem molestiae quia. Debitis voluptatibus voluptatem qui error ad hic. Quo commodi aliquid eius. Libero totam aperiam numquam ea vitae ipsum. Expedita ipsum quibusdam velit qui quo autem molestiae quia. Debitis voluptatibus voluptatem qui error ad hic. Quo commodi aliquid eius. " wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
-        <GridPane.margin>
-          <Insets bottom="15.0" />
-        </GridPane.margin>
-        <font>
-          <Font size="13.0" />
-        </font>
-    </Label>
+   <WebView fx:id="content" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <GridPane.margin>
+         <Insets bottom="10.0" right="10.0" />
+      </GridPane.margin>
+   </WebView>
 </GridPane>

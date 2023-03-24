@@ -1,6 +1,7 @@
 module eus.ehu.chismosas.mastodonfx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
     requires bigbone;
 
 

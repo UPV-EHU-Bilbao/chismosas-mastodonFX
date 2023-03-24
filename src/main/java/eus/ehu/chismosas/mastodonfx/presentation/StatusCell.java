@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.Status;
+import javafx.scene.web.WebView;
 
 
 public class StatusCell extends ListCell<Status> {
@@ -19,7 +20,7 @@ public class StatusCell extends ListCell<Status> {
     private ImageView avatar;
 
     @FXML
-    private Label content;
+    private WebView content;
 
     @FXML
     private Label date;
@@ -56,7 +57,7 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
-        content.setText(item.getContent());
+        content.getEngine().loadContent(item.getContent());
         date.setText(item.getCreatedAt());
         displayName.setText(item.getAccount().getDisplayName());
         userName.setText(item.getAccount().getUsername());
