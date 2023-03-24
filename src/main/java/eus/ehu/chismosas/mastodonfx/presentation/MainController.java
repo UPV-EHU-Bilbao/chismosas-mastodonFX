@@ -3,6 +3,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
@@ -10,8 +11,13 @@ import java.util.List;
 
 import javafx.scene.control.ListView;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import social.bigbone.api.entity.*;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -86,9 +92,39 @@ public class MainController {
         showStatusList();
         showFollowersList();
         showFollowingList();
-        mainPane.setCenter(followersListView);
+        mainPane.setCenter(tootListView);
         setProfile();
 
+    }
+
+    @FXML
+    void mouseFollowers(ActionEvent event) { sceneSwitch("Followers"); }
+
+    @FXML
+    void mouseFollowing(ActionEvent event) {
+        sceneSwitch("Following");
+    }
+
+    @FXML
+    void mouseProfile(MouseEvent event) {
+        sceneSwitch("Toots");
+    }
+
+    private void sceneSwitch(String scene){
+        switch (scene){
+            case "Followers" -> mainPane.setCenter(followersListView);
+            followersBtn.setEffect(DropShadow);
+            followingBtn.setEffect(null);
+            profileBtn.setEffect(null);
+            case "Following" -> mainPane.setCenter(followingListView);
+            followingBtn.setEffect(DropShadow);
+            followersBtn.setEffect(null);
+            profileBtn.setEffect(null);
+            case "Toots" -> mainPane.setCenter(tootListView);
+            profileBtn.setEffect(DropShadow);
+            followersBtn.setEffect(null);
+            followingBtn.setEffect(null);
+        }
     }
     /**
      * Show the list of statuses
@@ -161,5 +197,7 @@ public class MainController {
         userNameLabel.setText(account.getUsername());
         displayNameLabel.setText(account.getDisplayName());
     }
+
+
 
 }

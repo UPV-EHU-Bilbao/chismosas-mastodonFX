@@ -28,12 +28,12 @@
          </ImageView>
          <Pane layoutX="173.0" maxWidth="1.7976931348623157E308" prefHeight="149.0" prefWidth="368.0" style="-fx-border-color: #000000;">
             <children>
-               <Button fx:id="followingBtn" layoutX="59.0" layoutY="98.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="84.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE">
+               <Button fx:id="followingBtn" layoutX="59.0" layoutY="98.0" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="16.0" prefWidth="84.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE">
                   <font>
                      <Font size="15.0" />
                   </font>
                </Button>
-               <Button fx:id="followersBtn" layoutX="234.0" layoutY="98.0" mnemonicParsing="false" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE">
+               <Button fx:id="followersBtn" layoutX="234.0" layoutY="98.0" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE">
                   <font>
                      <Font size="15.0" />
                   </font>
@@ -103,7 +103,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ToolBar fx:id="profileBtn" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+                  <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
                     <items>
                         <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <Image url="@icons/user.png" />
