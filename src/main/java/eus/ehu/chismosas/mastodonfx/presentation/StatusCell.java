@@ -8,6 +8,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import javafx.scene.web.WebView;
 
@@ -81,11 +82,13 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
+        Account account = item.getAccount();
+
         content.getEngine().loadContent(item.getContent());
         date.setText(item.getCreatedAt());
-        displayName.setText(item.getAccount().getDisplayName());
-        userName.setText(item.getAccount().getUsername());
-        avatar.setImage(new Image(item.getAccount().getAvatar()));
+        displayName.setText(account.getDisplayName());
+        userName.setText("@" + account.getUsername());
+        avatar.setImage(new Image(account.getAvatar()));
 
         like.setText(String.valueOf(item.getFavouritesCount()));
         retweet.setText(String.valueOf(item.getReblogsCount()));
