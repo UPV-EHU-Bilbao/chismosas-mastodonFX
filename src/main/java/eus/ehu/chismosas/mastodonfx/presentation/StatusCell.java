@@ -90,12 +90,23 @@ public class StatusCell extends ListCell<Status> {
         userName.setText("@" + account.getUsername());
         avatar.setImage(new Image(account.getAvatar()));
 
+        disableButtons(item);
         like.setText(String.valueOf(item.getFavouritesCount()));
         retweet.setText(String.valueOf(item.getReblogsCount()));
         comment.setText(String.valueOf(item.getRepliesCount()));
 
-
         setText(null);
         setGraphic(loader.getRoot());
+    }
+    void disableButtons(Status item){
+        if (item.getFavouritesCount() == 0){
+            likeBtn.setOpacity(0.1);
+        }
+        if (item.getReblogsCount() == 0){
+            retweetBtn.setOpacity(0.1);
+        }
+        if (item.getRepliesCount() == 0){
+            commentBtn.setOpacity(0.1);
+        }
     }
 }
