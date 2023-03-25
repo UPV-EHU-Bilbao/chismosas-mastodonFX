@@ -141,8 +141,20 @@ public class MainController {
         List<Status> statusList;
         try {
             statusList = BusinessLogic.getStatuses(userID);
-            // Remove status without content until we can show media
-            statusList.removeIf(status -> status.getContent().equals(""));
+
+            // Process reblogs and filters out toots that we cannot display yet
+            var statusIterator = statusList.listIterator();
+            while(statusIterator.hasNext()) {
+                Status status = statusIterator.next();
+                if (status.getReblog() != null) {
+                    status = status.getReblog();
+                    statusIterator.set(status);
+                }
+                if (status.getContent().equals("")) {
+                    statusIterator.remove();
+                }
+            }
+
             var items = FXCollections.observableArrayList(statusList);
             tootListView.setItems(items);
             tootListView.setCellFactory(param -> new StatusCell());
