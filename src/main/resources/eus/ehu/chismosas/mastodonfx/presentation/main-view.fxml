@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="1010.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="899.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <TextArea fx:id="newToot" disable="true" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
@@ -167,8 +167,8 @@
       <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="139.0" prefWidth="756.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="148.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="563.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="359.0" minWidth="10.0" prefWidth="215.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="533.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="359.0" minWidth="10.0" prefWidth="221.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -206,7 +206,7 @@
             </Pane>
             <Pane prefHeight="139.0" prefWidth="220.0" GridPane.columnIndex="2">
                <children>
-                  <TextField fx:id="searcher" disable="true" layoutX="20.0" layoutY="57.0" prefHeight="25.0" prefWidth="176.0" promptText="Search" style="-fx-background-color: #282c37;" />
+                  <TextField fx:id="searcher" disable="true" layoutX="20.0" layoutY="57.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="Search" style="-fx-background-color: #282c37;" />
                </children>
             </Pane>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="139.0" prefWidth="488.0" GridPane.columnIndex="1">
