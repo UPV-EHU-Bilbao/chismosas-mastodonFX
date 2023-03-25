@@ -152,7 +152,6 @@ public class MainController {
     }
     /**
      * gets the statuses of the user and shows them in a list
-     * @return void
      */
     public void showStatusList(){
         List<Status> statusList;
