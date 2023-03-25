@@ -57,7 +57,7 @@ public class AccountCell extends ListCell<Account> {
         }
 
         displayName.setText(item.getDisplayName());
-        userName.setText(item.getUsername());
+        userName.setText("@" + item.getUsername());
         avatar.setImage(new Image(item.getAvatar()));
 
         setText(null);
