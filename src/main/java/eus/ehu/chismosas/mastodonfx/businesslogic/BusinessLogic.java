@@ -9,6 +9,11 @@ import social.bigbone.api.exception.BigBoneRequestException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This class contains all the methods that interact with the API
+ * to get the data needed for the application
+ * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
+ */
 public class BusinessLogic {
     private static MastodonClient client = new MastodonClient.Builder("mastodon.social")
             .accessToken(System.getenv("TOKEN"))
@@ -45,6 +50,11 @@ public class BusinessLogic {
         return request.execute().getPart();
     }
 
+    /**
+     * Get the account of the user
+     * @param userID User id to get account from
+     * @return Account of the user
+     */
     public static Account getAccount(String userID) {
         var request = client.accounts().getAccount(userID);
         try {

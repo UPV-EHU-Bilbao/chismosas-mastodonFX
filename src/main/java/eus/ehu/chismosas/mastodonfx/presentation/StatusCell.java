@@ -12,7 +12,11 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import javafx.scene.web.WebView;
 
-
+/**
+ * This class is used to update and show the status information
+ * in the list that will be shown in the main view when button 'profile' is pressed
+ * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
+ */
 public class StatusCell extends ListCell<Status> {
 
     private FXMLLoader loader;
@@ -58,10 +62,9 @@ public class StatusCell extends ListCell<Status> {
 
     @Override
     /**
-     * Update the status in the item list
+     * Updates the status to be shown in the list
      * @param item, status to update
      * @param empty, if the list is empty
-     * @return void
      */
     protected void updateItem(Status item, boolean empty) {
         super.updateItem(item, empty);
@@ -90,23 +93,11 @@ public class StatusCell extends ListCell<Status> {
         userName.setText("@" + account.getUsername());
         avatar.setImage(new Image(account.getAvatar()));
 
-        disableButtons(item);
         like.setText(String.valueOf(item.getFavouritesCount()));
         retweet.setText(String.valueOf(item.getReblogsCount()));
         comment.setText(String.valueOf(item.getRepliesCount()));
 
         setText(null);
         setGraphic(loader.getRoot());
-    }
-    void disableButtons(Status item){
-        if (item.getFavouritesCount() == 0){
-            likeBtn.setOpacity(0.1);
-        }
-        if (item.getReblogsCount() == 0){
-            retweetBtn.setOpacity(0.1);
-        }
-        if (item.getRepliesCount() == 0){
-            commentBtn.setOpacity(0.1);
-        }
     }
 }

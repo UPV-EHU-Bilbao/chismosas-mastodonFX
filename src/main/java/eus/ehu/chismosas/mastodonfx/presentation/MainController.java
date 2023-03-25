@@ -16,6 +16,10 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.List;
 
+/**
+ * This class is used to control the main view of the application
+ * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
+ */
 public class MainController {
     private final String userID = System.getenv("ID");
 
@@ -77,7 +81,7 @@ public class MainController {
     private DropShadow dropShadow;
 
     /**
-     * Initialize the main controller
+     * Initialize the main controller by setting the toots in a list
      */
     @FXML
     void initialize() {
@@ -98,19 +102,32 @@ public class MainController {
         setProfile();
     }
 
+    /**
+     * switches the scene to the followers list when the followers button is pressed
+     */
     @FXML
     void mouseFollowers() { sceneSwitch("Followers"); }
 
+    /**
+     * switches the scene to the following list when the following button is pressed
+     */
     @FXML
     void mouseFollowing() {
         sceneSwitch("Following");
     }
 
+    /**
+     * switches the scene to the toots list when the profile button is pressed
+     */
     @FXML
     void mouseProfile() {
         sceneSwitch("Toots");
     }
 
+    /**
+     * changes the main scene's center to the asked scene
+     * @param scene the scene to be shown
+     */
     private void sceneSwitch(String scene){
         switch (scene) {
             case "Followers" -> {
@@ -134,7 +151,7 @@ public class MainController {
         }
     }
     /**
-     * Show the list of statuses
+     * gets the statuses of the user and shows them in a list
      * @return void
      */
     public void showStatusList(){
@@ -163,7 +180,7 @@ public class MainController {
         }
     }
     /**
-     * Show the list of followings
+     * Gets the list of accounts that the user is following and shows it
      */
     public void showFollowingList(){
 
@@ -179,7 +196,7 @@ public class MainController {
     }
 
     /**
-     * Show the list of followers
+     * Gets the list of accounts that are following the user and shows it
      */
     public void showFollowersList(){
 
@@ -194,6 +211,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Sets the profile picture, username and display name of the user
+     */
     public void setProfile() {
         Account account = BusinessLogic.getAccount(userID);
 
