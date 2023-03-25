@@ -85,13 +85,17 @@ public class MainController {
         followersListView = new ListView<>();
         followingListView = new ListView<>();
         dropShadow = new DropShadow();
+
+
+        tootListView.setStyle("-fx-control-inner-background: #18181b");
+        followersListView.setStyle("-fx-control-inner-background: #18181b");
+        followingListView.setStyle("-fx-control-inner-background: #18181b");
+
         showStatusList();
         showFollowersList();
         showFollowingList();
         mainPane.setCenter(tootListView);
         setProfile();
-        dropShadow = new DropShadow();
-
     }
 
     @FXML
@@ -131,10 +135,12 @@ public class MainController {
     }
     /**
      * Show the list of statuses
+     * @return void
      */
     public void showStatusList(){
+        List<Status> statusList;
         try {
-            var statusList = BusinessLogic.getStatuses(userID);
+            statusList = BusinessLogic.getStatuses(userID);
             // Remove status without content until we can show media
             statusList.removeIf(status -> status.getContent().equals(""));
             var items = FXCollections.observableArrayList(statusList);
@@ -180,7 +186,7 @@ public class MainController {
         Account account = BusinessLogic.getAccount(userID);
 
         profilePic.setImage(new Image(account.getAvatar()));
-        userNameLabel.setText(account.getUsername());
+        userNameLabel.setText("@"+account.getUsername());
         displayNameLabel.setText(account.getDisplayName());
     }
 

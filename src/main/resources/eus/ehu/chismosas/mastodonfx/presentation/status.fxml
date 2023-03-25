@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="385.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -25,7 +25,7 @@
         <opaqueInsets>
             <Insets />
         </opaqueInsets>
-        <Label fx:id="displayName" text="Display Name">
+        <Label fx:id="displayName" text="Display Name" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
@@ -33,18 +33,18 @@
             <Insets />
          </HBox.margin>
         </Label>
-        <Label fx:id="userName" text="\@username" textFill="#000000c2">
+        <Label fx:id="userName" text="\@username" textFill="#ffffffc2">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label fx:id="date" alignment="TOP_LEFT" text="date" textFill="#000000c2">
+        <Label fx:id="date" alignment="TOP_LEFT" text="date" textFill="#ffffffc2">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
     </HBox>
-   <WebView fx:id="content" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+   <WebView fx:id="content" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
       <GridPane.margin>
          <Insets bottom="10.0" right="10.0" />
       </GridPane.margin>
