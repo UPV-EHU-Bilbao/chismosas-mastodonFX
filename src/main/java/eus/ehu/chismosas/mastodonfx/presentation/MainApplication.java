@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * This is the main class of the application. It loads the main view and shows it on the screen.
+ *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainApplication extends Application {

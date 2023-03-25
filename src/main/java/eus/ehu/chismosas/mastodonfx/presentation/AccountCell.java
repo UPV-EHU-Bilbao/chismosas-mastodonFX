@@ -1,19 +1,18 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
-import social.bigbone.api.entity.Account;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import social.bigbone.api.entity.Status;
+import social.bigbone.api.entity.Account;
 
 /**
  * This class is used to update and show the account information
  * in the list that will be shown in the main view when button 'following'
- * or 'followers'are pressed
+ * or 'followers' are pressed
+ *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class AccountCell extends ListCell<Account> {
@@ -35,12 +34,14 @@ public class AccountCell extends ListCell<Account> {
 
     private FXMLLoader loader;
 
-    @Override
+
     /**
      * Updates the account to be shown in the list
-     * @param item, account to add to the list
-     * @param empty, if the list is empty
+     *
+     * @param item  account to add to the list
+     * @param empty if the list is empty
      */
+    @Override
     protected void updateItem(Account item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {

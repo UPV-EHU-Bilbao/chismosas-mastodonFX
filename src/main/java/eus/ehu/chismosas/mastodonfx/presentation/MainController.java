@@ -4,7 +4,6 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -18,6 +17,7 @@ import java.util.List;
 
 /**
  * This class is used to control the main view of the application
+ *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainController {
@@ -71,7 +71,6 @@ public class MainController {
     @FXML
     private Label userNameLabel;
 
-    private FXMLLoader loader;
 
     private ListView<Status> tootListView;
 
@@ -106,7 +105,9 @@ public class MainController {
      * switches the scene to the followers list when the followers button is pressed
      */
     @FXML
-    void mouseFollowers() { sceneSwitch("Followers"); }
+    void mouseFollowers() {
+        sceneSwitch("Followers");
+    }
 
     /**
      * switches the scene to the following list when the following button is pressed
@@ -126,9 +127,10 @@ public class MainController {
 
     /**
      * changes the main scene's center to the asked scene
+     *
      * @param scene the scene to be shown
      */
-    private void sceneSwitch(String scene){
+    private void sceneSwitch(String scene) {
         switch (scene) {
             case "Followers" -> {
                 mainPane.setCenter(followersListView);
@@ -150,17 +152,18 @@ public class MainController {
             }
         }
     }
+
     /**
      * gets the statuses of the user and shows them in a list
      */
-    public void showStatusList(){
+    public void showStatusList() {
         List<Status> statusList;
         try {
             statusList = BusinessLogic.getStatuses(userID);
 
             // Process reblogs and filters out toots that we cannot display yet
             var statusIterator = statusList.listIterator();
-            while(statusIterator.hasNext()) {
+            while (statusIterator.hasNext()) {
                 Status status = statusIterator.next();
                 if (status.getReblog() != null) {
                     status = status.getReblog();
@@ -178,18 +181,18 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Gets the list of accounts that the user is following and shows it
      */
-    public void showFollowingList(){
+    public void showFollowingList() {
 
         try {
-           List<Account> accountList = BusinessLogic.getFollowing(userID);
-           ObservableList<Account> following = FXCollections.observableList(accountList);
+            List<Account> accountList = BusinessLogic.getFollowing(userID);
+            ObservableList<Account> following = FXCollections.observableList(accountList);
             followingListView.setItems(following);
             followingListView.setCellFactory(param -> new AccountCell());
-        }
-        catch (BigBoneRequestException e){
+        } catch (BigBoneRequestException e) {
             System.out.println("Could not get followings");
         }
     }
@@ -197,15 +200,14 @@ public class MainController {
     /**
      * Gets the list of accounts that are following the user and shows it
      */
-    public void showFollowersList(){
+    public void showFollowersList() {
 
         try {
             List<Account> accountList = BusinessLogic.getFollowers(userID);
             ObservableList<Account> followers = FXCollections.observableList(accountList);
             followersListView.setItems(followers);
             followersListView.setCellFactory(param -> new AccountCell());
-        }
-        catch (BigBoneRequestException e) {
+        } catch (BigBoneRequestException e) {
             System.out.println("Could not get followers");
         }
     }
@@ -214,13 +216,17 @@ public class MainController {
      * Sets the profile picture, username and display name of the user
      */
     public void setProfile() {
-        Account account = BusinessLogic.getAccount(userID);
+        Account account;
+        try {
+            account = BusinessLogic.getAccount(userID);
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
 
         profilePic.setImage(new Image(account.getAvatar()));
-        userNameLabel.setText("@"+account.getUsername());
+        userNameLabel.setText("@" + account.getUsername());
         displayNameLabel.setText(account.getDisplayName());
     }
-
 
 
 }

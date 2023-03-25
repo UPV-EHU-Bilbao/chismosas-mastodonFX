@@ -1,20 +1,19 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
-import javafx.scene.web.WebView;
 
 /**
  * This class is used to update and show the status information
  * in the list that will be shown in the main view when button 'profile' is pressed
+ *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class StatusCell extends ListCell<Status> {
@@ -60,12 +59,14 @@ public class StatusCell extends ListCell<Status> {
     @FXML
     private ImageView retweetBtn;
 
-    @Override
+
     /**
      * Updates the status to be shown in the list
-     * @param item, status to update
+     *
+     * @param item,  status to update
      * @param empty, if the list is empty
      */
+    @Override
     protected void updateItem(Status item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
@@ -86,6 +87,7 @@ public class StatusCell extends ListCell<Status> {
         }
 
         Account account = item.getAccount();
+        assert account != null;
 
         content.getEngine().loadContent(item.getContent());
         date.setText(item.getCreatedAt());
