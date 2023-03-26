@@ -10,6 +10,11 @@ import javafx.scene.web.WebView;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 /**
  * This class is used to update and show the status information
  * in the list that will be shown in the main view when button 'profile' is pressed
@@ -17,6 +22,9 @@ import social.bigbone.api.entity.Status;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class StatusCell extends ListCell<Status> {
+    static final DateTimeFormatter timeParser = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+    static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.ENGLISH);
+    static final DateTimeFormatter timeFormatterYear = DateTimeFormatter.ofPattern("MMMM d y", Locale.ENGLISH);
 
     private FXMLLoader loader;
 
@@ -86,11 +94,11 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
+        content.getEngine().loadContent(item.getContent());
+        setDate(item.getCreatedAt());
+
         Account account = item.getAccount();
         assert account != null;
-
-        content.getEngine().loadContent(item.getContent());
-        date.setText(item.getCreatedAt());
         displayName.setText(account.getDisplayName());
         userName.setText("@" + account.getUsername());
         avatar.setImage(new Image(account.getAvatar()));
@@ -101,5 +109,24 @@ public class StatusCell extends ListCell<Status> {
 
         setText(null);
         setGraphic(loader.getRoot());
+    }
+
+    private void setDate(String createdAt) {
+        OffsetDateTime creationDateTime = timeParser.parse(createdAt, OffsetDateTime::from);
+        OffsetDateTime now = OffsetDateTime.now();
+        Duration timeSinceCreation = Duration.between(creationDateTime, now);
+
+        if (timeSinceCreation.toSeconds() < 60)
+            date.setText(timeSinceCreation.getSeconds() + "s ago");
+        else if (timeSinceCreation.toMinutes() < 60)
+            date.setText(timeSinceCreation.toMinutes() + "m ago");
+        else if (timeSinceCreation.toHours() < 24)
+            date.setText(timeSinceCreation.toHours() + "h ago");
+        else if (timeSinceCreation.toDays() < 7)
+            date.setText(timeSinceCreation.toDays() + "d ago");
+        else if (creationDateTime.getYear() == now.getYear())
+            date.setText(timeFormatter.format(creationDateTime));
+        else
+            date.setText(timeFormatterYear.format(creationDateTime));
     }
 }
