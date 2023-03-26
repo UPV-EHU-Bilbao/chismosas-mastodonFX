@@ -1,105 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0"
-          prefWidth="385.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19"
-          xmlns:fx="http://javafx.com/fxml/1">
+
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="385.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints fillHeight="false" maxHeight="1.7976931348623157E308" minHeight="24.999998092651367"
-                        prefHeight="46.33333206176758" vgrow="NEVER"/>
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES"/>
+        <RowConstraints fillHeight="false" maxHeight="1.7976931348623157E308" minHeight="24.999998092651367" prefHeight="46.33333206176758" vgrow="NEVER" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
         <opaqueInsets>
-            <Insets/>
+            <Insets />
         </opaqueInsets>
         <Label fx:id="displayName" text="Display Name" textFill="WHITE">
             <font>
-                <Font name="System Bold" size="16.0"/>
+                <Font name="System Bold" size="16.0" />
             </font>
             <HBox.margin>
-                <Insets/>
+                <Insets />
             </HBox.margin>
         </Label>
         <Label fx:id="userName" text="\@username" textFill="#ffffffc2">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
+      <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
         <Label fx:id="date" alignment="TOP_LEFT" text="date" textFill="#ffffffc2">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
         </Label>
+      <GridPane.margin>
+         <Insets right="10.0" />
+      </GridPane.margin>
     </HBox>
-    <WebView fx:id="content" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0"
-             GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+    <WebView fx:id="content" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
         <GridPane.margin>
-            <Insets bottom="10.0" right="10.0"/>
+            <Insets bottom="10.0" right="10.0" />
         </GridPane.margin>
     </WebView>
-    <ImageView fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true"
-               GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets/>
+            <Insets />
         </GridPane.margin>
-        <Image url="@icons/bookmark.png"/>
+        <Image url="@icons/bookmark.png" />
     </ImageView>
-    <ImageView fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true"
-               preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets right="50.0"/>
+            <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/like.png"/>
+        <Image url="@icons/like.png" />
     </ImageView>
-    <Label fx:id="like" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="1"
-           GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <Label fx:id="like" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets left="30.0"/>
+            <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true"
-               GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets right="50.0"/>
+            <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/retweet.png"/>
+        <Image url="@icons/retweet.png" />
     </ImageView>
-    <Label fx:id="retweet" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="2"
-           GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <Label fx:id="retweet" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets left="30.0"/>
+            <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true"
-               GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets right="50.0"/>
+            <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/comment.png"/>
+        <Image url="@icons/comment.png" />
     </ImageView>
-    <Label fx:id="comment" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="3"
-           GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <Label fx:id="comment" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
-            <Insets left="30.0"/>
+            <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="avatar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true"
-               GridPane.rowIndex="1">
+    <ImageView fx:id="avatar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
         <GridPane.margin>
-            <Insets bottom="90.0" left="5.0"/>
+            <Insets bottom="90.0" left="5.0" />
         </GridPane.margin>
     </ImageView>
 </GridPane>
