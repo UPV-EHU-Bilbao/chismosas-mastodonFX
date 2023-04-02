@@ -1,6 +1,7 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -51,7 +52,7 @@ public class MainController {
     private ToolBar msgBtn;
 
     @FXML
-    private TextArea newToot;
+    private TextArea newTootArea;
 
     @FXML
     private ToolBar notificationsBtn;
@@ -70,6 +71,9 @@ public class MainController {
 
     @FXML
     private Label userNameLabel;
+
+    @FXML
+    private Button publishButton;
 
 
     private ListView<Status> tootListView;
@@ -93,6 +97,10 @@ public class MainController {
         tootListView.setStyle("-fx-control-inner-background: #18181b");
         followersListView.setStyle("-fx-control-inner-background: #18181b");
         followingListView.setStyle("-fx-control-inner-background: #18181b");
+
+        publishButton.disableProperty().bind(
+                Bindings.isEmpty(newTootArea.textProperty())
+        );
 
         showStatusList();
         showFollowersList();
@@ -228,5 +236,15 @@ public class MainController {
         displayNameLabel.setText(account.getDisplayName());
     }
 
+    public void publishToot() {
+        String toot = newTootArea.getText();
+        try {
+            BusinessLogic.postStatus(toot);
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+        newTootArea.clear();
+        showStatusList();
+    }
 
 }

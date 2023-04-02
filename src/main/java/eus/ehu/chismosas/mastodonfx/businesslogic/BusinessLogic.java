@@ -62,4 +62,13 @@ public class BusinessLogic {
         var request = client.accounts().getAccount(userID);
         return request.execute();
     }
+
+    /**
+     * Posts a status with the current user token
+     * @param status Text of the status
+     */
+    public static void postStatus(String status) throws BigBoneRequestException {
+        var request = client.statuses().postStatus(status);
+        request.execute();
+    }
 }
