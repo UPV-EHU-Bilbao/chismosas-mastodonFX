@@ -88,6 +88,8 @@ public class MainController {
      */
     @FXML
     void initialize() {
+        BusinessLogic.mainController = this;
+
         tootListView = new ListView<>();
         followersListView = new ListView<>();
         followingListView = new ListView<>();

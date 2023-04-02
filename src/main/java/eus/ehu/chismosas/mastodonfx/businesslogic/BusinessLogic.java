@@ -1,5 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
+import eus.ehu.chismosas.mastodonfx.presentation.MainController;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
@@ -17,6 +18,8 @@ public class BusinessLogic {
     private static final MastodonClient client = new MastodonClient.Builder("mastodon.social")
             .accessToken(System.getenv("TOKEN"))
             .build();
+
+    public static MainController mainController;
 
 
     /**
@@ -69,6 +72,24 @@ public class BusinessLogic {
      */
     public static void postStatus(String status) throws BigBoneRequestException {
         var request = client.statuses().postStatus(status);
+        request.execute();
+    }
+
+    /**
+     * Marks a status as favourite
+     * @param id Id of the status to favourite
+     */
+    public static void favouriteStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().favouriteStatus(id);
+        request.execute();
+    }
+
+    /**
+     * Unfavourites a status
+     * @param id Id of the status to unfavourite
+     */
+    public static void unfavouriteStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().unfavouriteStatus(id);
         request.execute();
     }
 }

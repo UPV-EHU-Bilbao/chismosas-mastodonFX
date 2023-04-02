@@ -1,5 +1,7 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
+import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,6 +16,7 @@ import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * This class is used to update and show the status information
@@ -27,6 +30,8 @@ public class StatusCell extends ListCell<Status> {
     static final DateTimeFormatter timeFormatterYear = DateTimeFormatter.ofPattern("MMMM d y", Locale.ENGLISH);
 
     private FXMLLoader loader;
+
+    private Status status;
 
     @FXML
     private ImageView avatar;
@@ -77,6 +82,7 @@ public class StatusCell extends ListCell<Status> {
     @Override
     protected void updateItem(Status item, boolean empty) {
         super.updateItem(item, empty);
+        status = item;
         if (empty || item == null) {
             setGraphic(null);
             setText(null);
@@ -94,21 +100,45 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
-        content.getEngine().loadContent(item.getContent());
-        setDate(item.getCreatedAt());
-
         Account account = item.getAccount();
-        assert account != null;
-        displayName.setText(account.getDisplayName());
-        userName.setText("@" + account.getUsername());
-        avatar.setImage(new Image(account.getAvatar()));
 
-        like.setText(String.valueOf(item.getFavouritesCount()));
-        retweet.setText(String.valueOf(item.getReblogsCount()));
-        comment.setText(String.valueOf(item.getRepliesCount()));
+        // To ensure this gets run on the JavaFX thread
+        Platform.runLater(() -> {
+            content.getEngine().loadContent(item.getContent());
+            setDate(item.getCreatedAt());
 
-        setText(null);
-        setGraphic(loader.getRoot());
+
+            assert account != null;
+            displayName.setText(account.getDisplayName());
+            userName.setText("@" + account.getUsername());
+            avatar.setImage(new Image(account.getAvatar()));
+
+            like.setText(String.valueOf(item.getFavouritesCount()));
+            retweet.setText(String.valueOf(item.getReblogsCount()));
+            comment.setText(String.valueOf(item.getRepliesCount()));
+
+            setText(null);
+            setGraphic(loader.getRoot());
+        });
+
+    }
+
+    @FXML
+    private void onLike() {
+        try {
+            if (status.isFavourited()) {
+                likeBtn.setOpacity(0.5);
+                BusinessLogic.unfavouriteStatus(status.getId());
+            } else {
+                likeBtn.setOpacity(1);
+                BusinessLogic.favouriteStatus(status.getId());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        CompletableFuture.runAsync(BusinessLogic.mainController::showStatusList);
+        // TODO update only the required status
     }
 
     private void setDate(String createdAt) {
