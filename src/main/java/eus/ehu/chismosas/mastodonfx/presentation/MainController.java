@@ -249,4 +249,23 @@ public class MainController {
         showStatusList();
     }
 
+    /**
+     * Requests the status with the given id and updates it in the list
+     * @param id the id of the status to update
+     */
+    public void updateStatus(String id) {
+        var iterator = tootListView.getItems().listIterator();
+        while (iterator.hasNext()) {
+            var status = iterator.next();
+            if (status.getId().equals(id)) {
+                try {
+                    var updatedStatus = BusinessLogic.getStatus(id);
+                    iterator.set(updatedStatus);
+                } catch (BigBoneRequestException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
 }

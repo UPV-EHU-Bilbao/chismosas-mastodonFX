@@ -137,8 +137,7 @@ public class StatusCell extends ListCell<Status> {
             throw new RuntimeException(e);
         }
 
-        CompletableFuture.runAsync(BusinessLogic.mainController::showStatusList);
-        // TODO update only the required status
+        CompletableFuture.runAsync(() -> BusinessLogic.mainController.updateStatus(status.getId()));
     }
 
     private void setDate(String createdAt) {

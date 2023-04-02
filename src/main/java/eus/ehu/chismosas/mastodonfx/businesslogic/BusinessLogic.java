@@ -92,4 +92,14 @@ public class BusinessLogic {
         var request = client.statuses().unfavouriteStatus(id);
         request.execute();
     }
+
+    /**
+     * Gets a status
+     * @param id Id of the status to get
+     * @return Status with the given id
+     */
+    public static Status getStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().getStatus(id);
+        return request.execute();
+    }
 }
