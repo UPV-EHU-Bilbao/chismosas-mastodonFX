@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
+import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -86,7 +87,6 @@ public class StatusCell extends ListCell<Status> {
         if (empty || item == null) {
             setGraphic(null);
             setText(null);
-
             return;
         }
 
@@ -114,6 +114,10 @@ public class StatusCell extends ListCell<Status> {
             avatar.setImage(new Image(account.getAvatar()));
 
             like.setText(String.valueOf(item.getFavouritesCount()));
+            if (item.isFavourited())
+                likeBtn.setOpacity(1);
+            else
+                likeBtn.setOpacity(0.5);
             retweet.setText(String.valueOf(item.getReblogsCount()));
             comment.setText(String.valueOf(item.getRepliesCount()));
 
@@ -128,16 +132,35 @@ public class StatusCell extends ListCell<Status> {
         try {
             if (status.isFavourited()) {
                 likeBtn.setOpacity(0.5);
-                BusinessLogic.unfavouriteStatus(status.getId());
+                like.setText(String.valueOf(Integer.parseInt(like.getText()) - 1));
+                CompletableFuture.runAsync(this::unlike);
             } else {
                 likeBtn.setOpacity(1);
-                BusinessLogic.favouriteStatus(status.getId());
+                like.setText(String.valueOf(Integer.parseInt(like.getText()) + 1));
+                CompletableFuture.runAsync(this::like);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        CompletableFuture.runAsync(() -> BusinessLogic.mainController.updateStatus(status.getId()));
+    }
+
+    private void like() {
+        try {
+            BusinessLogic.favouriteStatus(status.getId());
+            BusinessLogic.mainController.updateStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void unlike() {
+        try {
+            BusinessLogic.unfavouriteStatus(status.getId());
+            BusinessLogic.mainController.updateStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setDate(String createdAt) {
