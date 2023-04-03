@@ -3,7 +3,6 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -14,14 +13,15 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
-import java.util.List;
-
 /**
  * This class is used to control the main view of the application
  *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainController {
+    private static MainController instance;
+    public static MainController getInstance() {return instance;}
+
     private final String userID = System.getenv("ID");
 
     @FXML
@@ -77,10 +77,8 @@ public class MainController {
 
 
     private ListView<Status> tootListView;
-
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
-
     private DropShadow dropShadow;
 
     /**
@@ -88,43 +86,29 @@ public class MainController {
      */
     @FXML
     void initialize() {
-        BusinessLogic.mainController = this;
+        instance = this;
 
         tootListView = new ListView<>();
-        followersListView = new ListView<>();
+        tootListView.setCellFactory(param -> new StatusCell());
         followingListView = new ListView<>();
+        followingListView.setCellFactory(param -> new AccountCell());
+        followersListView = new ListView<>();
+        followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
 
-
         tootListView.setStyle("-fx-control-inner-background: #18181b");
-        followersListView.setStyle("-fx-control-inner-background: #18181b");
         followingListView.setStyle("-fx-control-inner-background: #18181b");
+        followersListView.setStyle("-fx-control-inner-background: #18181b");
 
         publishButton.disableProperty().bind(
                 Bindings.isEmpty(newTootArea.textProperty())
         );
 
-        showStatusList();
-        showFollowersList();
-        showFollowingList();
+        updateTootListView();
+        updateFollowingListView();
+        updateFollowersListView();
         mainPane.setCenter(tootListView);
         setProfile();
-    }
-
-    /**
-     * switches the scene to the followers list when the followers button is pressed
-     */
-    @FXML
-    void mouseFollowers() {
-        sceneSwitch("Followers");
-    }
-
-    /**
-     * switches the scene to the following list when the following button is pressed
-     */
-    @FXML
-    void mouseFollowing() {
-        sceneSwitch("Following");
     }
 
     /**
@@ -136,29 +120,45 @@ public class MainController {
     }
 
     /**
+     * switches the scene to the following list when the following button is pressed
+     */
+    @FXML
+    void mouseFollowing() {
+        sceneSwitch("Following");
+    }
+
+    /**
+     * switches the scene to the followers list when the followers button is pressed
+     */
+    @FXML
+    void mouseFollowers() {
+        sceneSwitch("Followers");
+    }
+
+
+    /**
      * changes the main scene's center to the asked scene
-     *
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
         switch (scene) {
-            case "Followers" -> {
-                mainPane.setCenter(followersListView);
-                followersBtn.setEffect(dropShadow);
+            case "Toots" -> {
+                profileBtn.setEffect(dropShadow);
                 followingBtn.setEffect(null);
-                profileBtn.setEffect(null);
+                followersBtn.setEffect(null);
+                mainPane.setCenter(tootListView);
             }
             case "Following" -> {
-                mainPane.setCenter(followingListView);
+                profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
-                profileBtn.setEffect(null);
+                mainPane.setCenter(followingListView);
             }
-            case "Toots" -> {
-                mainPane.setCenter(tootListView);
-                profileBtn.setEffect(dropShadow);
-                followersBtn.setEffect(null);
+            case "Followers" -> {
+                profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
+                followersBtn.setEffect(dropShadow);
+                mainPane.setCenter(followersListView);
             }
         }
     }
@@ -166,15 +166,15 @@ public class MainController {
     /**
      * gets the statuses of the user and shows them in a list
      */
-    public void showStatusList() {
-        List<Status> statusList;
+    public void updateTootListView() {
         try {
-            statusList = BusinessLogic.getStatuses(userID);
+            var statusList = BusinessLogic.getStatuses(userID);
 
             // Process reblogs and filters out toots that we cannot display yet
             var statusIterator = statusList.listIterator();
             while (statusIterator.hasNext()) {
                 Status status = statusIterator.next();
+
                 if (status.getReblog() != null) {
                     status = status.getReblog();
                     statusIterator.set(status);
@@ -186,8 +186,8 @@ public class MainController {
 
             var items = FXCollections.observableArrayList(statusList);
             tootListView.setItems(items);
-            tootListView.setCellFactory(param -> new StatusCell());
-        } catch (BigBoneRequestException e) {
+        }
+        catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
@@ -195,30 +195,26 @@ public class MainController {
     /**
      * Gets the list of accounts that the user is following and shows it
      */
-    public void showFollowingList() {
-
+    public void updateFollowingListView() {
         try {
-            List<Account> accountList = BusinessLogic.getFollowing(userID);
-            ObservableList<Account> following = FXCollections.observableList(accountList);
+            var followingList = BusinessLogic.getFollowing(userID);
+            var following = FXCollections.observableList(followingList);
             followingListView.setItems(following);
-            followingListView.setCellFactory(param -> new AccountCell());
         } catch (BigBoneRequestException e) {
-            System.out.println("Could not get followings");
+            throw new RuntimeException(e);
         }
     }
 
     /**
      * Gets the list of accounts that are following the user and shows it
      */
-    public void showFollowersList() {
-
+    public void updateFollowersListView() {
         try {
-            List<Account> accountList = BusinessLogic.getFollowers(userID);
-            ObservableList<Account> followers = FXCollections.observableList(accountList);
+            var followersList = BusinessLogic.getFollowers(userID);
+            var followers = FXCollections.observableList(followersList);
             followersListView.setItems(followers);
-            followersListView.setCellFactory(param -> new AccountCell());
         } catch (BigBoneRequestException e) {
-            System.out.println("Could not get followers");
+            throw new RuntimeException(e);
         }
     }
 
@@ -226,27 +222,29 @@ public class MainController {
      * Sets the profile picture, username and display name of the user
      */
     public void setProfile() {
-        Account account;
         try {
-            account = BusinessLogic.getAccount(userID);
-        } catch (BigBoneRequestException e) {
+            var account = BusinessLogic.getAccount(userID);
+            profilePic.setImage(new Image(account.getAvatar(), true));
+            userNameLabel.setText("@" + account.getUsername());
+            displayNameLabel.setText(account.getDisplayName());
+        }
+        catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
-
-        profilePic.setImage(new Image(account.getAvatar()));
-        userNameLabel.setText("@" + account.getUsername());
-        displayNameLabel.setText(account.getDisplayName());
     }
 
+    /**
+     * Publishes the toot written in the text area
+     */
     public void publishToot() {
         String toot = newTootArea.getText();
         try {
             BusinessLogic.postStatus(toot);
+            newTootArea.clear();
+            updateTootListView();
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
-        newTootArea.clear();
-        showStatusList();
     }
 
     /**
