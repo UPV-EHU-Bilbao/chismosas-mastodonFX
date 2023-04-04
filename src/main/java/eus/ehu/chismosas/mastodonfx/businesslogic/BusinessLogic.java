@@ -68,10 +68,10 @@ public class BusinessLogic {
 
     /**
      * Posts a status with the current user token
-     * @param status Text of the status
+     * @param content Content of the status
      */
-    public static void postStatus(String status) throws BigBoneRequestException {
-        var request = client.statuses().postStatus(status);
+    public static void postStatus(String content) throws BigBoneRequestException {
+        var request = client.statuses().postStatus(content);
         request.execute();
     }
 

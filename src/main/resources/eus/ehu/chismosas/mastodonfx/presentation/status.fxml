@@ -68,7 +68,7 @@
         </GridPane.margin>
         <Image url="@icons/bookmark.png" />
     </ImageView>
-    <ImageView fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" onMouseClicked="#onLike" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" onMouseClicked="#onLikeBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>
