@@ -1,6 +1,5 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
-import eus.ehu.chismosas.mastodonfx.presentation.MainController;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
@@ -18,8 +17,6 @@ public class BusinessLogic {
     private static final MastodonClient client = new MastodonClient.Builder("mastodon.social")
             .accessToken(System.getenv("TOKEN"))
             .build();
-
-    public static MainController mainController;
 
 
     /**
