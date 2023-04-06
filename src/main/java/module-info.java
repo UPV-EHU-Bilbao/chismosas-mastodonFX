@@ -3,6 +3,7 @@ module eus.ehu.chismosas.mastodonfx {
     requires javafx.fxml;
     requires javafx.web;
     requires bigbone;
+    requires org.jsoup;
 
 
     exports eus.ehu.chismosas.mastodonfx.presentation;

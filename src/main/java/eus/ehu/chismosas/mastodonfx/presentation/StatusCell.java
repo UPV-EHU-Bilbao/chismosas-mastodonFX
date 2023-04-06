@@ -1,7 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -9,6 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
+import org.jsoup.Jsoup;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
