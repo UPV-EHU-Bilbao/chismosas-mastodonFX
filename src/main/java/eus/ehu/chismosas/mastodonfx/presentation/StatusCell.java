@@ -7,8 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -38,7 +40,10 @@ public class StatusCell extends ListCell<Status> {
     private ImageView avatar;
 
     @FXML
-    private WebView content;
+    private TextFlow content;
+
+    @FXML
+    private Text contentText;
 
     @FXML
     private Label date;
@@ -105,7 +110,9 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
-        content.getEngine().loadContent(status.getContent());
+        Document contentDoc = Jsoup.parse(status.getContent());
+        contentText.setText(contentDoc.text());
+
         date.setText(getPrettyDate(status.getCreatedAt()));
 
         var account = status.getAccount();
