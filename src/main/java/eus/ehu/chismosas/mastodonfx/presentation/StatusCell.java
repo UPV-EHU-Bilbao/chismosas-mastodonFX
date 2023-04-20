@@ -3,14 +3,14 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -32,9 +32,6 @@ public class StatusCell extends ListCell<Status> {
     static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.ENGLISH);
     static final DateTimeFormatter timeFormatterYear = DateTimeFormatter.ofPattern("MMMM d y", Locale.ENGLISH);
 
-    private FXMLLoader loader;
-
-    private Status status;
 
     @FXML
     private ImageView avatar;
@@ -75,7 +72,14 @@ public class StatusCell extends ListCell<Status> {
     @FXML
     private ImageView retweetBtn;
 
+
+    private Status status;
+    private Account account;
     private boolean isLiked;
+    private long likes;
+    private boolean isReblogged;
+    private long reblogs;
+    private Parent root;
 
 
     /**
@@ -87,7 +91,6 @@ public class StatusCell extends ListCell<Status> {
     @Override
     protected void updateItem(Status item, boolean empty) {
         super.updateItem(item, empty);
-        status = item;
 
         if (empty || item == null) {
             setGraphic(null);
@@ -95,13 +98,19 @@ public class StatusCell extends ListCell<Status> {
             return;
         }
 
+        status = item;
+        account = status.getAccount();
         isLiked = status.isFavourited();
+        likes = status.getFavouritesCount();
+        isReblogged = status.isReblogged();
+        reblogs = status.getReblogsCount();
 
-        if (loader == null) {
-            loader = new FXMLLoader(getClass().getResource("status.fxml"));
+        if (root == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("status.fxml"));
             loader.setController(this);
             try {
                 loader.load();
+                root = loader.getRoot();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -114,39 +123,35 @@ public class StatusCell extends ListCell<Status> {
 
         date.setText(getPrettyDate(status.getCreatedAt()));
 
-        var account = status.getAccount();
-        assert account != null;
         displayName.setText(account.getDisplayName());
         userName.setText("@" + account.getUsername());
         avatar.setImage(new Image(account.getAvatar()));
 
-        like.setText(String.valueOf(status.getFavouritesCount()));
-        if (status.isFavourited()) likeBtn.setOpacity(1);
+        like.setText(String.valueOf(likes));
+        if (isLiked) likeBtn.setOpacity(1);
         else likeBtn.setOpacity(0.5);
-        retweet.setText(String.valueOf(status.getReblogsCount()));
+        retweet.setText(String.valueOf(reblogs));
         comment.setText(String.valueOf(status.getRepliesCount()));
 
         setText(null);
-        setGraphic(loader.getRoot());
+        setGraphic(root);
 
     }
 
     @FXML
     private void onLikeBtn() {
-        try {
-            if (isLiked) {
-                likeBtn.setOpacity(0.5);
-                like.setText(String.valueOf(Integer.parseInt(like.getText()) - 1));
-                CompletableFuture.runAsync(this::unlike);
-                isLiked = false;
-            } else {
-                likeBtn.setOpacity(1);
-                like.setText(String.valueOf(Integer.parseInt(like.getText()) + 1));
-                CompletableFuture.runAsync(this::like);
-                isLiked = true;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+        if (isLiked) {
+            likeBtn.setOpacity(0.5);
+            like.setText(String.valueOf(--likes));
+            CompletableFuture.runAsync(this::unlike);
+            isLiked = false;
+        }
+        else {
+            likeBtn.setOpacity(1);
+            like.setText(String.valueOf(++likes));
+            CompletableFuture.runAsync(this::like);
+            isLiked = true;
         }
 
     }
@@ -175,7 +180,7 @@ public class StatusCell extends ListCell<Status> {
     private String getPrettyDate(String createdAt) {
         var creationDateTime = timeParser.parse(createdAt, OffsetDateTime::from);
         var now = OffsetDateTime.now();
-        Duration timeSinceCreation = Duration.between(creationDateTime, now);
+        var timeSinceCreation = Duration.between(creationDateTime, now);
 
         if (timeSinceCreation.toSeconds() < 60)
             return(timeSinceCreation.getSeconds() + "s ago");
@@ -189,5 +194,6 @@ public class StatusCell extends ListCell<Status> {
             return(timeFormatter.format(creationDateTime));
         else
             return(timeFormatterYear.format(creationDateTime));
+
     }
 }
