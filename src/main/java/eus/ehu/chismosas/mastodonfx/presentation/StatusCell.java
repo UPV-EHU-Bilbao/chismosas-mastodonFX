@@ -1,14 +1,16 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebView;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -38,7 +40,7 @@ public class StatusCell extends ListCell<Status> {
     private ImageView avatar;
 
     @FXML
-    private WebView content;
+    private Text contentText;
 
     @FXML
     private Label date;
@@ -105,7 +107,11 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
-        content.getEngine().loadContent(status.getContent());
+        Document parsedContent = Jsoup.parse(status.getContent());
+        contentText.setText(parsedContent.text());
+//        List<Element> children = contentDoc.children();
+//        List<Element> children = contentDoc.getAllElements();
+
         date.setText(getPrettyDate(status.getCreatedAt()));
 
         var account = status.getAccount();
