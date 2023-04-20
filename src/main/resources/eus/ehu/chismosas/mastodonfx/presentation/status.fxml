@@ -102,7 +102,7 @@
             <Insets bottom="90.0" left="5.0" />
         </GridPane.margin>
     </ImageView>
-   <TextFlow fx:id="content" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+   <TextFlow maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
       <children>
          <Text fx:id="contentText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
             <font>

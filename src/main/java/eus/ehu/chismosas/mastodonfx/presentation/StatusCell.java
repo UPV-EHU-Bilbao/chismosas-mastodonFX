@@ -40,9 +40,6 @@ public class StatusCell extends ListCell<Status> {
     private ImageView avatar;
 
     @FXML
-    private TextFlow content;
-
-    @FXML
     private Text contentText;
 
     @FXML
@@ -110,8 +107,10 @@ public class StatusCell extends ListCell<Status> {
             }
         }
 
-        Document contentDoc = Jsoup.parse(status.getContent());
-        contentText.setText(contentDoc.text());
+        Document parsedContent = Jsoup.parse(status.getContent());
+        contentText.setText(parsedContent.text());
+//        List<Element> children = contentDoc.children();
+//        List<Element> children = contentDoc.getAllElements();
 
         date.setText(getPrettyDate(status.getCreatedAt()));
 
