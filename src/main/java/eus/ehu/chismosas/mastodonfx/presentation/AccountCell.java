@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
 
@@ -63,7 +62,7 @@ public class AccountCell extends ListCell<Account> {
 
         displayName.setText(item.getDisplayName());
         userName.setText("@" + item.getUsername());
-        avatar.setImage(new Image(item.getAvatar()));
+        avatar.setImage(ImageCache.get(item.getAvatar()));
 
         setText(null);
         setGraphic(loader.getRoot());

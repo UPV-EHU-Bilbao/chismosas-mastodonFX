@@ -125,7 +125,7 @@ public class StatusCell extends ListCell<Status> {
 
         displayName.setText(account.getDisplayName());
         userName.setText("@" + account.getUsername());
-        avatar.setImage(new Image(account.getAvatar()));
+        avatar.setImage(ImageCache.get(account.getAvatar()));
 
         like.setText(String.valueOf(likes));
         if (isLiked) likeBtn.setOpacity(1);

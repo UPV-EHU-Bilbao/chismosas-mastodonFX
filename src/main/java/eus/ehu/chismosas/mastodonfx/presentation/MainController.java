@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import social.bigbone.api.entity.Account;
@@ -224,7 +223,7 @@ public class MainController {
     public void setProfile() {
         try {
             var account = BusinessLogic.getAccount(userID);
-            profilePic.setImage(new Image(account.getAvatar(), true));
+            profilePic.setImage(ImageCache.get(account.getAvatar()));
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
         }
