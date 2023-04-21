@@ -1,10 +1,16 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import eus.ehu.chismosas.mastodonfx.domain.AccountLoginInfo;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -14,10 +20,52 @@ import java.util.List;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class BusinessLogic {
-    private static final MastodonClient client = new MastodonClient.Builder("mastodon.social")
-            .accessToken(System.getenv("TOKEN"))
-            .build();
 
+    private static MastodonClient client;
+    private static List<AccountLoginInfo> accountLogins;
+
+    private static String id;
+
+    public static List<AccountLoginInfo> getAccountLogins() {return accountLogins;}
+    public static String getUserId() {return id;}
+
+
+    public static void loadAccountLogins() throws IOException {
+        Gson gson = new Gson();
+
+        var json = new FileReader("accountlogins.json");
+        var listType = new TypeToken<List<AccountLoginInfo>>() {};
+
+        accountLogins = gson.fromJson(json, listType);
+
+        json.close();
+    }
+
+    public static void addAccountLogin(String token, String id) {
+        accountLogins.add(new AccountLoginInfo(token, id));
+    }
+
+    public static void removeAccountLogin(AccountLoginInfo account) {
+        accountLogins.remove(account);
+    }
+
+    public static void login(AccountLoginInfo account) {
+        client = new MastodonClient.Builder("mastodon.social")
+                .accessToken(account.token)
+                .build();
+
+        id = account.id;
+    }
+
+    public static void saveAccountLogins() throws IOException {
+        Gson gson = new Gson();
+
+        var writer = new FileWriter("accountlogins.json");
+
+        gson.toJson(accountLogins, writer);
+
+        writer.close();
+    }
 
     /**
      * Get statuses from a user
