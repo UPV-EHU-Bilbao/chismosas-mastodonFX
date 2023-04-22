@@ -35,7 +35,7 @@ public class BusinessLogic {
         try (var json = new FileReader("accountlogins.json")) {
             var listType = new TypeToken<Map<String, String>>() {};
             accountLogins = gson.fromJson(json, listType);
-        }
+        } catch (FileNotFoundException ignored) {}
         finally {
             if (accountLogins == null)
                 accountLogins = new HashMap<>();
