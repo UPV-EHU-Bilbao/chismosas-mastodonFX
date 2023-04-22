@@ -8,9 +8,12 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * This class is used to control the main view of the application
@@ -76,6 +79,7 @@ public class MainController {
 
 
     private ListView<Status> tootListView;
+    private Pageable<Status> homeTimeline;
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
     private DropShadow dropShadow;
@@ -103,11 +107,19 @@ public class MainController {
                 Bindings.isEmpty(newTootArea.textProperty())
         );
 
-        updateTootListView();
+        showAccountToots();
         updateFollowingListView();
         updateFollowersListView();
         mainPane.setCenter(tootListView);
         setProfile();
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                homeTimeline = BusinessLogic.getHomeTimeline();
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
@@ -115,7 +127,7 @@ public class MainController {
      */
     @FXML
     void mouseProfile() {
-        sceneSwitch("Toots");
+        sceneSwitch("Profile");
     }
 
     /**
@@ -134,6 +146,10 @@ public class MainController {
         sceneSwitch("Followers");
     }
 
+    @FXML
+    void mouseHome() {
+        sceneSwitch("HomeTimeline");
+    }
 
     /**
      * changes the main scene's center to the asked scene
@@ -141,10 +157,20 @@ public class MainController {
      */
     private void sceneSwitch(String scene) {
         switch (scene) {
-            case "Toots" -> {
+            case "Profile" -> {
                 profileBtn.setEffect(dropShadow);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
+
+                showAccountToots();
+                mainPane.setCenter(tootListView);
+            }
+            case "HomeTimeline" -> {
+                profileBtn.setEffect(null);
+                followingBtn.setEffect(null);
+                followersBtn.setEffect(null);
+
+                showHometimeline();
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
@@ -165,7 +191,7 @@ public class MainController {
     /**
      * gets the statuses of the user and shows them in a list
      */
-    public void updateTootListView() {
+    public void showAccountToots() {
         try {
             var statusList = BusinessLogic.getStatuses(userID);
 
@@ -189,6 +215,11 @@ public class MainController {
         catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void showHometimeline() {
+        var items = FXCollections.observableArrayList(homeTimeline.getPart());
+        tootListView.setItems(items);
     }
 
     /**
@@ -240,7 +271,7 @@ public class MainController {
         try {
             BusinessLogic.postStatus(toot);
             newTootArea.clear();
-            updateTootListView();
+            showAccountToots();
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }

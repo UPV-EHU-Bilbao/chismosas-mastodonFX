@@ -1,6 +1,7 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
 import social.bigbone.MastodonClient;
+import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -108,5 +109,10 @@ public class BusinessLogic {
     public static void unreblogStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().unreblogStatus(id);
         request.execute();
+    }
+
+    public static Pageable<Status> getHomeTimeline() throws BigBoneRequestException {
+        var request = client.timelines().getHomeTimeline();
+        return request.execute();
     }
 }
