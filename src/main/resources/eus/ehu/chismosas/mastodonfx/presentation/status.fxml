@@ -75,7 +75,7 @@
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onRetootBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>

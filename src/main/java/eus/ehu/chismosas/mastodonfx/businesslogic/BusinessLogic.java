@@ -99,4 +99,14 @@ public class BusinessLogic {
         var request = client.statuses().getStatus(id);
         return request.execute();
     }
+
+    public static void reblogStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().reblogStatus(id);
+        request.execute();
+    }
+
+    public static void unreblogStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().unreblogStatus(id);
+        request.execute();
+    }
 }
