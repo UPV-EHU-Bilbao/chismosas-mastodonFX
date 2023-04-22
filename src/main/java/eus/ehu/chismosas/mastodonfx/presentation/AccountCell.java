@@ -1,11 +1,16 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
+import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.Status;
+import social.bigbone.api.exception.BigBoneRequestException;
 
 /**
  * This class is used to update and show the account information
@@ -15,6 +20,7 @@ import social.bigbone.api.entity.Account;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class AccountCell extends ListCell<Account> {
+
 
     @FXML
     private ImageView avatar;
@@ -30,6 +36,9 @@ public class AccountCell extends ListCell<Account> {
 
     @FXML
     private Label userName;
+
+    @FXML
+    private Button followBtn;
 
     private FXMLLoader loader;
 
@@ -64,7 +73,19 @@ public class AccountCell extends ListCell<Account> {
         userName.setText("@" + item.getUsername());
         avatar.setImage(ImageCache.get(item.getAvatar()));
 
+
         setText(null);
         setGraphic(loader.getRoot());
     }
+    @FXML
+    void followAccount(ActionEvent event) {
+        try {
+            BusinessLogic.followAccount(getItem().getId());
+        } catch (BigBoneRequestException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

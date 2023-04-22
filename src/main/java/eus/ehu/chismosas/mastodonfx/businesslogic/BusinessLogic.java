@@ -1,7 +1,9 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
+import eus.ehu.chismosas.mastodonfx.presentation.AccountCell;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -97,6 +99,15 @@ public class BusinessLogic {
      */
     public static Status getStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().getStatus(id);
+        return request.execute();
+    }
+
+    public static AccountCell getInstance() {
+        return null;
+    }
+
+    public static Relationship followAccount(String id) throws BigBoneRequestException {
+        var request = client.accounts().followAccount(id);
         return request.execute();
     }
 }
