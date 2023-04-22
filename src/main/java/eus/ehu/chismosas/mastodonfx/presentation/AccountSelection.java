@@ -9,11 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import social.bigbone.api.entity.Account;
-import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class AccountSelection {
 
@@ -29,19 +26,8 @@ public class AccountSelection {
     private void initialize() {
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
-        Set<Account> choosableAccounts = new HashSet<>();
-        for (String id: BusinessLogic.getAccountLoginIds()) {
-            try {
-                choosableAccounts.add(BusinessLogic.getAccount(id));
-            }
-            catch (BigBoneRequestException e) {
-                System.out.println("Error getting account " + id);
-            }
-
-        }
-
         accountsList.setCellFactory(param -> new AccountSelectionCell());
-        accountsList.getItems().setAll(choosableAccounts);
+        accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
     }
 
@@ -49,7 +35,7 @@ public class AccountSelection {
     private void chooseAccount() {
         var account = accountsList.getSelectionModel().getSelectedItem();
 
-        BusinessLogic.login(account.getId());
+        BusinessLogic.login(account);
         var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load());
