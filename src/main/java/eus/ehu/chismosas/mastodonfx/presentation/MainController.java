@@ -155,26 +155,28 @@ public class MainController {
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
+        String id = StatusCell.getInstance().getAccountID();
         switch (scene) {
             case "Toots" -> {
                 profileBtn.setEffect(dropShadow);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
                 mainPane.setCenter(tootListView);
+                updateTootListView(id);
             }
             case "Following" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
                 mainPane.setCenter(followingListView);
-                updateFollowingListView(userID);
+                updateFollowingListView(id);
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
                 mainPane.setCenter(followersListView);
-                updateFollowersListView(userID);
+                updateFollowersListView(id);
             }
         }
     }
