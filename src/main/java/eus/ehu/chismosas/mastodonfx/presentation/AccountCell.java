@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
-import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 /**
@@ -20,7 +19,6 @@ import social.bigbone.api.exception.BigBoneRequestException;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class AccountCell extends ListCell<Account> {
-
 
     @FXML
     private ImageView avatar;
@@ -73,19 +71,42 @@ public class AccountCell extends ListCell<Account> {
         userName.setText("@" + item.getUsername());
         avatar.setImage(ImageCache.get(item.getAvatar()));
 
-
         setText(null);
         setGraphic(loader.getRoot());
+
+        try {
+        if(BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+            followBtn.setText("Unfollow");
+        }
+        else{
+            followBtn.setText("Follow");
+        }
+    } catch (BigBoneRequestException e) {
+        e.printStackTrace();
     }
+    }
+
+    /**
+     * Follow the account on which the button is clicked
+     * @param event .
+     */
     @FXML
     void followAccount(ActionEvent event) {
+        String id = getItem().getId();
         try {
-            BusinessLogic.followAccount(getItem().getId());
+            if(!BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+                BusinessLogic.followAccount(id);
+                followBtn.setText("Unfollow");
+            }
+            else{
+                BusinessLogic.unfollowAccount(id);
+                followBtn.setText("Follow");
+            }
+
         } catch (BigBoneRequestException e) {
             e.printStackTrace();
         }
     }
-
 
 
 }

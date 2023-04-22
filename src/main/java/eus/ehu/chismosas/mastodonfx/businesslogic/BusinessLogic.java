@@ -1,12 +1,12 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
-import eus.ehu.chismosas.mastodonfx.presentation.AccountCell;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,12 +102,38 @@ public class BusinessLogic {
         return request.execute();
     }
 
-    public static AccountCell getInstance() {
-        return null;
-    }
-
+    /**
+     * Follows the account to which the id belongs
+     * @param id of the account to follow
+     * @return relationship the user doing the action with the account following
+     * @throws BigBoneRequestException
+     */
     public static Relationship followAccount(String id) throws BigBoneRequestException {
         var request = client.accounts().followAccount(id);
+        return request.execute();
+    }
+
+    /**
+     * Unfollows the account to which the id belongs
+     * @param id of the account to unfollow
+     * @return relationship the user doing the action with the account unfollowing
+     * @throws BigBoneRequestException
+     */
+    public static Relationship unfollowAccount(String id) throws BigBoneRequestException{
+        var request = client.accounts().unfollowAccount(id);
+        return request.execute();
+    }
+
+    /**
+     * Gets the relationship with the acount given
+     * @param id of the account
+     * @return a list with the relationships
+     * @throws BigBoneRequestException
+     */
+    public static List<Relationship> getRelationShip(String id) throws BigBoneRequestException{
+        List<String> ids = new ArrayList<>();
+        ids.add(id);
+        var request = client.accounts().getRelationships(ids);
         return request.execute();
     }
 }
