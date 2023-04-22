@@ -1,5 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
+import javafx.scene.image.Image;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Relationship;
@@ -136,4 +137,5 @@ public class BusinessLogic {
         var request = client.accounts().getRelationships(ids);
         return request.execute();
     }
+
 }

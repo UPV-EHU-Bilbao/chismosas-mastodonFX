@@ -3,6 +3,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -11,6 +12,9 @@ import javafx.scene.layout.BorderPane;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
+
+import static eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic.getAccount;
+
 
 /**
  * This class is used to control the main view of the application
@@ -22,6 +26,8 @@ public class MainController {
     public static MainController getInstance() {return instance;}
 
     private final String userID = System.getenv("ID");
+
+    private String id;
 
     @FXML
     private ToolBar bookmarksBtn;
@@ -74,6 +80,11 @@ public class MainController {
     @FXML
     private Button publishButton;
 
+    @FXML
+    private Button followBtn;
+
+
+
 
     private ListView<Status> tootListView;
     private ListView<Account> followersListView;
@@ -103,11 +114,12 @@ public class MainController {
                 Bindings.isEmpty(newTootArea.textProperty())
         );
 
-        updateTootListView();
-        updateFollowingListView();
-        updateFollowersListView();
+
+        updateTootListView(userID);
+        updateFollowingListView(userID);
+        updateFollowersListView(userID);
         mainPane.setCenter(tootListView);
-        setProfile();
+        setProfile(userID);
     }
 
     /**
@@ -135,6 +147,9 @@ public class MainController {
     }
 
 
+
+
+
     /**
      * changes the main scene's center to the asked scene
      * @param scene the scene to be shown
@@ -152,14 +167,14 @@ public class MainController {
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
                 mainPane.setCenter(followingListView);
-                updateFollowingListView();
+                updateFollowingListView(userID);
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
                 mainPane.setCenter(followersListView);
-                updateFollowersListView();
+                updateFollowersListView(userID);
             }
         }
     }
@@ -167,9 +182,9 @@ public class MainController {
     /**
      * gets the statuses of the user and shows them in a list
      */
-    public void updateTootListView() {
+    public void updateTootListView(String id) {
         try {
-            var statusList = BusinessLogic.getStatuses(userID);
+            var statusList = BusinessLogic.getStatuses(id);
 
             // Process reblogs and filters out toots that we cannot display yet
             var statusIterator = statusList.listIterator();
@@ -189,16 +204,16 @@ public class MainController {
             tootListView.setItems(items);
         }
         catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error getting statuses, add your token to the environment variables", e);
         }
     }
 
     /**
      * Gets the list of accounts that the user is following and shows it
      */
-    public void updateFollowingListView() {
+    public void updateFollowingListView(String id) {
         try {
-            var followingList = BusinessLogic.getFollowing(userID);
+            var followingList = BusinessLogic.getFollowing(id);
             var following = FXCollections.observableList(followingList);
             followingListView.setItems(following);
         } catch (BigBoneRequestException e) {
@@ -209,9 +224,9 @@ public class MainController {
     /**
      * Gets the list of accounts that are following the user and shows it
      */
-    public void updateFollowersListView() {
+    public void updateFollowersListView(String id) {
         try {
-            var followersList = BusinessLogic.getFollowers(userID);
+            var followersList = BusinessLogic.getFollowers(id);
             var followers = FXCollections.observableList(followersList);
             followersListView.setItems(followers);
         } catch (BigBoneRequestException e) {
@@ -222,9 +237,9 @@ public class MainController {
     /**
      * Sets the profile picture, username and display name of the user
      */
-    public void setProfile() {
+    public void setProfile(String id) {
         try {
-            var account = BusinessLogic.getAccount(userID);
+            var account = getAccount(id);
             profilePic.setImage(ImageCache.get(account.getAvatar()));
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
@@ -242,7 +257,7 @@ public class MainController {
         try {
             BusinessLogic.postStatus(toot);
             newTootArea.clear();
-            updateTootListView();
+            updateTootListView(userID);
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -266,8 +281,39 @@ public class MainController {
             }
         }
     }
+    /**
+     * Changes the profile to the given id
+     * @param id the id of the account to update
+     */
+    public void goProfile(String id) throws BigBoneRequestException {
+        setProfile(id);
+        updateTootListView(id);
+        updateFollowersListView(id);
+        updateFollowingListView(id);
+        try {
+            if(BusinessLogic.getRelationShip(id).get(0).isFollowing()){
+                followBtn.setText("Unfollow");
+            }
+            else{
+                followBtn.setText("Follow");
+            }
+        } catch (BigBoneRequestException e) {
+            e.printStackTrace();
+        }
 
-
-
+    }
+    @FXML
+    void followAccount(ActionEvent event) throws BigBoneRequestException {
+        String id = StatusCell.getInstance().getAccountID();
+        if(!BusinessLogic.getRelationShip(id).get(0).isFollowing()){
+            BusinessLogic.followAccount(id);
+            followBtn.setText("Unfollow");
+        }
+        else{
+            BusinessLogic.unfollowAccount(id);
+            followBtn.setText("Follow");
+            MainController.getInstance().updateFollowingListView(id);
+        }
+    }
 
 }

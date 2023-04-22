@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
+import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -19,6 +20,10 @@ import social.bigbone.api.exception.BigBoneRequestException;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class AccountCell extends ListCell<Account> {
+
+
+    private static AccountCell instance;
+    public static AccountCell getInstance() {return instance;}
 
     @FXML
     private ImageView avatar;
@@ -49,6 +54,7 @@ public class AccountCell extends ListCell<Account> {
      */
     @Override
     protected void updateItem(Account item, boolean empty) {
+        instance = this;
         super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
@@ -101,13 +107,22 @@ public class AccountCell extends ListCell<Account> {
             else{
                 BusinessLogic.unfollowAccount(id);
                 followBtn.setText("Follow");
-                MainController.getInstance().updateFollowingListView();
+                MainController.getInstance().updateFollowingListView(id);
             }
 
         } catch (BigBoneRequestException e) {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Method to go to the profile of the account
+     * @param mouseEvent
+     * @throws BigBoneRequestException
+     */
+    @FXML
+    public void goAccount(javafx.scene.input.MouseEvent mouseEvent) throws BigBoneRequestException {
+        String id = getItem().getId();
+        MainController.getInstance().goProfile(id);
+    }
 
 }

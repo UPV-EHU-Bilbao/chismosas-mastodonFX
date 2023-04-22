@@ -189,6 +189,7 @@
             </columnConstraints>
             <rowConstraints>
                <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
             </rowConstraints>
@@ -203,21 +204,22 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="displayNameLabel" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="displayNameLabel" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="25.0" prefWidth="67.0" text="Follow" GridPane.columnIndex="4" GridPane.rowIndex="1" />
          </GridPane>
       </GridPane>
    </top>

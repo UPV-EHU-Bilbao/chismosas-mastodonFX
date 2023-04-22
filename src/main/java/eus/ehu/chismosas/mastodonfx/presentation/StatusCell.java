@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -32,6 +33,9 @@ public class StatusCell extends ListCell<Status> {
     static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.ENGLISH);
     static final DateTimeFormatter timeFormatterYear = DateTimeFormatter.ofPattern("MMMM d y", Locale.ENGLISH);
 
+
+    private static StatusCell instance;
+    public static StatusCell getInstance() {return instance;}
 
     @FXML
     private ImageView avatar;
@@ -90,6 +94,7 @@ public class StatusCell extends ListCell<Status> {
      */
     @Override
     protected void updateItem(Status item, boolean empty) {
+        instance = this;
         super.updateItem(item, empty);
 
         if (empty || item == null) {
@@ -97,6 +102,7 @@ public class StatusCell extends ListCell<Status> {
             setText(null);
             return;
         }
+
 
         status = item;
         account = status.getAccount();
@@ -195,5 +201,24 @@ public class StatusCell extends ListCell<Status> {
         else
             return(timeFormatterYear.format(creationDateTime));
 
+    }
+
+    /**@FXML
+    void goAccountOnStatus(MouseEvent event) {
+        MainController.getInstance().mouseProfile();
+    }*/
+
+    /**
+     * Method to go to the profile of the account
+     * @param mouseEvent
+     * @throws BigBoneRequestException
+     */
+    @FXML
+    public void goAccount(javafx.scene.input.MouseEvent mouseEvent) throws BigBoneRequestException {
+        String id = status.getAccount().getId();
+        MainController.getInstance().goProfile(id);
+    }
+    public String getAccountID(){
+        return status.getAccount().getId();
     }
 }
