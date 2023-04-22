@@ -2,16 +2,16 @@ package eus.ehu.chismosas.mastodonfx.businesslogic;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import eus.ehu.chismosas.mastodonfx.domain.AccountLoginInfo;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class contains all the methods that interact with the API
@@ -22,39 +22,47 @@ import java.util.List;
 public class BusinessLogic {
 
     private static MastodonClient client;
-    private static List<AccountLoginInfo> accountLogins;
+    private static Map<String, String> accountLogins; // Maps account ID to Token
 
     private static String id;
 
-    public static List<AccountLoginInfo> getAccountLogins() {return accountLogins;}
     public static String getUserId() {return id;}
 
 
     public static void loadAccountLogins() throws IOException {
         Gson gson = new Gson();
 
-        var json = new FileReader("accountlogins.json");
-        var listType = new TypeToken<List<AccountLoginInfo>>() {};
-
-        accountLogins = gson.fromJson(json, listType);
-
-        json.close();
+        try (var json = new FileReader("accountlogins.json")) {
+            var listType = new TypeToken<Map<String, String>>() {};
+            accountLogins = gson.fromJson(json, listType);
+        }
+        finally {
+            if (accountLogins == null)
+                accountLogins = new HashMap<>();
+        }
     }
 
-    public static void addAccountLogin(String token, String id) {
-        accountLogins.add(new AccountLoginInfo(token, id));
+    public static Set<String> getAccountLoginIds() {
+        return accountLogins.keySet();
     }
 
-    public static void removeAccountLogin(AccountLoginInfo account) {
-        accountLogins.remove(account);
+    public static void addAccountLogin(String id, String token) {
+        accountLogins.put(id, token);
     }
 
-    public static void login(AccountLoginInfo account) {
-        client = new MastodonClient.Builder("mastodon.social")
-                .accessToken(account.token)
+    public static void removeAccountLogin(String id) {
+        accountLogins.remove(id);
+    }
+
+    public static void login(String id) {
+        String token = accountLogins.get(id);
+        if (token == null) throw new IllegalArgumentException("No account stored with this ID");
+
+        BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
+                .accessToken(token)
                 .build();
 
-        id = account.id;
+        BusinessLogic.id = id;
     }
 
     public static void saveAccountLogins() throws IOException {

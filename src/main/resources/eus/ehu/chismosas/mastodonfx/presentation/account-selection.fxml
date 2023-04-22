@@ -21,7 +21,7 @@
             <Image url="@icons/logo.png" />
          </image>
       </ImageView>
-      <Button layoutX="260.0" layoutY="423.0" mnemonicParsing="false" onMouseClicked="#chooseAccount" style="-fx-background-color: #5c4de3;" text="Choose accunt" textFill="WHITE">
+      <Button fx:id="chooseAccountBtn" layoutX="260.0" layoutY="423.0" mnemonicParsing="false" onAction="#chooseAccount" onMouseClicked="#chooseAccount" style="-fx-background-color: #5c4de3;" text="Choose accunt" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
