@@ -5,6 +5,7 @@ module eus.ehu.chismosas.mastodonfx {
     requires bigbone;
     requires org.jsoup;
     requires com.google.gson;
+    requires java.sql;
 
 
     exports eus.ehu.chismosas.mastodonfx.presentation;
