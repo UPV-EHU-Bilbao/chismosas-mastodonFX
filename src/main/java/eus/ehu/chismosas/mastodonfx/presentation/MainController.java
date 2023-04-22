@@ -152,12 +152,14 @@ public class MainController {
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
                 mainPane.setCenter(followingListView);
+                updateFollowingListView();
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
                 mainPane.setCenter(followersListView);
+                updateFollowersListView();
             }
         }
     }

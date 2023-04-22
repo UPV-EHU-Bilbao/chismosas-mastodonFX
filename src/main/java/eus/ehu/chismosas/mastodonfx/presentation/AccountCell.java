@@ -101,6 +101,7 @@ public class AccountCell extends ListCell<Account> {
             else{
                 BusinessLogic.unfollowAccount(id);
                 followBtn.setText("Follow");
+                MainController.getInstance().updateFollowingListView();
             }
 
         } catch (BigBoneRequestException e) {
