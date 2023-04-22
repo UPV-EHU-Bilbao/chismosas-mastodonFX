@@ -1,5 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
+import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,12 +25,19 @@ public class MainApplication extends Application {
         MainApplication.instance = this;
         this.mainStage = stage;
 
+        BusinessLogic.loadAccountLogins();
+
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         mainStage.setTitle("MastodonFX - Account selection");
         mainStage.setScene(scene);
         mainStage.show();
         mainStage.requestFocus();
+    }
+
+    @Override
+    public void stop() throws Exception{
+        BusinessLogic.saveAccountLogins();
     }
 
     public static void main(String[] args) {
