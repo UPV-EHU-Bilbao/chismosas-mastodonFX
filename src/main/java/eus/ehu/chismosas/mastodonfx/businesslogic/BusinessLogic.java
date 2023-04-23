@@ -54,20 +54,22 @@ public class BusinessLogic {
 
     public static void login(Account account) {
         String id = account.getId();
-        String token = null;
         try {
-            token = DBManager.getAccountToken(id);
-        } catch (SQLException e) {
+            String token = DBManager.getAccountToken(id);
+            if (token == null) throw new IllegalArgumentException("No account stored with this ID");
+
+            DBManager.close(); // It will not be needed once the user is logged in
+
+            BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
+                    .accessToken(token)
+                    .build();
+
+            BusinessLogic.id = id;
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        if (token == null) throw new IllegalArgumentException("No account stored with this ID");
-
-        BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
-                .accessToken(token)
-                .build();
-
-        BusinessLogic.id = id;
     }
 
 

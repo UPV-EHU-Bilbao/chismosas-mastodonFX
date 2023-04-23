@@ -2,36 +2,52 @@ package eus.ehu.chismosas.mastodonfx.persistance;
 
 import org.sqlite.SQLiteDataSource;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DBManager {
-    private static final Connection connection;
+    private static final DataSource dataSource;
+    private static Connection connection;
 
-    private static final PreparedStatement selectAccountIds;
-    private static final PreparedStatement insertAccount;
-    private static final PreparedStatement deleteAccount;
-    private static final PreparedStatement getAccountToken;
+    private static PreparedStatement selectAccountIds;
+    private static PreparedStatement insertAccount;
+    private static PreparedStatement deleteAccount;
+    private static PreparedStatement getAccountToken;
+
 
     static {
         try {
-            SQLiteDataSource dataSource = new SQLiteDataSource();
-            dataSource.setUrl("jdbc:sqlite:AccountTokens.db");
-            connection = dataSource.getConnection();
+            SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
+            sqLiteDataSource.setUrl("jdbc:sqlite:AccountTokens.db");
+            dataSource = sqLiteDataSource;
+            DBManager.open();
 
             Statement stmt = connection.createStatement();
             stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
             System.out.println("Table created successfully");
-
-            selectAccountIds = connection.prepareStatement("SELECT id FROM Account");
-            insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
-            deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
-            getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public static void open() throws SQLException {
+        connection = dataSource.getConnection();
+        selectAccountIds = connection.prepareStatement("SELECT id FROM Account");
+        insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
+        deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
+        getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
+    }
+
+    public static void close() throws SQLException {
+        connection.close();
+        selectAccountIds.close();
+        insertAccount.close();
+        deleteAccount.close();
+        getAccountToken.close();
     }
 
     public static Set<String> getLoggableAccountIds() throws SQLException {
