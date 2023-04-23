@@ -66,14 +66,22 @@ public class BusinessLogic {
             BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
                     .accessToken(token)
                     .build();
-
-
             BusinessLogic.id = id;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public static void logout() {
+        BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
+                .build();
+
+        try {
+            DBManager.open();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

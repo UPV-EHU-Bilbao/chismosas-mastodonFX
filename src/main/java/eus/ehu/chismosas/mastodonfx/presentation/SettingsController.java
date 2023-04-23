@@ -3,8 +3,6 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -49,5 +47,10 @@ public class SettingsController {
         catch (Exception e){
             usernameField.setText("Error");
         }
+    }
+
+    @FXML
+    public void logOut() {
+        MainApplication.logout();
     }
 }

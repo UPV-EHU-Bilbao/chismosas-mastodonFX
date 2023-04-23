@@ -133,7 +133,7 @@
       </HBox>
       <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
          <children>
-            <ToolBar prefHeight="76.0" prefWidth="185.0" style="-fx-background-color: #18181b;">
+            <ToolBar onMouseClicked="#logOut" prefHeight="76.0" prefWidth="185.0" style="-fx-background-color: #18181b;">
                <items>
                   <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
