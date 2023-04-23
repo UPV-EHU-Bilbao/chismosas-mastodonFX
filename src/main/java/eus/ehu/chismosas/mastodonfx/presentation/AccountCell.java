@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
-import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
 
@@ -82,7 +81,7 @@ public class AccountCell extends ListCell<Account> {
         setGraphic(loader.getRoot());
 
         try {
-        if(!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+        if(!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()){
             followBtn.setVisible(true);
             followBtn.setText("Unfollow");
         }
@@ -104,14 +103,13 @@ public class AccountCell extends ListCell<Account> {
     void followAccount(ActionEvent event) {
         String id = getItem().getId();
         try {
-            if(!BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+            if(!BusinessLogic.getRelationship(getItem().getId()).isFollowing()){
                 BusinessLogic.followAccount(id);
                 followBtn.setText("Unfollow");
             }
             else{
                 BusinessLogic.unfollowAccount(id);
                 followBtn.setText("Follow");
-                MainController.getInstance().updateFollowingListView(id);
             }
 
         } catch (BigBoneRequestException e) {
@@ -120,13 +118,11 @@ public class AccountCell extends ListCell<Account> {
     }
     /**
      * Method to go to the profile of the account
-     * @param mouseEvent
-     * @throws BigBoneRequestException
      */
     @FXML
-    public void goAccount(javafx.scene.input.MouseEvent mouseEvent) throws BigBoneRequestException {
+    public void goAccount() {
         String id = getItem().getId();
-        MainController.getInstance().goProfile(id);
+        MainController.getInstance().showProfile(id);
     }
 
 }

@@ -1,13 +1,11 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
-import javafx.scene.image.Image;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -131,11 +129,9 @@ public class BusinessLogic {
      * @return a list with the relationships
      * @throws BigBoneRequestException
      */
-    public static List<Relationship> getRelationShip(String id) throws BigBoneRequestException{
-        List<String> ids = new ArrayList<>();
-        ids.add(id);
-        var request = client.accounts().getRelationships(ids);
-        return request.execute();
+    public static Relationship getRelationship(String id) throws BigBoneRequestException{
+        var request = client.accounts().getRelationships(List.of(id));
+        return request.execute().get(0);
     }
 
 }

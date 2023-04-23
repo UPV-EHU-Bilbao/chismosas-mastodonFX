@@ -3,7 +3,6 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -26,8 +25,7 @@ public class MainController {
     public static MainController getInstance() {return instance;}
 
     private final String userID = System.getenv("ID");
-
-    private String id;
+    private String currentID;
 
     @FXML
     private ToolBar bookmarksBtn;
@@ -114,12 +112,12 @@ public class MainController {
                 Bindings.isEmpty(newTootArea.textProperty())
         );
 
-
+        currentID = userID;
         updateTootListView(userID);
         updateFollowingListView(userID);
         updateFollowersListView(userID);
         mainPane.setCenter(tootListView);
-        setProfile(userID);
+        updateBanner(userID);
     }
 
     /**
@@ -127,7 +125,7 @@ public class MainController {
      */
     @FXML
     void mouseProfile() {
-        setProfile(userID);
+        updateBanner(userID);
         updateTootListView(userID);
         sceneSwitch("Toots");
         followBtn.setVisible(false);
@@ -155,15 +153,20 @@ public class MainController {
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
-        String id = StatusCell.getInstance().getAccountID();
         switch (scene) {
             case "Toots" -> {
-                profileBtn.setEffect(dropShadow);
+                if (currentID.equals(userID)) {
+                    profileBtn.setEffect(dropShadow);
+                    profileBtn.setStyle("-fx-background-color: #212124");
+                }
+                else {
+                    profileBtn.setEffect(null);
+                    profileBtn.setStyle("-fx-background-color: #18181b");
+                }
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
                 followingBtn.setStyle("-fx-background-color:  #18181b");
                 followersBtn.setStyle("-fx-background-color:  #18181b");
-                profileBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
@@ -174,8 +177,7 @@ public class MainController {
                 profileBtn.setStyle("-fx-background-color: #18181b");
                 followingBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followingListView);
-                updateFollowingListView(id);
-                visibilityFollowButton(id);
+                updateFollowingListView(currentID);
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
@@ -185,8 +187,7 @@ public class MainController {
                 followingBtn.setStyle("-fx-background-color: #18181b");
                 followersBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followersListView);
-                updateFollowersListView(id);
-                visibilityFollowButton(id);
+                updateFollowersListView(currentID);
             }
         }
     }
@@ -231,7 +232,6 @@ public class MainController {
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
-        visibilityFollowButton(id);
     }
 
     /**
@@ -245,19 +245,18 @@ public class MainController {
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
-        visibilityFollowButton(id);
     }
 
     /**
      * Sets the profile picture, username and display name of the user
      */
-    public void setProfile(String id) {
+    public void updateBanner(String id) {
         try {
             var account = getAccount(id);
             profilePic.setImage(ImageCache.get(account.getAvatar()));
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
-            visibilityFollowButton(id);
+            showFollowButton(id);
         }
         catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
@@ -267,11 +266,21 @@ public class MainController {
      * Shows the follow button if the user is not in their own profile
      * @param id id of the current profile that is being visited
      */
-    public void visibilityFollowButton(String id) {
+    public void showFollowButton(String id) {
         if (userID.equals(id)) {
             followBtn.setVisible(false);
         } else {
-            followBtn.setVisible(true);
+            try {
+                if(BusinessLogic.getRelationship(id).isFollowing()){
+                    followBtn.setText("Unfollow");
+                }
+                else{
+                    followBtn.setText("Follow");
+                }
+                followBtn.setVisible(true);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -313,37 +322,28 @@ public class MainController {
      * Changes the profile to the given id
      * @param id the id of the account to update
      */
-    public void goProfile(String id) throws BigBoneRequestException {
+    public void showProfile(String id) {
 
-        setProfile(id);
+        currentID = id;
+        updateBanner(id);
         updateTootListView(id);
-        updateFollowersListView(id);
-        updateFollowingListView(id);
         sceneSwitch("Toots");
-        try {
-            if(BusinessLogic.getRelationShip(id).get(0).isFollowing()){
-                followBtn.setText("Unfollow");
-            }
-            else{
-                followBtn.setText("Follow");
-            }
-        } catch (BigBoneRequestException e) {
-            e.printStackTrace();
-        }
-        visibilityFollowButton(id);
 
     }
     @FXML
-    void followAccount(ActionEvent event) throws BigBoneRequestException {
-        String id = StatusCell.getInstance().getAccountID();
-        if(!BusinessLogic.getRelationShip(id).get(0).isFollowing()){
-            BusinessLogic.followAccount(id);
-            followBtn.setText("Unfollow");
-        }
-        else{
-            BusinessLogic.unfollowAccount(id);
-            followBtn.setText("Follow");
-            MainController.getInstance().updateFollowingListView(id);
+    void followAccount() {
+        try {
+            if(!BusinessLogic.getRelationship(currentID).isFollowing()){
+                BusinessLogic.followAccount(currentID);
+                followBtn.setText("Unfollow");
+            }
+            else{
+                BusinessLogic.unfollowAccount(currentID);
+                followBtn.setText("Follow");
+                MainController.getInstance().updateFollowingListView(currentID);
+            }
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
         }
     }
 
