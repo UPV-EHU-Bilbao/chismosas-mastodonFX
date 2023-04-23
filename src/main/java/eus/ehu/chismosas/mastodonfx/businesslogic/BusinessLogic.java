@@ -66,14 +66,22 @@ public class BusinessLogic {
             BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
                     .accessToken(token)
                     .build();
-
-
             BusinessLogic.id = id;
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public static void logout() {
+        BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
+                .build();
+
+        try {
+            DBManager.open();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -156,6 +164,19 @@ public class BusinessLogic {
     public static Status getStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().getStatus(id);
         return request.execute();
+    }
+
+    public static void changeUsername(String username) throws BigBoneRequestException {
+        if (username.length() < 1) {
+            throw new IllegalArgumentException("Username too short");
+        }
+        try{
+            var request = client.accounts().updateCredentials(username, null, null, null);
+            request.execute();
+        }
+        catch (BigBoneRequestException e){
+            throw new IllegalArgumentException("Username already taken");
+        }
     }
 
     public static void reblogStatus(String id) throws BigBoneRequestException {

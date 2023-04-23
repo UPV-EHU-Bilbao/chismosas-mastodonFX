@@ -1,0 +1,8 @@
+.root{
+    -fx-background-color: #ffffff;
+}
+.label{
+    -fx-font-family: "System";
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}

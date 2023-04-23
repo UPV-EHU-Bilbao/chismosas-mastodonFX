@@ -3,6 +3,9 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
@@ -11,6 +14,7 @@ import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
+import java.io.IOException;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -87,13 +91,15 @@ public class MainController {
     private Pageable<Status> homeTimeline;
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
+
+    private Scene settingsScene;
     private DropShadow dropShadow;
 
     /**
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
-    void initialize() {
+    void initialize(){
         instance = this;
 
         tootListView = new ListView<>();
@@ -103,6 +109,7 @@ public class MainController {
         followersListView = new ListView<>();
         followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
+
 
         tootListView.setStyle("-fx-control-inner-background: #18181b");
         followingListView.setStyle("-fx-control-inner-background: #18181b");
@@ -114,6 +121,7 @@ public class MainController {
         updateBanner();
         showAccountToots();
         mainPane.setCenter(tootListView);
+        settingsSceneLoader();
 
         CompletableFuture.runAsync(() -> {
             try {
@@ -150,6 +158,9 @@ public class MainController {
     }
 
     @FXML
+    void mouseSettings() { sceneSwitch("Settings");}
+
+    @FXML
     void mouseHome() {
         sceneSwitch("HomeTimeline");
     }
@@ -159,6 +170,7 @@ public class MainController {
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
+        var settingsRoot = settingsScene.getRoot();
         switch (scene) {
             case "Profile" -> {
                 if (currentID.equals(userID)) {
@@ -181,6 +193,7 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
+                settingsBtn.setEffect(null);
 
                 showHometimeline();
                 mainPane.setCenter(tootListView);
@@ -189,6 +202,7 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
+                settingsBtn.setEffect(null);
                 followersBtn.setStyle("-fx-background-color:  #18181b");
                 profileBtn.setStyle("-fx-background-color: #18181b");
                 followingBtn.setStyle("-fx-background-color: #212124");
@@ -200,6 +214,7 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
+                settingsBtn.setEffect(null);
                 profileBtn.setStyle("-fx-background-color: #18181b");
                 followingBtn.setStyle("-fx-background-color: #18181b");
                 followersBtn.setStyle("-fx-background-color: #212124");
@@ -207,6 +222,18 @@ public class MainController {
                 mainPane.setCenter(followersListView);
                 updateFollowersListView();
             }
+            case "Settings" -> {
+                profileBtn.setEffect(null);
+                followingBtn.setEffect(null);
+                followersBtn.setEffect(null);
+                settingsBtn.setEffect(dropShadow);
+                mainPane.setCenter(settingsRoot);
+
+                //BUG: If I don't update the pane the settings window doesn't show up
+                mainPane.setCenter(followersListView);
+                mainPane.setCenter(settingsRoot);
+            }
+
         }
     }
 
@@ -339,6 +366,38 @@ public class MainController {
                 }
             }
         }
+    }
+    public void settingsSceneLoader() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            settingsScene = new Scene(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void lightButton(){
+        mainPane.setStyle("-fx-background-color: #ffffff");
+        userNameLabel.setStyle("-fx-text-fill: #000000");
+        displayNameLabel.setStyle("-fx-text-fill: #000000");
+        followersBtn.opacityProperty().setValue(0.4);
+        followingBtn.opacityProperty().setValue(0.4);
+        profileBtn.opacityProperty().setValue(0.4);
+        settingsBtn.opacityProperty().setValue(0.4);
+        tootListView.setStyle("-fx-background-color: #ffffff");
+        followingListView.setStyle("-fx-background-color: #ffffff");
+        followersListView.setStyle("-fx-background-color: #ffffff");
+    }
+    public void darkButton(){
+        mainPane.setStyle("-fx-background-color: #18181b");
+        userNameLabel.setStyle("-fx-text-fill: #ffffff");
+        displayNameLabel.setStyle("-fx-text-fill: #ffffff");
+        followersBtn.opacityProperty().setValue(1);
+        followingBtn.opacityProperty().setValue(1);
+        profileBtn.opacityProperty().setValue(1);
+        settingsBtn.opacityProperty().setValue(1);
+        tootListView.setStyle("-fx-background-color: #18181b");
+        followingListView.setStyle("-fx-background-color: #18181b");
+        followersListView.setStyle("-fx-background-color: #18181b");
     }
     /**
      * Changes the profile to the given id

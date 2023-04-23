@@ -2,11 +2,9 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
@@ -49,16 +47,7 @@ public class AccountSelection{
     @FXML
     private void chooseAccount() {
         var account = accountsList.getSelectionModel().getSelectedItem();
-
-        BusinessLogic.login(account);
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            MainApplication.setScene(scene);
-            MainApplication.setTitle("MastodonFX - @" + account.getUsername());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        MainApplication.login(account);
     }
 
     @FXML
@@ -66,7 +55,7 @@ public class AccountSelection{
         String id = newID.getText();
         String token = newToken.getText();
         try {
-            DBManager.storeAccount(id, token);
+           BusinessLogic.addAccountLogin(id, token);
             accountsList.getItems().add(BusinessLogic.getAccount(id));
         }catch (Exception e){
             e.printStackTrace();
