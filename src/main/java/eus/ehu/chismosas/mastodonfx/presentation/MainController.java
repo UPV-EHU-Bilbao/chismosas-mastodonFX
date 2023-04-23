@@ -180,6 +180,10 @@ public class MainController {
                 followersBtn.setEffect(null);
                 settingsBtn.setEffect(dropShadow);
                 mainPane.setCenter(settingsRoot);
+
+                //BUG: If I don't update the pane the settings window doesn't show up
+                mainPane.setCenter(followersListView);
+                mainPane.setCenter(settingsRoot);
             }
 
         }
@@ -303,6 +307,9 @@ public class MainController {
         followingBtn.opacityProperty().setValue(0.4);
         profileBtn.opacityProperty().setValue(0.4);
         settingsBtn.opacityProperty().setValue(0.4);
+        tootListView.setStyle("-fx-background-color: #ffffff");
+        followingListView.setStyle("-fx-background-color: #ffffff");
+        followersListView.setStyle("-fx-background-color: #ffffff");
     }
     public void darkButton(){
         mainPane.setStyle("-fx-background-color: #18181b");
@@ -312,5 +319,8 @@ public class MainController {
         followingBtn.opacityProperty().setValue(1);
         profileBtn.opacityProperty().setValue(1);
         settingsBtn.opacityProperty().setValue(1);
+        tootListView.setStyle("-fx-background-color: #18181b");
+        followingListView.setStyle("-fx-background-color: #18181b");
+        followersListView.setStyle("-fx-background-color: #18181b");
     }
 }
