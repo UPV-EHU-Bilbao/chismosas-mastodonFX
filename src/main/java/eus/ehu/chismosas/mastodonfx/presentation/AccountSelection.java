@@ -55,7 +55,7 @@ public class AccountSelection{
         String id = newID.getText();
         String token = newToken.getText();
         try {
-            DBManager.storeAccount(id, token);
+           BusinessLogic.addAccountLogin(id, token);
             accountsList.getItems().add(BusinessLogic.getAccount(id));
         }catch (Exception e){
             e.printStackTrace();
