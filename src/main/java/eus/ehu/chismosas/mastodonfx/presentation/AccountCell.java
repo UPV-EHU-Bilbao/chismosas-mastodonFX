@@ -54,6 +54,7 @@ public class AccountCell extends ListCell<Account> {
      */
     @Override
     protected void updateItem(Account item, boolean empty) {
+
         instance = this;
         super.updateItem(item, empty);
         if (empty || item == null) {
@@ -81,12 +82,15 @@ public class AccountCell extends ListCell<Account> {
         setGraphic(loader.getRoot());
 
         try {
-        if(BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+        if(!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationShip(getItem().getId()).get(0).isFollowing()){
+            followBtn.setVisible(true);
             followBtn.setText("Unfollow");
         }
-        else{
+        else if (!System.getenv("ID").equals(getItem().getId())){
+            followBtn.setVisible(true);
             followBtn.setText("Follow");
         }
+        else if (System.getenv("ID").equals(getItem().getId())) followBtn.setVisible(false);
     } catch (BigBoneRequestException e) {
         e.printStackTrace();
     }

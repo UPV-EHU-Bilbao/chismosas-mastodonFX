@@ -264,7 +264,8 @@ public class MainController {
         }
     }
     /**
-     * Shows the follow button if the user is not the current user
+     * Shows the follow button if the user is not in their own profile
+     * @param id id of the current profile that is being visited
      */
     public void visibilityFollowButton(String id) {
         if (userID.equals(id)) {

@@ -95,6 +95,7 @@ public class StatusCell extends ListCell<Status> {
     @Override
     protected void updateItem(Status item, boolean empty) {
         instance = this;
+
         super.updateItem(item, empty);
 
         if (empty || item == null) {
@@ -102,7 +103,6 @@ public class StatusCell extends ListCell<Status> {
             setText(null);
             return;
         }
-
 
         status = item;
         account = status.getAccount();

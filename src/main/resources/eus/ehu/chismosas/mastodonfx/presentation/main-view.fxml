@@ -220,7 +220,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: lightblue;" text="Follow" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: lightblue;" text="Follow" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>
