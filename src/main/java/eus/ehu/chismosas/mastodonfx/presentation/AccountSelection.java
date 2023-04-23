@@ -2,6 +2,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,6 +39,11 @@ public class AccountSelection{
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
+
+        AddNewAccountBtn.disableProperty().bind(
+                newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty())
+        );
+
     }
 
     @FXML
