@@ -1,96 +1,62 @@
 package eus.ehu.chismosas.mastodonfx.persistance;
 
+import org.sqlite.SQLiteDataSource;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DBManager {
-    private static DBManager instance = new DBManager();
-    Connection conn;
-    String dbpath;
+    private static final Connection connection;
 
-    private DBManager() {
-        dbpath = "accounts.db";
-    }
+    private static final PreparedStatement selectAccountIds;
+    private static final PreparedStatement insertAccount;
+    private static final PreparedStatement deleteAccount;
+    private static final PreparedStatement getAccountToken;
 
-    public static DBManager getInstance() {
-        return instance;
-    }
-
-    public void open() {
+    static {
         try {
-            String url = "jdbc:sqlite:" + dbpath;
-            conn = DriverManager.getConnection(url);
+            SQLiteDataSource dataSource = new SQLiteDataSource();
+            dataSource.setUrl("jdbc:sqlite:AccountTokens.db");
+            connection = dataSource.getConnection();
+
+            Statement stmt = connection.createStatement();
+            stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
+            System.out.println("Table created successfully");
+
+            selectAccountIds = connection.prepareStatement("SELECT id FROM Account");
+            insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
+            deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
+            getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public void close() {
-        if (conn != null)
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-    }
-
-    public void storeAccount(String id, String token) {
-
-        this.open();
-        String sql = "INSERT INTO account (id, token) VALUES(?,?)";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, id);
-            pstmt.setString(2, token);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        this.close();
-    }
-
-    public List<String> getAllAccounts() {
-        var accounts = new ArrayList<String>();
-        this.open();
-
-        try {
-            String query = "SELECT id FROM account";
-            ResultSet rs = conn.createStatement().executeQuery(query);
-            while (rs.next()) {
-                accounts.add(rs.getString("id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        this.close();
+    public static Set<String> getLoggableAccountIds() throws SQLException {
+        ResultSet queryResult = selectAccountIds.executeQuery();
+        HashSet<String> accounts = new HashSet<>();
+        while (queryResult.next()) accounts.add(queryResult.getString("id"));
         return accounts;
     }
 
-    public String getAccountToken(String id) {
-
-        this.open();
-        String query = "SELECT token FROM account WHERE id = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, id);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.getString("token");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static void storeAccount(String id, String token) throws SQLException {
+        insertAccount.setString(1, id);
+        insertAccount.setString(2, token);
+        insertAccount.executeUpdate();
     }
 
-    public void deleteAccount(String id) {
-        this.open();
-        String sql = "DELETE FROM account WHERE id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, id);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        this.close();
+    public static void deleteAccount(String id) throws SQLException {
+        deleteAccount.setString(1, id);
+        deleteAccount.executeUpdate();
     }
+
+    public static String getAccountToken(String id) throws SQLException {
+        getAccountToken.setString(1, id);
+        ResultSet queryResult = getAccountToken.executeQuery();
+        return queryResult.next() ? queryResult.getString("token") : null;
+    }
+
+
 }

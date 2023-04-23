@@ -6,6 +6,7 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,8 +18,6 @@ import java.util.Set;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class BusinessLogic {
-    private static DBManager dbManager = DBManager.getInstance();
-
     private static MastodonClient client;
     private static String id;
     public static String getUserId() {return id;}
@@ -26,28 +25,41 @@ public class BusinessLogic {
 
     public static Set<Account> getLoggableAccounts() {
         var accounts = new HashSet<Account>();
-        for (String id: dbManager.getAllAccounts()) {
-            try {
+
+        try {
+            for (String id : DBManager.getLoggableAccountIds())
                 accounts.add(getAccount(id));
-            }
-            catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (SQLException | BigBoneRequestException e) {
+            throw new RuntimeException(e);
         }
+
         return accounts;
     }
 
     public static void addAccountLogin(String id, String token) {
-        dbManager.storeAccount(id, token);
+        try {
+            DBManager.storeAccount(id, token);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void removeAccountLogin(String id) {
-        dbManager.deleteAccount(id);
+        try {
+            DBManager.deleteAccount(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void login(Account account) {
         String id = account.getId();
-        String token = dbManager.getAccountToken(id);
+        String token = null;
+        try {
+            token = DBManager.getAccountToken(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         if (token == null) throw new IllegalArgumentException("No account stored with this ID");
 

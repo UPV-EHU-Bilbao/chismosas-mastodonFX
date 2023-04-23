@@ -6,6 +6,7 @@ module eus.ehu.chismosas.mastodonfx {
     requires org.jsoup;
     requires com.google.gson;
     requires java.sql;
+    requires org.xerial.sqlitejdbc;
 
 
     exports eus.ehu.chismosas.mastodonfx.presentation;
