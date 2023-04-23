@@ -164,7 +164,6 @@ public class MainController {
                 followersBtn.setStyle("-fx-background-color:  #18181b");
                 profileBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(tootListView);
-                updateTootListView(id);
             }
             case "Following" -> {
                 profileBtn.setEffect(null);
