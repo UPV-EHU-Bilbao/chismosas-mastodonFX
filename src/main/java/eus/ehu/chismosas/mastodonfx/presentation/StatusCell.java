@@ -90,7 +90,6 @@ public class StatusCell extends ListCell<Status> {
      */
     @Override
     protected void updateItem(Status item, boolean empty) {
-
         super.updateItem(item, empty);
 
         if (empty || item == null) {
@@ -132,6 +131,8 @@ public class StatusCell extends ListCell<Status> {
         if (isLiked) likeBtn.setOpacity(1);
         else likeBtn.setOpacity(0.5);
         retweet.setText(String.valueOf(reblogs));
+        if (isReblogged) retweetBtn.setOpacity(1);
+        else retweetBtn.setOpacity(0.5);
         comment.setText(String.valueOf(status.getRepliesCount()));
 
         setText(null);
@@ -157,8 +158,6 @@ public class StatusCell extends ListCell<Status> {
 
     }
 
-
-
     private void like() {
         try {
             BusinessLogic.favouriteStatus(status.getId());
@@ -175,7 +174,37 @@ public class StatusCell extends ListCell<Status> {
         }
     }
 
+    @FXML
+    private void onRetootBtn() {
+        if (isReblogged) {
+            retweetBtn.setOpacity(0.5);
+            retweet.setText(String.valueOf(--reblogs));
+            CompletableFuture.runAsync(this::unreblog);
+            isReblogged = false;
+        }
+        else {
+            retweetBtn.setOpacity(1);
+            retweet.setText(String.valueOf(++reblogs));
+            CompletableFuture.runAsync(this::reblog);
+            isReblogged = true;
+        }
+    }
 
+    private void reblog() {
+        try {
+            BusinessLogic.reblogStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void unreblog() {
+        try {
+            BusinessLogic.unreblogStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Converts the createdAt string of the status to a String to display in the toot date

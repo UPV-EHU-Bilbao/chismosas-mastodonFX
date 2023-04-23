@@ -100,7 +100,7 @@ public class AccountCell extends ListCell<Account> {
      * @param event .
      */
     @FXML
-    void followAccount(ActionEvent event) {
+    void followAccount() {
         String id = getItem().getId();
         try {
             if(!BusinessLogic.getRelationship(getItem().getId()).isFollowing()){
