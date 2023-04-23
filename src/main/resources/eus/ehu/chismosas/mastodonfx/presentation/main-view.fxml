@@ -46,7 +46,7 @@
             <padding>
                <Insets left="15.0" right="15.0" />
             </padding>
-            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #212124;" GridPane.rowIndex="1">
                <effect>
                   <DropShadow />
                </effect>
@@ -181,7 +181,8 @@
          <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="139.0" prefWidth="488.0" GridPane.columnIndex="1">
             <columnConstraints>
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="100.0" />
-               <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="100.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="118.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="59.0" />
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="100.0" />
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="100.0" />
                <ColumnConstraints hgrow="SOMETIMES" maxWidth="376.0" minWidth="10.0" prefWidth="100.0" />
@@ -204,22 +205,25 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="displayNameLabel" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <Label fx:id="displayNameLabel" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="25.0" prefWidth="67.0" text="Follow" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: lightblue;" text="Follow" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
          </GridPane>
       </GridPane>
    </top>

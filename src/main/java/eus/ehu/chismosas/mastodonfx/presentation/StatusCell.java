@@ -162,6 +162,8 @@ public class StatusCell extends ListCell<Status> {
 
     }
 
+
+
     private void like() {
         try {
             BusinessLogic.favouriteStatus(status.getId());
@@ -177,6 +179,8 @@ public class StatusCell extends ListCell<Status> {
             throw new RuntimeException(e);
         }
     }
+
+
 
     /**
      * Converts the createdAt string of the status to a String to display in the toot date

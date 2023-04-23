@@ -149,9 +149,6 @@ public class MainController {
     }
 
 
-
-
-
     /**
      * changes the main scene's center to the asked scene
      * @param scene the scene to be shown
@@ -163,6 +160,9 @@ public class MainController {
                 profileBtn.setEffect(dropShadow);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
+                followingBtn.setStyle("-fx-background-color:  #18181b");
+                followersBtn.setStyle("-fx-background-color:  #18181b");
+                profileBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(tootListView);
                 updateTootListView(id);
             }
@@ -170,6 +170,9 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
+                followersBtn.setStyle("-fx-background-color:  #18181b");
+                profileBtn.setStyle("-fx-background-color: #18181b");
+                followingBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followingListView);
                 updateFollowingListView(id);
             }
@@ -177,6 +180,9 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
+                profileBtn.setStyle("-fx-background-color: #18181b");
+                followingBtn.setStyle("-fx-background-color: #18181b");
+                followersBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followersListView);
                 updateFollowersListView(id);
             }
