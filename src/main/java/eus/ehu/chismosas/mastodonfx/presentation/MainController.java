@@ -99,9 +99,7 @@ public class MainController {
         followingListView.setStyle("-fx-control-inner-background: #18181b");
         followersListView.setStyle("-fx-control-inner-background: #18181b");
 
-        publishButton.disableProperty().bind(
-                Bindings.isEmpty(newTootArea.textProperty())
-        );
+        publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
         updateTootListView();
         updateFollowingListView();
