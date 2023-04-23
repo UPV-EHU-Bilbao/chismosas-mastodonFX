@@ -18,7 +18,8 @@ import java.util.Set;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class BusinessLogic {
-    private static MastodonClient client;
+    private static MastodonClient client = new MastodonClient.Builder("mastodon.social")
+            .build();
     private static String id;
     public static String getUserId() {return id;}
 
