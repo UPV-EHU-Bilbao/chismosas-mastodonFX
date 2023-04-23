@@ -5,7 +5,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -78,7 +78,6 @@ public class MainController {
 
     @FXML
     private Button publishButton;
-
 
     private ListView<Status> tootListView;
     private ListView<Account> followersListView;
@@ -288,4 +287,7 @@ public class MainController {
         }
     }
 
+    public Scene getScene() {
+        return mainPane.getScene();
+    }
 }

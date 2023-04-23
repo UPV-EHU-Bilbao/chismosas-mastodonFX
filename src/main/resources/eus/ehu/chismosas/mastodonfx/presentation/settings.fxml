@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="723.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.SettingsController">
    <children>
       <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
          <children>
@@ -40,7 +39,7 @@
                         </ImageView>
                         <Label text="Theme selector:" textFill="WHITE">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="16.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -48,12 +47,12 @@
                         </Label>
                      </items>
                   </ToolBar>
-                  <RadioButton mnemonicParsing="false" selected="true" text="DARK" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <RadioButton fx:id="darkBtn" mnemonicParsing="false" onAction="#selectDarkTheme" selected="true" text="DARK" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="LIGHT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <RadioButton fx:id="lightBtn" mnemonicParsing="false" onAction="#selectLightTheme" text="LIGHT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -123,7 +122,7 @@
                         </ImageView>
                         <Label text="Profile settings:" textFill="WHITE">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="16.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -134,7 +133,7 @@
                   <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #18181b;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <items>
                         <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="312.0" promptText="Change your username" />
-                      <Button fx:id="usernameBtn" mnemonicParsing="false" text="Done" />
+                      <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" text="Done" />
                     </items>
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #18181b;" GridPane.columnIndex="1" GridPane.rowIndex="2">

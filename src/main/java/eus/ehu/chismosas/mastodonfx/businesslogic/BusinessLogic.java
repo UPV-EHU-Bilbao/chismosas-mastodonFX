@@ -99,4 +99,17 @@ public class BusinessLogic {
         var request = client.statuses().getStatus(id);
         return request.execute();
     }
+
+    public static void changeUsername(String username) throws BigBoneRequestException {
+        if (username.length() < 1) {
+            throw new IllegalArgumentException("Username too short");
+        }
+        try{
+            var request = client.accounts().updateCredentials(username, null, null, null);
+            request.execute();
+        }
+        catch (BigBoneRequestException e){
+            throw new IllegalArgumentException("Username already taken");
+        }
+    }
 }
