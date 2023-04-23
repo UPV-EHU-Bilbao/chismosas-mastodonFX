@@ -3,9 +3,13 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class SettingsController {
     @FXML
@@ -15,13 +19,7 @@ public class SettingsController {
     private RadioButton lightBtn;
 
     @FXML
-    private TextField passwordField;
-
-    @FXML
     private Button usernameBtn;
-
-    @FXML
-    private Button usernameBtn1;
 
     @FXML
     private TextField usernameField;
@@ -29,14 +27,16 @@ public class SettingsController {
     @FXML
     public void selectDarkTheme(ActionEvent event) {
         lightBtn.setSelected(false);
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("darkmode.css").toExternalForm());
+        MainController.getInstance().darkButton();
+        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
 
     }
 
     @FXML
-    public void selectLightTheme(ActionEvent event) {
+    public void selectLightTheme(ActionEvent event) throws IOException {
         darkBtn.setSelected(false);
-        //MainController.getInstance().getScene().getStylesheets().clear();
+        MainController.getInstance().lightButton();
+        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("light.css").toExternalForm());
     }
 
     @FXML

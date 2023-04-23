@@ -127,11 +127,11 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="favsBtn1" disable="true" prefHeight="32.0" prefWidth="158.0" style="-fx-background-color: #18181b;">
-               <ImageView id="bellImg" disable="true" fitHeight="24.0" fitWidth="24.0" opacity="0.25" pickOnBounds="true" preserveRatio="true">
+            <ToolBar fx:id="favsBtn1" opacity="0.4" prefHeight="32.0" prefWidth="158.0" style="-fx-background-color: #18181b;">
+               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/home.png" />
                </ImageView>
-               <Label disable="true" prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -203,7 +203,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="displayNameLabel" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Label fx:id="displayNameLabel" prefHeight="20.0" prefWidth="174.0" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
                   <Font size="14.0" />
                </font>

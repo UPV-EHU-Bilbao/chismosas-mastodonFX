@@ -21,8 +21,8 @@
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="216.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="371.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="204.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="10.0" prefWidth="396.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -32,7 +32,7 @@
                <children>
                   <ToolBar prefHeight="69.0" prefWidth="220.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
                      <items>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/brightness.png" />
                            </image>
@@ -41,9 +41,6 @@
                            <font>
                               <Font size="16.0" />
                            </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
                         </Label>
                      </items>
                   </ToolBar>
@@ -65,7 +62,7 @@
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="216.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="188.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="392.0" />
                </columnConstraints>
                <rowConstraints>
@@ -76,7 +73,7 @@
                <children>
                   <ToolBar prefHeight="69.0" prefWidth="220.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
                      <items>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/appearance.png" />
                            </image>
@@ -85,9 +82,6 @@
                            <font>
                               <Font size="20.0" />
                            </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
                         </Label>
                      </items>
                   </ToolBar>
@@ -104,7 +98,7 @@
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="216.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="188.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="392.0" />
                </columnConstraints>
                <rowConstraints>
@@ -115,7 +109,7 @@
                <children>
                   <ToolBar prefHeight="60.0" prefWidth="249.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
                      <items>
-                        <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/edit.png" />
                            </image>
@@ -124,23 +118,14 @@
                            <font>
                               <Font size="16.0" />
                            </font>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
                         </Label>
                      </items>
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #18181b;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <items>
-                        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="312.0" promptText="Change your username" />
+                        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="239.0" promptText="Change your username" />
                       <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" text="Done" />
                     </items>
-                  </ToolBar>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #18181b;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <items>
-                        <TextField fx:id="passwordField" prefHeight="25.0" prefWidth="312.0" promptText="Change your password (WIP)" />
-                        <Button fx:id="usernameBtn1" mnemonicParsing="false" text="Done" />
-                     </items>
                   </ToolBar>
                </children>
             </GridPane>
@@ -165,7 +150,7 @@
                   </Label>
                </items>
                <HBox.margin>
-                  <Insets left="210.0" top="50.0" />
+                  <Insets left="165.0" />
                </HBox.margin>
             </ToolBar>
          </children>

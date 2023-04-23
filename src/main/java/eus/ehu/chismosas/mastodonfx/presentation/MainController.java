@@ -90,7 +90,7 @@ public class MainController {
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
-    void initialize() throws IOException {
+    void initialize(){
         instance = this;
 
         tootListView = new ListView<>();
@@ -100,8 +100,7 @@ public class MainController {
         followersListView = new ListView<>();
         followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
-        settingsScene = new Scene(loader.load());
+
 
         tootListView.setStyle("-fx-control-inner-background: #18181b");
         followingListView.setStyle("-fx-control-inner-background: #18181b");
@@ -116,6 +115,7 @@ public class MainController {
         updateFollowersListView();
         mainPane.setCenter(tootListView);
         setProfile();
+        settingsSceneLoader();
     }
 
     /**
@@ -151,6 +151,7 @@ public class MainController {
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
+        var settingsRoot = settingsScene.getRoot();
         switch (scene) {
             case "Toots" -> {
                 profileBtn.setEffect(dropShadow);
@@ -178,7 +179,7 @@ public class MainController {
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
                 settingsBtn.setEffect(dropShadow);
-                mainPane.setCenter(settingsScene.getRoot());
+                mainPane.setCenter(settingsRoot);
             }
 
         }
@@ -286,8 +287,30 @@ public class MainController {
             }
         }
     }
-
-    public Scene getScene() {
-        return mainPane.getScene();
+    public void settingsSceneLoader() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            settingsScene = new Scene(loader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void lightButton(){
+        mainPane.setStyle("-fx-background-color: #ffffff");
+        userNameLabel.setStyle("-fx-text-fill: #000000");
+        displayNameLabel.setStyle("-fx-text-fill: #000000");
+        followersBtn.opacityProperty().setValue(0.4);
+        followingBtn.opacityProperty().setValue(0.4);
+        profileBtn.opacityProperty().setValue(0.4);
+        settingsBtn.opacityProperty().setValue(0.4);
+    }
+    public void darkButton(){
+        mainPane.setStyle("-fx-background-color: #18181b");
+        userNameLabel.setStyle("-fx-text-fill: #ffffff");
+        displayNameLabel.setStyle("-fx-text-fill: #ffffff");
+        followersBtn.opacityProperty().setValue(1);
+        followingBtn.opacityProperty().setValue(1);
+        profileBtn.opacityProperty().setValue(1);
+        settingsBtn.opacityProperty().setValue(1);
     }
 }
