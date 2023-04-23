@@ -20,6 +20,9 @@ public class AccountSelection {
     @FXML
     private Button chooseAccountBtn;
 
+    @FXML
+    private Button AddAccountBtn;
+
     private Parent root;
 
     @FXML
