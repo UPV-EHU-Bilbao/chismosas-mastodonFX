@@ -44,7 +44,7 @@ public class SettingsController {
         String user = usernameField.getText();
         try{
             BusinessLogic.changeUsername(user);
-            MainController.getInstance().setProfile();
+            MainController.getInstance().updateBanner();
         }
         catch (Exception e){
             usernameField.setText("Error");

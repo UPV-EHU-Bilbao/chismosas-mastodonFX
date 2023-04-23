@@ -29,7 +29,7 @@
         <opaqueInsets>
             <Insets />
         </opaqueInsets>
-        <Label fx:id="displayName" text="Display Name" textFill="WHITE">
+        <Label fx:id="displayName" onMouseClicked="#goAccount" text="Display Name" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="16.0" />
             </font>
@@ -37,7 +37,7 @@
                 <Insets />
             </HBox.margin>
         </Label>
-        <Label fx:id="userName" text="\@username" textFill="#ffffffc2">
+        <Label fx:id="userName" onMouseClicked="#goAccount" text="\@username" textFill="#ffffffc2">
             <font>
                 <Font size="16.0" />
             </font>
@@ -75,7 +75,7 @@
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onRetootBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>
@@ -97,7 +97,7 @@
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="avatar" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+    <ImageView fx:id="avatar" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#goAccount" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
         <GridPane.margin>
             <Insets bottom="90.0" left="5.0" />
         </GridPane.margin>
