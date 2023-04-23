@@ -127,6 +127,8 @@ public class MainController {
      */
     @FXML
     void mouseProfile() {
+        setProfile(userID);
+        updateTootListView(userID);
         sceneSwitch("Toots");
     }
 
@@ -288,10 +290,12 @@ public class MainController {
      * @param id the id of the account to update
      */
     public void goProfile(String id) throws BigBoneRequestException {
+
         setProfile(id);
         updateTootListView(id);
         updateFollowersListView(id);
         updateFollowingListView(id);
+        sceneSwitch("Toots");
         try {
             if(BusinessLogic.getRelationShip(id).get(0).isFollowing()){
                 followBtn.setText("Unfollow");
