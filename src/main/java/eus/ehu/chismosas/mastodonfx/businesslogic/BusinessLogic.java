@@ -1,12 +1,16 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
+import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class contains all the methods that interact with the API
@@ -15,9 +19,60 @@ import java.util.List;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class BusinessLogic {
-    private static final MastodonClient client = new MastodonClient.Builder("mastodon.social")
-            .accessToken(System.getenv("TOKEN"))
+    private static MastodonClient client = new MastodonClient.Builder("mastodon.social")
             .build();
+    private static String id;
+    public static String getUserId() {return id;}
+
+
+    public static Set<Account> getLoggableAccounts() {
+        var accounts = new HashSet<Account>();
+
+        try {
+            for (String id : DBManager.getLoggableAccountIds())
+                accounts.add(getAccount(id));
+        } catch (SQLException | BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+
+        return accounts;
+    }
+
+    public static void addAccountLogin(String id, String token) {
+        try {
+            DBManager.storeAccount(id, token);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void removeAccountLogin(String id) {
+        try {
+            DBManager.deleteAccount(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void login(Account account) {
+        String id = account.getId();
+        try {
+            String token = DBManager.getAccountToken(id);
+            if (token == null) throw new IllegalArgumentException("No account stored with this ID");
+
+            DBManager.close(); // It will not be needed once the user is logged in
+
+            BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
+                    .accessToken(token)
+                    .build();
+
+            BusinessLogic.id = id;
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
     /**

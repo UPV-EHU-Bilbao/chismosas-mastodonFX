@@ -13,14 +13,23 @@ import java.io.IOException;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainApplication extends Application {
+
+    private static MainApplication instance;
+    private Stage mainStage;
+    public static void setScene(Scene scene) {instance.mainStage.setScene(scene);}
+    public static void setTitle(String title) {instance.mainStage.setTitle(title);}
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        MainApplication.instance = this;
+        this.mainStage = stage;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("MastodonFX");
-        stage.setScene(scene);
-        stage.show();
-        stage.requestFocus();
+        mainStage.setTitle("MastodonFX - Account selection");
+        mainStage.setScene(scene);
+        mainStage.show();
+        mainStage.requestFocus();
     }
 
     public static void main(String[] args) {

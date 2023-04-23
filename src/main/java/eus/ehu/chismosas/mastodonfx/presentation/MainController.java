@@ -24,7 +24,7 @@ public class MainController {
     private static MainController instance;
     public static MainController getInstance() {return instance;}
 
-    private final String userID = System.getenv("ID");
+    private final String userID = BusinessLogic.getUserId();
 
     @FXML
     private ToolBar bookmarksBtn;
@@ -103,9 +103,7 @@ public class MainController {
         followingListView.setStyle("-fx-control-inner-background: #18181b");
         followersListView.setStyle("-fx-control-inner-background: #18181b");
 
-        publishButton.disableProperty().bind(
-                Bindings.isEmpty(newTootArea.textProperty())
-        );
+        publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
         showAccountToots();
         updateFollowingListView();
