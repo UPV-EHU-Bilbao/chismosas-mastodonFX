@@ -1,7 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,6 +24,7 @@ public class MainController {
     public static MainController getInstance() {return instance;}
 
     private final String userID = BusinessLogic.getUserId();
+    private String currentID;
 
     @FXML
     private ToolBar bookmarksBtn;
@@ -77,6 +77,11 @@ public class MainController {
     @FXML
     private Button publishButton;
 
+    @FXML
+    private Button followBtn;
+
+
+
 
     private ListView<Status> tootListView;
     private Pageable<Status> homeTimeline;
@@ -105,11 +110,10 @@ public class MainController {
 
         publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
+        currentID = userID;
+        updateBanner();
         showAccountToots();
-        updateFollowingListView();
-        updateFollowersListView();
         mainPane.setCenter(tootListView);
-        setProfile();
 
         CompletableFuture.runAsync(() -> {
             try {
@@ -118,6 +122,7 @@ public class MainController {
                 throw new RuntimeException(e);
             }
         });
+
     }
 
     /**
@@ -125,7 +130,7 @@ public class MainController {
      */
     @FXML
     void mouseProfile() {
-        sceneSwitch("Profile");
+        showProfile(userID);
     }
 
     /**
@@ -156,9 +161,18 @@ public class MainController {
     private void sceneSwitch(String scene) {
         switch (scene) {
             case "Profile" -> {
-                profileBtn.setEffect(dropShadow);
+                if (currentID.equals(userID)) {
+                    profileBtn.setEffect(dropShadow);
+                    profileBtn.setStyle("-fx-background-color: #212124");
+                }
+                else {
+                    profileBtn.setEffect(null);
+                    profileBtn.setStyle("-fx-background-color: #18181b");
+                }
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
+                followingBtn.setStyle("-fx-background-color:  #18181b");
+                followersBtn.setStyle("-fx-background-color:  #18181b");
 
                 showAccountToots();
                 mainPane.setCenter(tootListView);
@@ -175,13 +189,23 @@ public class MainController {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
+                followersBtn.setStyle("-fx-background-color:  #18181b");
+                profileBtn.setStyle("-fx-background-color: #18181b");
+                followingBtn.setStyle("-fx-background-color: #212124");
+
                 mainPane.setCenter(followingListView);
+                updateFollowingListView();
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
+                profileBtn.setStyle("-fx-background-color: #18181b");
+                followingBtn.setStyle("-fx-background-color: #18181b");
+                followersBtn.setStyle("-fx-background-color: #212124");
+
                 mainPane.setCenter(followersListView);
+                updateFollowersListView();
             }
         }
     }
@@ -191,7 +215,7 @@ public class MainController {
      */
     public void showAccountToots() {
         try {
-            var statusList = BusinessLogic.getStatuses(userID);
+            var statusList = BusinessLogic.getStatuses(currentID);
 
             // Process reblogs and filters out toots that we cannot display yet
             var statusIterator = statusList.listIterator();
@@ -225,7 +249,7 @@ public class MainController {
      */
     public void updateFollowingListView() {
         try {
-            var followingList = BusinessLogic.getFollowing(userID);
+            var followingList = BusinessLogic.getFollowing(currentID);
             var following = FXCollections.observableList(followingList);
             followingListView.setItems(following);
         } catch (BigBoneRequestException e) {
@@ -238,7 +262,7 @@ public class MainController {
      */
     public void updateFollowersListView() {
         try {
-            var followersList = BusinessLogic.getFollowers(userID);
+            var followersList = BusinessLogic.getFollowers(currentID);
             var followers = FXCollections.observableList(followersList);
             followersListView.setItems(followers);
         } catch (BigBoneRequestException e) {
@@ -249,17 +273,40 @@ public class MainController {
     /**
      * Sets the profile picture, username and display name of the user
      */
-    public void setProfile() {
+    public void updateBanner() {
         try {
-            var account = BusinessLogic.getAccount(userID);
+            var account = BusinessLogic.getAccount(currentID);
             profilePic.setImage(ImageCache.get(account.getAvatar()));
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
+            showFollowButton();
         }
         catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Shows the follow button if the user is not in their own profile
+     */
+    public void showFollowButton() {
+        if (userID.equals(currentID)) {
+            followBtn.setVisible(false);
+        } else {
+            try {
+                if(BusinessLogic.getRelationship(currentID).isFollowing()){
+                    followBtn.setText("Unfollow");
+                }
+                else{
+                    followBtn.setText("Follow");
+                }
+                followBtn.setVisible(true);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
 
     /**
      * Publishes the toot written in the text area
@@ -291,6 +338,32 @@ public class MainController {
                     throw new RuntimeException(e);
                 }
             }
+        }
+    }
+    /**
+     * Changes the profile to the given id
+     * @param id the id of the account to update
+     */
+    public void showProfile(String id) {
+
+        currentID = id;
+        updateBanner();
+        sceneSwitch("Profile");
+
+    }
+    @FXML
+    void followAccount() {
+        try {
+            if(!BusinessLogic.getRelationship(currentID).isFollowing()){
+                BusinessLogic.followAccount(currentID);
+                followBtn.setText("Unfollow");
+            }
+            else{
+                BusinessLogic.unfollowAccount(currentID);
+                followBtn.setText("Follow");
+            }
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -230,4 +230,15 @@ public class StatusCell extends ListCell<Status> {
             return(timeFormatterYear.format(creationDateTime));
 
     }
+
+
+    /**
+     * Method to go to the profile of the account
+     */
+    @FXML
+    public void goAccount(){
+        String id = account.getId();
+        MainController.getInstance().showProfile(id);
+    }
+
 }

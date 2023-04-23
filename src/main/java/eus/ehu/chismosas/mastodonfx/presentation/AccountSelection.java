@@ -68,9 +68,7 @@ public class AccountSelection{
         try {
             DBManager.storeAccount(id, token);
             accountsList.getItems().add(BusinessLogic.getAccount(id));
-            System.out.println("Account added");
         }catch (Exception e){
-            System.out.println("Couldn't add the account");
             e.printStackTrace();
         }
     }
@@ -108,7 +106,7 @@ public class AccountSelection{
             root.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getClickCount() == 2)
                     chooseAccount();
-            }); //TODO: Test if account is selected in the list when double clicking
+            });
 
             setText(null);
             setGraphic(root);
