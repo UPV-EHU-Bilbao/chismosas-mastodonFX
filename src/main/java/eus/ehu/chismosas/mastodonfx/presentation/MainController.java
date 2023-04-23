@@ -21,7 +21,7 @@ public class MainController {
     private static MainController instance;
     public static MainController getInstance() {return instance;}
 
-    private final String userID = System.getenv("ID");
+    private final String userID = BusinessLogic.getUserId();
 
     @FXML
     private ToolBar bookmarksBtn;
