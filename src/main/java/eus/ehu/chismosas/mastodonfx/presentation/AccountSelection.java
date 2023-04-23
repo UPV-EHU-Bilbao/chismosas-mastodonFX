@@ -2,16 +2,13 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import social.bigbone.api.entity.Account;
-import social.bigbone.api.entity.Application;
 
 import java.io.IOException;
 
@@ -48,7 +45,7 @@ public class AccountSelection{
         var account = accountsList.getSelectionModel().getSelectedItem();
 
         BusinessLogic.login(account);
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load());
             MainApplication.setScene(scene);

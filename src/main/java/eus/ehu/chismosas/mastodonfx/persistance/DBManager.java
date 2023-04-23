@@ -26,7 +26,6 @@ public class DBManager {
 
             Statement stmt = connection.createStatement();
             stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
-            System.out.println("Table created successfully");
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
