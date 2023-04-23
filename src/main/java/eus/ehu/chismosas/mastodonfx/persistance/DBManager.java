@@ -22,10 +22,12 @@ public class DBManager {
             SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();
             sqLiteDataSource.setUrl("jdbc:sqlite:AccountTokens.db");
             dataSource = sqLiteDataSource;
-            DBManager.open();
+            connection = dataSource.getConnection();
 
             Statement stmt = connection.createStatement();
             stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
+
+            prepareStatements();
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -33,12 +35,16 @@ public class DBManager {
     }
 
 
-    public static void open() throws SQLException {
-        connection = dataSource.getConnection();
+    private static void prepareStatements() throws SQLException {
         selectAccountIds = connection.prepareStatement("SELECT id FROM Account");
         insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
         deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
         getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
+    }
+
+    public static void open() throws SQLException {
+        connection = dataSource.getConnection();
+        prepareStatements();
     }
 
     public static void close() throws SQLException {
