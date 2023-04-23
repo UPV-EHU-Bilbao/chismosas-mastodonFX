@@ -130,6 +130,7 @@ public class MainController {
         setProfile(userID);
         updateTootListView(userID);
         sceneSwitch("Toots");
+        followBtn.setVisible(false);
     }
 
     /**
@@ -174,6 +175,7 @@ public class MainController {
                 followingBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followingListView);
                 updateFollowingListView(id);
+                visibilityFollowButton(id);
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
@@ -184,6 +186,7 @@ public class MainController {
                 followersBtn.setStyle("-fx-background-color: #212124");
                 mainPane.setCenter(followersListView);
                 updateFollowersListView(id);
+                visibilityFollowButton(id);
             }
         }
     }
@@ -228,6 +231,7 @@ public class MainController {
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
+        visibilityFollowButton(id);
     }
 
     /**
@@ -241,6 +245,7 @@ public class MainController {
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
+        visibilityFollowButton(id);
     }
 
     /**
@@ -252,11 +257,24 @@ public class MainController {
             profilePic.setImage(ImageCache.get(account.getAvatar()));
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
+            visibilityFollowButton(id);
         }
         catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Shows the follow button if the user is not the current user
+     */
+    public void visibilityFollowButton(String id) {
+        if (userID.equals(id)) {
+            followBtn.setVisible(false);
+        } else {
+            followBtn.setVisible(true);
+        }
+    }
+
+
 
     /**
      * Publishes the toot written in the text area
@@ -311,6 +329,7 @@ public class MainController {
         } catch (BigBoneRequestException e) {
             e.printStackTrace();
         }
+        visibilityFollowButton(id);
 
     }
     @FXML
