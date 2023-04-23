@@ -160,11 +160,11 @@
                </effect>
                <Image url="@icons/logo.png" />
             </ImageView>
-            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" opacity="0.4" prefHeight="39.0" prefWidth="137.0" style="-fx-background-color: #18181b;">
+            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0" style="-fx-background-color: #18181b;">
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/settings.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
+               <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>

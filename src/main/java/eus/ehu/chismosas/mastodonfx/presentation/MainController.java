@@ -4,6 +4,9 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
@@ -11,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
+
+import java.io.IOException;
 
 /**
  * This class is used to control the main view of the application
@@ -78,13 +83,15 @@ public class MainController {
     private ListView<Status> tootListView;
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
+
+    private Scene settingsScene;
     private DropShadow dropShadow;
 
     /**
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
         instance = this;
 
         tootListView = new ListView<>();
@@ -94,6 +101,8 @@ public class MainController {
         followersListView = new ListView<>();
         followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+        settingsScene = new Scene(loader.load());
 
         tootListView.setStyle("-fx-control-inner-background: #18181b");
         followingListView.setStyle("-fx-control-inner-background: #18181b");
@@ -134,6 +143,9 @@ public class MainController {
         sceneSwitch("Followers");
     }
 
+    @FXML
+    void mouseSettings() { sceneSwitch("Settings");}
+
 
     /**
      * changes the main scene's center to the asked scene
@@ -145,20 +157,31 @@ public class MainController {
                 profileBtn.setEffect(dropShadow);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(null);
+                settingsBtn.setEffect(null);
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(dropShadow);
                 followersBtn.setEffect(null);
+                settingsBtn.setEffect(null);
                 mainPane.setCenter(followingListView);
             }
             case "Followers" -> {
                 profileBtn.setEffect(null);
                 followingBtn.setEffect(null);
                 followersBtn.setEffect(dropShadow);
+                settingsBtn.setEffect(null);
                 mainPane.setCenter(followersListView);
             }
+            case "Settings" -> {
+                profileBtn.setEffect(null);
+                followingBtn.setEffect(null);
+                followersBtn.setEffect(null);
+                settingsBtn.setEffect(dropShadow);
+                mainPane.setCenter(settingsScene.getRoot());
+            }
+
         }
     }
 
