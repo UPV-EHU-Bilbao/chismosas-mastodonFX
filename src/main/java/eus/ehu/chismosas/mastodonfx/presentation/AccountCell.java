@@ -21,6 +21,7 @@ public class AccountCell extends ListCell<Account> {
 
 
     private static AccountCell instance;
+
     public static AccountCell getInstance() {return instance;}
 
     @FXML
@@ -80,33 +81,31 @@ public class AccountCell extends ListCell<Account> {
         setGraphic(loader.getRoot());
 
         try {
-        if(!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()){
-            followBtn.setVisible(true);
-            followBtn.setText("Unfollow");
+            if (!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
+                followBtn.setVisible(true);
+                followBtn.setText("Unfollow");
+            } else if (!System.getenv("ID").equals(getItem().getId())) {
+                followBtn.setVisible(true);
+                followBtn.setText("Follow");
+            } else if (System.getenv("ID").equals(getItem().getId())) followBtn.setVisible(false);
+        } catch (BigBoneRequestException e) {
+            e.printStackTrace();
         }
-        else if (!System.getenv("ID").equals(getItem().getId())){
-            followBtn.setVisible(true);
-            followBtn.setText("Follow");
-        }
-        else if (System.getenv("ID").equals(getItem().getId())) followBtn.setVisible(false);
-    } catch (BigBoneRequestException e) {
-        e.printStackTrace();
-    }
     }
 
     /**
      * Follow the account on which the button is clicked
+     *
      * @param event .
      */
     @FXML
     void followAccount() {
         String id = getItem().getId();
         try {
-            if(!BusinessLogic.getRelationship(getItem().getId()).isFollowing()){
+            if (!BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
                 BusinessLogic.followAccount(id);
                 followBtn.setText("Unfollow");
-            }
-            else{
+            } else {
                 BusinessLogic.unfollowAccount(id);
                 followBtn.setText("Follow");
             }
@@ -115,6 +114,7 @@ public class AccountCell extends ListCell<Account> {
             e.printStackTrace();
         }
     }
+
     /**
      * Method to go to the profile of the account
      */

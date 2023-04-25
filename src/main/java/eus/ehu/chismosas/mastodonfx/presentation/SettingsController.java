@@ -40,11 +40,10 @@ public class SettingsController {
     @FXML
     public void changeUsername(ActionEvent event) {
         String user = usernameField.getText();
-        try{
+        try {
             BusinessLogic.changeUsername(user);
             MainController.getInstance().updateBanner();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             usernameField.setText("Error");
         }
     }

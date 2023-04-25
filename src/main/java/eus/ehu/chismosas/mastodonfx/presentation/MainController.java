@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class MainController {
     private static MainController instance;
+
     public static MainController getInstance() {return instance;}
 
     private final String userID = BusinessLogic.getUserId();
@@ -84,8 +85,6 @@ public class MainController {
     private Button followBtn;
 
 
-
-
     private ListView<Status> tootListView;
     private Pageable<Status> homeTimeline;
     private ListView<Account> followersListView;
@@ -98,7 +97,7 @@ public class MainController {
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
-    void initialize(){
+    void initialize() {
         instance = this;
 
         tootListView = new ListView<>();
@@ -157,7 +156,9 @@ public class MainController {
     }
 
     @FXML
-    void mouseSettings() { sceneSwitch("Settings");}
+    void mouseSettings() {
+        sceneSwitch("Settings");
+    }
 
     @FXML
     void mouseHome() {
@@ -166,6 +167,7 @@ public class MainController {
 
     /**
      * changes the main scene's center to the asked scene
+     *
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
@@ -175,8 +177,7 @@ public class MainController {
                 if (currentID.equals(userID)) {
                     profileBtn.setEffect(dropShadow);
                     profileBtn.setStyle("-fx-background-color: #212124");
-                }
-                else {
+                } else {
                     profileBtn.setEffect(null);
                     profileBtn.setStyle("-fx-background-color: #18181b");
                 }
@@ -259,8 +260,7 @@ public class MainController {
 
             var items = FXCollections.observableArrayList(statusList);
             tootListView.setItems(items);
-        }
-        catch (BigBoneRequestException e) {
+        } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
@@ -306,11 +306,11 @@ public class MainController {
             userNameLabel.setText("@" + account.getUsername());
             displayNameLabel.setText(account.getDisplayName());
             showFollowButton();
-        }
-        catch (BigBoneRequestException e) {
+        } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * Shows the follow button if the user is not in their own profile
      */
@@ -319,10 +319,9 @@ public class MainController {
             followBtn.setVisible(false);
         } else {
             try {
-                if(BusinessLogic.getRelationship(currentID).isFollowing()){
+                if (BusinessLogic.getRelationship(currentID).isFollowing()) {
                     followBtn.setText("Unfollow");
-                }
-                else{
+                } else {
                     followBtn.setText("Follow");
                 }
                 followBtn.setVisible(true);
@@ -331,7 +330,6 @@ public class MainController {
             }
         }
     }
-
 
 
     /**
@@ -350,6 +348,7 @@ public class MainController {
 
     /**
      * Requests the status with the given id and updates it in the list
+     *
      * @param id the id of the status to update
      */
     public void updateStatus(String id) {
@@ -366,6 +365,7 @@ public class MainController {
             }
         }
     }
+
     public void settingsSceneLoader() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
@@ -374,7 +374,8 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
-    public void lightButton(){
+
+    public void lightButton() {
         mainPane.setStyle("-fx-background-color: #ffffff");
         userNameLabel.setStyle("-fx-text-fill: #000000");
         displayNameLabel.setStyle("-fx-text-fill: #000000");
@@ -386,7 +387,8 @@ public class MainController {
         followingListView.setStyle("-fx-background-color: #ffffff");
         followersListView.setStyle("-fx-background-color: #ffffff");
     }
-    public void darkButton(){
+
+    public void darkButton() {
         mainPane.setStyle("-fx-background-color: #18181b");
         userNameLabel.setStyle("-fx-text-fill: #ffffff");
         displayNameLabel.setStyle("-fx-text-fill: #ffffff");
@@ -398,8 +400,10 @@ public class MainController {
         followingListView.setStyle("-fx-background-color: #18181b");
         followersListView.setStyle("-fx-background-color: #18181b");
     }
+
     /**
      * Changes the profile to the given id
+     *
      * @param id the id of the account to update
      */
     public void showProfile(String id) {
@@ -409,14 +413,14 @@ public class MainController {
         sceneSwitch("Profile");
 
     }
+
     @FXML
     void followAccount() {
         try {
-            if(!BusinessLogic.getRelationship(currentID).isFollowing()){
+            if (!BusinessLogic.getRelationship(currentID).isFollowing()) {
                 BusinessLogic.followAccount(currentID);
                 followBtn.setText("Unfollow");
-            }
-            else{
+            } else {
                 BusinessLogic.unfollowAccount(currentID);
                 followBtn.setText("Follow");
             }

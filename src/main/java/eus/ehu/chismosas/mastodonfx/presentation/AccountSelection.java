@@ -10,7 +10,7 @@ import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 
-public class AccountSelection{
+public class AccountSelection {
 
 
     @FXML
@@ -54,9 +54,9 @@ public class AccountSelection{
         String id = newID.getText();
         String token = newToken.getText();
         try {
-           BusinessLogic.addAccountLogin(id, token);
+            BusinessLogic.addAccountLogin(id, token);
             accountsList.getItems().add(BusinessLogic.getAccount(id));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

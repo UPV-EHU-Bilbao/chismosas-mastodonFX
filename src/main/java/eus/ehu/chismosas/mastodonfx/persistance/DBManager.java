@@ -28,8 +28,7 @@ public class DBManager {
             stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
 
             prepareStatements();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -23,6 +23,7 @@ public class BusinessLogic {
     private static MastodonClient client = new MastodonClient.Builder("mastodon.social")
             .build();
     private static String id;
+
     public static String getUserId() {return id;}
 
 
@@ -67,8 +68,7 @@ public class BusinessLogic {
                     .accessToken(token)
                     .build();
             BusinessLogic.id = id;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -131,6 +131,7 @@ public class BusinessLogic {
 
     /**
      * Posts a status with the current user token
+     *
      * @param content Content of the status
      */
     public static void postStatus(String content) throws BigBoneRequestException {
@@ -140,6 +141,7 @@ public class BusinessLogic {
 
     /**
      * Marks a status as favourite
+     *
      * @param id Id of the status to favourite
      */
     public static void favouriteStatus(String id) throws BigBoneRequestException {
@@ -149,6 +151,7 @@ public class BusinessLogic {
 
     /**
      * Unfavourites a status
+     *
      * @param id Id of the status to unfavourite
      */
     public static void unfavouriteStatus(String id) throws BigBoneRequestException {
@@ -158,6 +161,7 @@ public class BusinessLogic {
 
     /**
      * Gets a status
+     *
      * @param id Id of the status to get
      * @return Status with the given id
      */
@@ -170,11 +174,10 @@ public class BusinessLogic {
         if (username.length() < 1) {
             throw new IllegalArgumentException("Username too short");
         }
-        try{
+        try {
             var request = client.accounts().updateCredentials(username, null, null, null);
             request.execute();
-        }
-        catch (BigBoneRequestException e){
+        } catch (BigBoneRequestException e) {
             throw new IllegalArgumentException("Username already taken");
         }
     }
@@ -196,6 +199,7 @@ public class BusinessLogic {
 
     /**
      * Follows the account to which the id belongs
+     *
      * @param id of the account to follow
      * @return relationship the user doing the action with the account following
      * @throws BigBoneRequestException
@@ -208,22 +212,24 @@ public class BusinessLogic {
 
     /**
      * Unfollows the account to which the id belongs
+     *
      * @param id of the account to unfollow
      * @return relationship the user doing the action with the account unfollowing
      * @throws BigBoneRequestException
      */
-    public static Relationship unfollowAccount(String id) throws BigBoneRequestException{
+    public static Relationship unfollowAccount(String id) throws BigBoneRequestException {
         var request = client.accounts().unfollowAccount(id);
         return request.execute();
     }
 
     /**
      * Gets the relationship with the acount given
+     *
      * @param id of the account
      * @return a list with the relationships
      * @throws BigBoneRequestException
      */
-    public static Relationship getRelationship(String id) throws BigBoneRequestException{
+    public static Relationship getRelationship(String id) throws BigBoneRequestException {
         var request = client.accounts().getRelationships(List.of(id));
         return request.execute().get(0);
     }
