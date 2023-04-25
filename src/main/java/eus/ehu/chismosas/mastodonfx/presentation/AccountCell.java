@@ -70,13 +70,13 @@ public class AccountCell extends ListCell<Account> {
         setGraphic(loader.getRoot());
 
         try {
-            if (!System.getenv("ID").equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
+            if (!BusinessLogic.getUserId().equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
                 followBtn.setVisible(true);
                 followBtn.setText("Unfollow");
-            } else if (!System.getenv("ID").equals(getItem().getId())) {
+            } else if (!BusinessLogic.getUserId().equals(getItem().getId())) {
                 followBtn.setVisible(true);
                 followBtn.setText("Follow");
-            } else if (System.getenv("ID").equals(getItem().getId())) followBtn.setVisible(false);
+            } else if (BusinessLogic.getUserId().equals(getItem().getId())) followBtn.setVisible(false);
         } catch (BigBoneRequestException e) {
             e.printStackTrace();
         }
