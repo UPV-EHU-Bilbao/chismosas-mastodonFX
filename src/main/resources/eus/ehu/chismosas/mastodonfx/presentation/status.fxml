@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<!--suppress XmlHighlighting-->
 <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="385.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
@@ -102,19 +103,18 @@
             <Insets bottom="90.0" left="5.0" />
         </GridPane.margin>
     </ImageView>
-   <TextFlow maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-      <children>
-         <Text fx:id="contentText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-            <font>
-               <Font size="14.0" />
-            </font>
-         </Text>
-      </children>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-      <GridPane.margin>
-         <Insets top="10.0" />
-      </GridPane.margin>
-   </TextFlow>
+    <TextFlow maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
+              GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+        <GridPane.margin>
+            <Insets top="10.0"/>
+        </GridPane.margin>
+        <Text fx:id="contentText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+           <font>
+               <Font size="14.0"/>
+           </font>
+        </Text>
+    </TextFlow>
 </GridPane>

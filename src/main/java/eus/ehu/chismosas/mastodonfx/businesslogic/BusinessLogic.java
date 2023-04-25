@@ -142,7 +142,7 @@ public class BusinessLogic {
     /**
      * Marks a status as favourite
      *
-     * @param id Id of the status to favourite
+     * @param id id of the status to favourite
      */
     public static void favouriteStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().favouriteStatus(id);
@@ -152,7 +152,7 @@ public class BusinessLogic {
     /**
      * Unfavourites a status
      *
-     * @param id Id of the status to unfavourite
+     * @param id id of the status to unfavourite
      */
     public static void unfavouriteStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().unfavouriteStatus(id);
@@ -162,7 +162,7 @@ public class BusinessLogic {
     /**
      * Gets a status
      *
-     * @param id Id of the status to get
+     * @param id id of the status to get
      * @return Status with the given id
      */
     public static Status getStatus(String id) throws BigBoneRequestException {
@@ -170,7 +170,7 @@ public class BusinessLogic {
         return request.execute();
     }
 
-    public static void changeUsername(String username) throws BigBoneRequestException {
+    public static void changeUsername(String username) {
         if (username.length() < 1) {
             throw new IllegalArgumentException("Username too short");
         }
@@ -223,7 +223,7 @@ public class BusinessLogic {
     }
 
     /**
-     * Gets the relationship with the acount given
+     * Gets the relationship with the account given
      *
      * @param id of the account
      * @return a list with the relationships

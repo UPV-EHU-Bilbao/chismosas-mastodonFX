@@ -20,7 +20,6 @@ import social.bigbone.api.exception.BigBoneRequestException;
 public class AccountCell extends ListCell<Account> {
 
 
-    private static AccountCell instance;
     @FXML
     private ImageView avatar;
     @FXML
@@ -35,7 +34,6 @@ public class AccountCell extends ListCell<Account> {
     private Button followBtn;
     private FXMLLoader loader;
 
-    public static AccountCell getInstance() {return instance;}
 
     /**
      * Updates the account to be shown in the list
@@ -46,7 +44,6 @@ public class AccountCell extends ListCell<Account> {
     @Override
     protected void updateItem(Account item, boolean empty) {
 
-        instance = this;
         super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
@@ -88,7 +85,6 @@ public class AccountCell extends ListCell<Account> {
     /**
      * Follow the account on which the button is clicked
      *
-     * @param event .
      */
     @FXML
     void followAccount() {

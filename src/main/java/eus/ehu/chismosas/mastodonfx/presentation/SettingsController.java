@@ -7,8 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
-
 public class SettingsController {
     @FXML
     private RadioButton darkBtn;
@@ -31,7 +29,7 @@ public class SettingsController {
     }
 
     @FXML
-    public void selectLightTheme(ActionEvent event) throws IOException {
+    public void selectLightTheme(ActionEvent event) {
         darkBtn.setSelected(false);
         MainController.getInstance().lightButton();
         //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("light.css").toExternalForm());

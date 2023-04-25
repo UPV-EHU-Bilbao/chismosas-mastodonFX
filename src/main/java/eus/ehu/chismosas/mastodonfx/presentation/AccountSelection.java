@@ -28,7 +28,6 @@ public class AccountSelection {
     @FXML
     private TextField newToken;
 
-    private Parent root;
 
     @FXML
     private void initialize() {

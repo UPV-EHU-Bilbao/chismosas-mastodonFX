@@ -173,7 +173,7 @@ public class MainController {
                 followersBtn.setEffect(null);
                 settingsBtn.setEffect(null);
 
-                showHometimeline();
+                showHomeTimeline();
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
@@ -243,7 +243,7 @@ public class MainController {
         }
     }
 
-    public void showHometimeline() {
+    public void showHomeTimeline() {
         var items = FXCollections.observableArrayList(homeTimeline.getPart());
         tootListView.setItems(items);
     }
