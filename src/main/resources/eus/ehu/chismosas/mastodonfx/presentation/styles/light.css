@@ -1,0 +1,110 @@
+
+/*STYLES FOR CLASES*/
+
+.root{
+    -fx-background-color: white;
+    -fx-font-family: "Ebrima";
+}
+
+.border-pane{
+    -fx-background-color: white;
+}
+
+.label{
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+.tool-bar{
+    -fx-background-color: white;
+}
+
+.tool-bar:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+.tool-bar:pressed{
+    -fx-background-color:  #e7e7e8;
+}
+
+.button{
+    -fx-background-color: white;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.button:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+.button:pressed{
+    -fx-background-color:  #e7e7e8;
+}
+
+.text-field{
+    -fx-background-color: #e7e7e8;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.text-area{
+    -fx-background-color: #e7e7e8;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.scroll-bar{
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.radio-button{
+    -fx-text-fill: #000000;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.list-view{
+    -fx-background-color: white;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.list-cell{
+    -fx-background-color: white;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+
+
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#followBtn{
+    -fx-background-color:  transparent;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+#followBtn:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+#publishButton{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+#publishButton:hover{
+    -fx-background-color: #6c5de3;
+}
+
+/* Path: src\main\resources\eus\ehu\chismosas\mastodonfx\presentation\styles\light.css */

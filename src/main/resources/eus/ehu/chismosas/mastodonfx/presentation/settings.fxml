@@ -17,7 +17,7 @@
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="723.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.SettingsController">
    <children>
-      <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
+      <HBox prefHeight="183.0" prefWidth="600.0">
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
               <columnConstraints>
@@ -30,7 +30,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ToolBar prefHeight="69.0" prefWidth="220.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+                  <ToolBar prefHeight="69.0" prefWidth="220.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -58,7 +58,7 @@
             </GridPane>
          </children>
       </HBox>
-      <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
+      <HBox prefHeight="183.0" prefWidth="600.0">
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
                <columnConstraints>
@@ -71,7 +71,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ToolBar prefHeight="69.0" prefWidth="220.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+                  <ToolBar prefHeight="69.0" prefWidth="220.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -94,7 +94,7 @@
             </GridPane>
          </children>
       </HBox>
-      <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
+      <HBox prefHeight="183.0" prefWidth="600.0">
          <children>
             <GridPane prefHeight="183.0" prefWidth="600.0">
                <columnConstraints>
@@ -107,7 +107,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ToolBar prefHeight="60.0" prefWidth="249.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="1">
+                  <ToolBar prefHeight="60.0" prefWidth="249.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -121,7 +121,7 @@
                         </Label>
                      </items>
                   </ToolBar>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #18181b;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <items>
                         <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="239.0" promptText="Change your username" />
                       <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" text="Done" />
@@ -131,9 +131,9 @@
             </GridPane>
          </children>
       </HBox>
-      <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">
+      <HBox prefHeight="183.0" prefWidth="600.0">
          <children>
-            <ToolBar onMouseClicked="#logOut" prefHeight="76.0" prefWidth="185.0" style="-fx-background-color: #18181b;">
+            <ToolBar onMouseClicked="#logOut" prefHeight="76.0" prefWidth="185.0">
                <items>
                   <ImageView fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -95,13 +95,17 @@ public class MainController {
     private Scene settingsScene;
     private DropShadow dropShadow;
 
+    private String lightTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/light.css").toExternalForm();
+
+    private String darkTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/dark.css").toExternalForm();
     /**
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
     void initialize(){
         instance = this;
-
+        mainPane.getStylesheets().clear();
+        mainPane.getStylesheets().add(darkTheme);
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
         followingListView = new ListView<>();
@@ -173,60 +177,62 @@ public class MainController {
         var settingsRoot = settingsScene.getRoot();
         switch (scene) {
             case "Profile" -> {
+                /**
                 if (currentID.equals(userID)) {
-                    profileBtn.setEffect(dropShadow);
+                   // profileBtn.setEffect(dropShadow);
                     profileBtn.setStyle("-fx-background-color: #212124");
                 }
                 else {
-                    profileBtn.setEffect(null);
+                  //  profileBtn.setEffect(null);
                     profileBtn.setStyle("-fx-background-color: #18181b");
                 }
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                followingBtn.setStyle("-fx-background-color:  #18181b");
-                followersBtn.setStyle("-fx-background-color:  #18181b");
+                 */
+                //followingBtn.setEffect(null);
+                //followersBtn.setEffect(null);
+                //followingBtn.setStyle("-fx-background-color:  #18181b");
+                //followersBtn.setStyle("-fx-background-color:  #18181b");
 
                 showAccountToots();
                 mainPane.setCenter(tootListView);
             }
             case "HomeTimeline" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(null);
+              //  profileBtn.setEffect(null);
+              //  followingBtn.setEffect(null);
+              //  followersBtn.setEffect(null);
+              //  settingsBtn.setEffect(null);
 
                 showHometimeline();
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(dropShadow);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(null);
-                followersBtn.setStyle("-fx-background-color:  #18181b");
-                profileBtn.setStyle("-fx-background-color: #18181b");
-                followingBtn.setStyle("-fx-background-color: #212124");
+              //  profileBtn.setEffect(null);
+              //  followingBtn.setEffect(dropShadow);
+              // followersBtn.setEffect(null);
+              //  settingsBtn.setEffect(null);
+              //  followersBtn.setStyle("-fx-background-color:  #18181b");
+              //  profileBtn.setStyle("-fx-background-color: #18181b");
+              //  followingBtn.setStyle("-fx-background-color: #212124");
 
                 mainPane.setCenter(followingListView);
                 updateFollowingListView();
             }
             case "Followers" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(dropShadow);
-                settingsBtn.setEffect(null);
-                profileBtn.setStyle("-fx-background-color: #18181b");
-                followingBtn.setStyle("-fx-background-color: #18181b");
-                followersBtn.setStyle("-fx-background-color: #212124");
+              //  profileBtn.setEffect(null);
+              //  followingBtn.setEffect(null);
+              //  followersBtn.setEffect(dropShadow);
+              //  settingsBtn.setEffect(null);
+              //  profileBtn.setStyle("-fx-background-color: #18181b");
+             //   followingBtn.setStyle("-fx-background-color: #18181b");
+              //  followersBtn.setStyle("-fx-background-color: #212124");
 
                 mainPane.setCenter(followersListView);
                 updateFollowersListView();
             }
             case "Settings" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(dropShadow);
+             //   profileBtn.setEffect(null);
+             //   followingBtn.setEffect(null);
+             //   followersBtn.setEffect(null);
+             //   settingsBtn.setEffect(dropShadow);
                 mainPane.setCenter(settingsRoot);
 
                 //BUG: If I don't update the pane the settings window doesn't show up
@@ -376,28 +382,12 @@ public class MainController {
         }
     }
     public void lightButton(){
-        mainPane.setStyle("-fx-background-color: #ffffff");
-        userNameLabel.setStyle("-fx-text-fill: #000000");
-        displayNameLabel.setStyle("-fx-text-fill: #000000");
-        followersBtn.opacityProperty().setValue(0.4);
-        followingBtn.opacityProperty().setValue(0.4);
-        profileBtn.opacityProperty().setValue(0.4);
-        settingsBtn.opacityProperty().setValue(0.4);
-        tootListView.setStyle("-fx-background-color: #ffffff");
-        followingListView.setStyle("-fx-background-color: #ffffff");
-        followersListView.setStyle("-fx-background-color: #ffffff");
+        mainPane.getStylesheets().clear();
+        mainPane.getStylesheets().add(lightTheme);
     }
     public void darkButton(){
-        mainPane.setStyle("-fx-background-color: #18181b");
-        userNameLabel.setStyle("-fx-text-fill: #ffffff");
-        displayNameLabel.setStyle("-fx-text-fill: #ffffff");
-        followersBtn.opacityProperty().setValue(1);
-        followingBtn.opacityProperty().setValue(1);
-        profileBtn.opacityProperty().setValue(1);
-        settingsBtn.opacityProperty().setValue(1);
-        tootListView.setStyle("-fx-background-color: #18181b");
-        followingListView.setStyle("-fx-background-color: #18181b");
-        followersListView.setStyle("-fx-background-color: #18181b");
+        mainPane.getStylesheets().clear();
+        mainPane.getStylesheets().add(darkTheme);
     }
     /**
      * Changes the profile to the given id

@@ -1,0 +1,107 @@
+
+/*STYLES FOR CLASES*/
+
+.root{
+    -fx-background-color:  #18181b;
+    -fx-font-family: "Ebrima";
+}
+
+.border-pane{
+    -fx-background-color:  #18181b;
+}
+
+.label{
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+}
+.tool-bar{
+    -fx-background-color: #18181b;
+}
+
+.tool-bar:hover{
+    -fx-background-color:  #212124;
+}
+
+.tool-bar:pressed{
+    -fx-background-color:  #212124;
+}
+
+.button{
+    -fx-background-color: #18181b;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.button:hover{
+    -fx-background-color:  #212124;
+}
+
+.button:pressed{
+    -fx-background-color:  #212124;
+}
+
+.text-field{
+    -fx-background-color: #212124;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.text-area{
+    -fx-background-color: #212124;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.scroll-bar{
+    -fx-background-radius: 0;
+    -fx-background-color: #212124;
+}
+
+.radio-button{
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.list-view{
+    -fx-background-color: #18181b;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+.list-cell{
+    -fx-background-color: #18181b;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+
+
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#followBtn{
+    -fx-background-color:  transparent;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+#followBtn:hover{
+    -fx-background-color:  #212124;
+}
+#publishButton{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+#publishButton:hover{
+    -fx-background-color: #6c5de3;
+}
+
+
