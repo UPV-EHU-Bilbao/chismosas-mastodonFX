@@ -24,74 +24,52 @@ import java.util.concurrent.CompletableFuture;
  */
 public class MainController {
     private static MainController instance;
-
-    public static MainController getInstance() {return instance;}
-
     private final String userID = BusinessLogic.getUserId();
     private String currentID;
-
     @FXML
     private ToolBar bookmarksBtn;
-
     @FXML
     private Label displayNameLabel;
-
     @FXML
     private ToolBar exploreBtn;
-
     @FXML
     private ToolBar favsBtn;
-
     @FXML
     private ToolBar favsBtn1;
-
     @FXML
     private Button followersBtn;
-
     @FXML
     private Button followingBtn;
-
     @FXML
     private BorderPane mainPane;
-
     @FXML
     private ToolBar msgBtn;
-
     @FXML
     private TextArea newTootArea;
-
     @FXML
     private ToolBar notificationsBtn;
-
     @FXML
     private ToolBar profileBtn;
-
     @FXML
     private ImageView profilePic;
-
     @FXML
     private TextField searcher;
-
     @FXML
     private ToolBar settingsBtn;
-
     @FXML
     private Label userNameLabel;
-
     @FXML
     private Button publishButton;
-
     @FXML
     private Button followBtn;
-
-
     private ListView<Status> tootListView;
     private Pageable<Status> homeTimeline;
     private ListView<Account> followersListView;
     private ListView<Account> followingListView;
-
     private Scene settingsScene;
     private DropShadow dropShadow;
+
+    public static MainController getInstance() {return instance;}
 
     /**
      * Initialize the main controller by setting the toots in a list

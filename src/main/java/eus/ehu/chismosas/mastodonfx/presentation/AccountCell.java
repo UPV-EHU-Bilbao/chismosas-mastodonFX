@@ -21,29 +21,21 @@ public class AccountCell extends ListCell<Account> {
 
 
     private static AccountCell instance;
-
-    public static AccountCell getInstance() {return instance;}
-
     @FXML
     private ImageView avatar;
-
     @FXML
     private Label content;
-
     @FXML
     private Label date;
-
     @FXML
     private Label displayName;
-
     @FXML
     private Label userName;
-
     @FXML
     private Button followBtn;
-
     private FXMLLoader loader;
 
+    public static AccountCell getInstance() {return instance;}
 
     /**
      * Updates the account to be shown in the list
