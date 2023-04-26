@@ -39,7 +39,7 @@ public class SettingsController {
     public void changeUsername(ActionEvent event) {
         String user = usernameField.getText();
         try {
-            BusinessLogic.changeUsername(user);
+            BusinessLogic.changeDisplayName(user);
             MainController.getInstance().updateBanner();
         } catch (Exception e) {
             usernameField.setText("Error");

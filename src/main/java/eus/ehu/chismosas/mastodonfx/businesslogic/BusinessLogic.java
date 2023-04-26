@@ -14,19 +14,68 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class contains all the methods that interact with the API
- * to get the data needed for the application
+ * This class is in charge of the application's business logic.
+ * It contains methods that interact with the Mastodon API, and with the database.
+ * <p>
+ * This class is used through its static methods.
  *
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class BusinessLogic {
-    private static MastodonClient client = new MastodonClient.Builder("mastodon.social")
-            .build();
+    /**
+     * Name of the Mastodon instance to use. By default, mastodon.social.
+     */
+    private static final String instanceName = "mastodon.social";
+
+    /**
+     * Client to use in interactions with the Mastodon API.
+     */
+    private static MastodonClient client = new MastodonClient.Builder(instanceName)
+                                                             .build();
+
     private static String id;
 
+    /**
+     * Returns the id of the logged-in Mastodon account.
+     * Will return null if {@link #login} has not been called.
+     *
+     * @return the id of the logged-in Mastodon account
+     */
     public static String getUserId() {return id;}
 
+    /**
+     * Stores an account's login information (id and token) to the database.
+     *
+     * @param id    Account id of the account to store
+     * @param token Access token of the account to store
+     */
+    public static void addAccountLogin(String id, String token) {
+        try {
+            DBManager.storeAccount(id, token);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    /**
+     * Removes an account's login information (id and token) from the database.
+     *
+     * @param id Account id of the account to remove
+     */
+    public static void removeAccountLogin(String id) {
+        try {
+            DBManager.deleteAccount(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Reads the accounts logins stored in the database, and
+     * returns the loggable accounts as a set of {@link Account} objects.
+     *
+     * @return a set of accounts that can be logged into
+     */
     public static Set<Account> getLoggableAccounts() {
         var accounts = new HashSet<Account>();
 
@@ -40,42 +89,37 @@ public class BusinessLogic {
         return accounts;
     }
 
-    public static void addAccountLogin(String id, String token) {
-        try {
-            DBManager.storeAccount(id, token);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void removeAccountLogin(String id) {
-        try {
-            DBManager.deleteAccount(id);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    /**
+     * Logs in into an account. {@code account} must correspond to one of
+     * the accounts stored in the database (obtained with {@link #getLoggableAccounts()}).
+     *
+     * @param account Account to log into
+     */
     public static void login(Account account) {
-        String id = account.getId();
+        String accountId = account.getId();
         try {
-            String token = DBManager.getAccountToken(id);
+            String token = DBManager.getAccountToken(accountId);
             if (token == null) throw new IllegalArgumentException("No account stored with this ID");
 
             DBManager.close(); // It will not be needed once the user is logged in
 
-            BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
-                    .accessToken(token)
-                    .build();
-            BusinessLogic.id = id;
+            id = accountId;
+            client = new MastodonClient.Builder(instanceName)
+                                       .accessToken(token)
+                                       .build();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Logs out of the current account.
+     */
     public static void logout() {
-        BusinessLogic.client = new MastodonClient.Builder("mastodon.social")
-                .build();
+        id = null;
+        client = new MastodonClient.Builder(instanceName)
+                                   .build();
 
         try {
             DBManager.open();
@@ -84,12 +128,33 @@ public class BusinessLogic {
         }
     }
 
+    /**
+     * Changes the display name of the logged account.
+     *
+     * @param name display name to set
+     */
+    public static void changeDisplayName(String name) throws BigBoneRequestException {
+        var request = client.accounts().updateCredentials(name, null, null, null);
+        request.execute();
+    }
 
     /**
-     * Get statuses from a user
+     * Returns the account corresponding to the given account id.
      *
-     * @param id User id to get statuses from
-     * @return List of statuses
+     * @param id id of the account to get
+     * @return the account corresponding to the given account id
+     */
+    public static Account getAccount(String id) throws BigBoneRequestException {
+        var request = client.accounts().getAccount(id);
+        return request.execute();
+    }
+
+    /**
+     * Returns a list of the last 20 statuses posted by the given account.
+     * Only returns public statuses and those that the logged user can see.
+     *
+     * @param id id of the account to get statuses from
+     * @return a list of the last 20 statuses posted by the account
      */
     public static List<Status> getStatuses(String id) throws BigBoneRequestException {
         var request = client.accounts().getStatuses(id);
@@ -97,10 +162,11 @@ public class BusinessLogic {
     }
 
     /**
-     * Get followers of a user
+     * Returns a list of the first 20 accounts that follow the
+     * given account, if network is not hidden by the account owner.
      *
-     * @param id User id to get followers from
-     * @return List of accounts that follow the user
+     * @param id id of the account to get followers from
+     * @return a list of the first 20 accounts that follow the given account
      */
     public static List<Account> getFollowers(String id) throws BigBoneRequestException {
         var request = client.accounts().getFollowers(id);
@@ -108,10 +174,11 @@ public class BusinessLogic {
     }
 
     /**
-     * Get users that a user follows
+     * Returns a list of the first 20 accounts that the given
+     * account is following, if network is not hidden by the account owner.
      *
-     * @param id User id to get following from
-     * @return List of accounts that the user follows
+     * @param id id of the account to get following from
+     * @return a list of the first 20 accounts that the given account is following
      */
     public static List<Account> getFollowing(String id) throws BigBoneRequestException {
         var request = client.accounts().getFollowing(id);
@@ -119,20 +186,42 @@ public class BusinessLogic {
     }
 
     /**
-     * Get the account of the user
+     * Follows the given account.
      *
-     * @param userID User id to get account from
-     * @return Account of the user
+     * @param id id of the account to follow
+     * @return the relationship between the logged user and the followed account
      */
-    public static Account getAccount(String userID) throws BigBoneRequestException {
-        var request = client.accounts().getAccount(userID);
+    public static Relationship followAccount(String id) throws BigBoneRequestException {
+        var request = client.accounts().followAccount(id);
         return request.execute();
     }
 
     /**
-     * Posts a status with the current user token
+     * Unfollows the given account.
      *
-     * @param content Content of the status
+     * @param id of the account to unfollow
+     * @return the relationship between the logged user and the unfollowed account
+     */
+    public static Relationship unfollowAccount(String id) throws BigBoneRequestException {
+        var request = client.accounts().unfollowAccount(id);
+        return request.execute();
+    }
+
+    /**
+     * Returns the relationship between the logged user and the given account.
+     *
+     * @param id id of the account to get the relationship with
+     * @return the relationship between the logged user and the given account
+     */
+    public static Relationship getRelationship(String id) throws BigBoneRequestException {
+        var request = client.accounts().getRelationships(List.of(id));
+        return request.execute().get(0);
+    }
+
+    /**
+     * Posts a status with the given content, using the logged account.
+     *
+     * @param content text content of the status
      */
     public static void postStatus(String content) throws BigBoneRequestException {
         var request = client.statuses().postStatus(content);
@@ -140,7 +229,18 @@ public class BusinessLogic {
     }
 
     /**
-     * Marks a status as favourite
+     * Returns a status given its id. The logged user must be able to see the status.
+     *
+     * @param id id of the status to get
+     * @return the status corresponding to the given id
+     */
+    public static Status getStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().getStatus(id);
+        return request.execute();
+    }
+
+    /**
+     * Marks a status as favourite for the logged account.
      *
      * @param id id of the status to favourite
      */
@@ -150,7 +250,7 @@ public class BusinessLogic {
     }
 
     /**
-     * Unfavourites a status
+     * Unmarks a status as favourite for the logged account.
      *
      * @param id id of the status to unfavourite
      */
@@ -160,78 +260,33 @@ public class BusinessLogic {
     }
 
     /**
-     * Gets a status
+     * Reblogs (boosts) a status given its id, using the logged account.
      *
-     * @param id id of the status to get
-     * @return Status with the given id
+     * @param id id of the status to reblog
      */
-    public static Status getStatus(String id) throws BigBoneRequestException {
-        var request = client.statuses().getStatus(id);
-        return request.execute();
-    }
-
-    public static void changeUsername(String username) {
-        if (username.length() < 1) {
-            throw new IllegalArgumentException("Username too short");
-        }
-        try {
-            var request = client.accounts().updateCredentials(username, null, null, null);
-            request.execute();
-        } catch (BigBoneRequestException e) {
-            throw new IllegalArgumentException("Username already taken");
-        }
-    }
-
     public static void reblogStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().reblogStatus(id);
         request.execute();
     }
 
+    /**
+     * Removes a reblog (boost) from a status given its id, using the logged account.
+     *
+     * @param id id of the status to unreblog
+     */
     public static void unreblogStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().unreblogStatus(id);
         request.execute();
     }
 
+    /**
+     * Returns a {@link Pageable} of the first 20 statuses from the logged user's home timeline.
+     *
+     * @return a {@link Pageable} of the first 20 statuses from the logged user's home timeline
+     */
     public static Pageable<Status> getHomeTimeline() throws BigBoneRequestException {
         var request = client.timelines().getHomeTimeline();
         return request.execute();
-    }
-
-    /**
-     * Follows the account to which the id belongs
-     *
-     * @param id of the account to follow
-     * @return relationship the user doing the action with the account following
-     * @throws BigBoneRequestException
-     */
-    public static Relationship followAccount(String id) throws BigBoneRequestException {
-        var request = client.accounts().followAccount(id);
-        System.out.println("Really following " + id);
-        return request.execute();
-    }
-
-    /**
-     * Unfollows the account to which the id belongs
-     *
-     * @param id of the account to unfollow
-     * @return relationship the user doing the action with the account unfollowing
-     * @throws BigBoneRequestException
-     */
-    public static Relationship unfollowAccount(String id) throws BigBoneRequestException {
-        var request = client.accounts().unfollowAccount(id);
-        return request.execute();
-    }
-
-    /**
-     * Gets the relationship with the account given
-     *
-     * @param id of the account
-     * @return a list with the relationships
-     * @throws BigBoneRequestException
-     */
-    public static Relationship getRelationship(String id) throws BigBoneRequestException {
-        var request = client.accounts().getRelationships(List.of(id));
-        return request.execute().get(0);
     }
 
 }
