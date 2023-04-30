@@ -1,14 +1,18 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
+
+import java.io.IOException;
 
 /**
  * This class is used to update and show the account information
@@ -32,7 +36,8 @@ public class AccountCell extends ListCell<Account> {
     private Label userName;
     @FXML
     private Button followBtn;
-    private FXMLLoader loader;
+    private Account account;
+    private Parent root;
 
 
     /**
@@ -43,43 +48,42 @@ public class AccountCell extends ListCell<Account> {
      */
     @Override
     protected void updateItem(Account item, boolean empty) {
+        account = item;
 
         super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
             setText(null);
-
             return;
         }
 
-        if (loader == null) {
-            loader = new FXMLLoader(getClass().getResource("account.fxml"));
+        if (root == null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
             loader.setController(this);
             try {
-                loader.load();
-            } catch (Exception e) {
-                e.printStackTrace();
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
-        displayName.setText(item.getDisplayName());
-        userName.setText("@" + item.getUsername());
-        avatar.setImage(ImageCache.get(item.getAvatar()));
+        displayName.setText(account.getDisplayName());
+        userName.setText("@" + account.getUsername());
+        avatar.setImage(ImageCache.get(account.getAvatar()));
+
+        if (account.getId().equals(BusinessLogic.getUserId())) followBtn.setVisible(false);
+        else {
+            if (RelationshipCache.get(account).isFollowing())
+                followBtn.setText("Unfollow");
+            else
+                followBtn.setText("Follow");
+
+            followBtn.setVisible(true);
+        }
 
         setText(null);
-        setGraphic(loader.getRoot());
+        setGraphic(root);
 
-        try {
-            if (!BusinessLogic.getUserId().equals(getItem().getId()) && BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
-                followBtn.setVisible(true);
-                followBtn.setText("Unfollow");
-            } else if (!BusinessLogic.getUserId().equals(getItem().getId())) {
-                followBtn.setVisible(true);
-                followBtn.setText("Follow");
-            } else if (BusinessLogic.getUserId().equals(getItem().getId())) followBtn.setVisible(false);
-        } catch (BigBoneRequestException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -88,18 +92,17 @@ public class AccountCell extends ListCell<Account> {
      */
     @FXML
     void followAccount() {
-        String id = getItem().getId();
         try {
-            if (!BusinessLogic.getRelationship(getItem().getId()).isFollowing()) {
-                BusinessLogic.followAccount(id);
+            if (!RelationshipCache.get(account).isFollowing()) {
+                BusinessLogic.followAccount(account);
                 followBtn.setText("Unfollow");
             } else {
-                BusinessLogic.unfollowAccount(id);
+                BusinessLogic.unfollowAccount(account);
                 followBtn.setText("Follow");
             }
 
         } catch (BigBoneRequestException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -108,8 +111,7 @@ public class AccountCell extends ListCell<Account> {
      */
     @FXML
     public void goAccount() {
-        String id = getItem().getId();
-        MainController.getInstance().showProfile(id);
+        MainController.getInstance().setProfile(account);
     }
 
 }

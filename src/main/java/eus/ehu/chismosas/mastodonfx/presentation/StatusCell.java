@@ -90,15 +90,15 @@ public class StatusCell extends ListCell<Status> {
      */
     @Override
     protected void updateItem(Status item, boolean empty) {
-        super.updateItem(item, empty);
+        status = item;
 
+        super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
             setText(null);
             return;
         }
 
-        status = item;
         account = status.getAccount();
         isLiked = status.isFavourited();
         likes = status.getFavouritesCount();
@@ -122,7 +122,6 @@ public class StatusCell extends ListCell<Status> {
 //        List<Element> children = contentDoc.getAllElements();
 
         date.setText(getPrettyDate(status.getCreatedAt()));
-
         displayName.setText(account.getDisplayName());
         userName.setText("@" + account.getUsername());
         avatar.setImage(ImageCache.get(account.getAvatar()));
@@ -130,9 +129,11 @@ public class StatusCell extends ListCell<Status> {
         like.setText(String.valueOf(likes));
         if (isLiked) likeBtn.setOpacity(1);
         else likeBtn.setOpacity(0.5);
+
         retweet.setText(String.valueOf(reblogs));
         if (isReblogged) retweetBtn.setOpacity(1);
         else retweetBtn.setOpacity(0.5);
+
         comment.setText(String.valueOf(status.getRepliesCount()));
 
         setText(null);
@@ -236,8 +237,7 @@ public class StatusCell extends ListCell<Status> {
      */
     @FXML
     public void goAccount() {
-        String id = account.getId();
-        MainController.getInstance().showProfile(id);
+        MainController.getInstance().setProfile(account);
     }
 
 }
