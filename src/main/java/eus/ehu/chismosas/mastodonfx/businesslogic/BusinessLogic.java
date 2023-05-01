@@ -33,7 +33,9 @@ public class BusinessLogic {
     private static MastodonClient client = new MastodonClient.Builder(instanceName)
                                                              .build();
 
-    private static String id;
+    private static String userID;
+
+    private static Account userAccount;
 
     /**
      * Returns the id of the logged-in Mastodon account.
@@ -41,7 +43,15 @@ public class BusinessLogic {
      *
      * @return the id of the logged-in Mastodon account
      */
-    public static String getUserId() {return id;}
+    public static String getUserId() {return userID;}
+
+    /**
+     * Returns object of the logged-in Mastodon account.
+     * Will return null if {@link #login} has not been called.
+     *
+     * @return the logged-in Mastodon account
+     */
+    public static Account getUserAccount() {return userAccount;}
 
     /**
      * Stores an account's login information (id and token) to the database.
@@ -103,7 +113,8 @@ public class BusinessLogic {
 
             DBManager.close(); // It will not be needed once the user is logged in
 
-            id = accountId;
+            userAccount = account;
+            userID = accountId;
             client = new MastodonClient.Builder(instanceName)
                                        .accessToken(token)
                                        .build();
@@ -111,13 +122,15 @@ public class BusinessLogic {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        RelationshipCache.initialize();
     }
 
     /**
      * Logs out of the current account.
      */
     public static void logout() {
-        id = null;
+        userID = null;
         client = new MastodonClient.Builder(instanceName)
                                    .build();
 
@@ -158,7 +171,22 @@ public class BusinessLogic {
      */
     public static List<Status> getStatuses(String id) throws BigBoneRequestException {
         var request = client.accounts().getStatuses(id);
-        return request.execute().getPart();
+        var statuses = request.execute().getPart();
+        for (Status status : statuses) RelationshipCache.addPending(status.getAccount());
+        return statuses;
+    }
+
+    /**
+     * Wrapper for {@link #getStatuses(String)} that takes an account object instead of an id.
+     * <p>
+     * Returns a list of the last 20 statuses posted by the given account.
+     * Only returns public statuses and those that the logged user can see.
+     *
+     * @param account the account to get statuses from
+     * @return a list of the last 20 statuses posted by the account
+     */
+    public static List<Status> getStatuses(Account account) throws BigBoneRequestException{
+        return getStatuses(account.getId());
     }
 
     /**
@@ -170,7 +198,22 @@ public class BusinessLogic {
      */
     public static List<Account> getFollowers(String id) throws BigBoneRequestException {
         var request = client.accounts().getFollowers(id);
-        return request.execute().getPart();
+        var followers = request.execute().getPart();
+        followers.forEach(RelationshipCache::addPending);
+        return followers;
+    }
+
+    /**
+     * Wrapper for {@link #getFollowers(String)} that takes an account object instead of an id.
+     * <p>
+     * Returns a list of the first 20 accounts that follow the
+     * given account, if network is not hidden by the account owner.
+     *
+     * @param account the account to get followers from
+     * @return a list of the first 20 accounts that follow the given account
+     */
+    public static List<Account> getFollowers(Account account) throws BigBoneRequestException {
+        return getFollowers(account.getId());
     }
 
     /**
@@ -182,40 +225,85 @@ public class BusinessLogic {
      */
     public static List<Account> getFollowing(String id) throws BigBoneRequestException {
         var request = client.accounts().getFollowing(id);
-        return request.execute().getPart();
+        var following = request.execute().getPart();
+        following.forEach(RelationshipCache::addPending);
+        return following;
+    }
+
+    /**
+     * Wrapper for {@link #getFollowing(String)} that takes an account object instead of an id.
+     * <p>
+     * Returns a list of the first 20 accounts that the given
+     * account is following, if network is not hidden by the account owner.
+     *
+     * @param account the account to get followers from
+     * @return a list of the first 20 accounts that the given account is following
+     */
+    public static List<Account> getFollowing(Account account) throws BigBoneRequestException {
+        return getFollowing(account.getId());
     }
 
     /**
      * Follows the given account.
      *
      * @param id id of the account to follow
-     * @return the relationship between the logged user and the followed account
      */
-    public static Relationship followAccount(String id) throws BigBoneRequestException {
+    public static void followAccount(String id) throws BigBoneRequestException {
         var request = client.accounts().followAccount(id);
-        return request.execute();
+        RelationshipCache.put(request.execute());
+    }
+
+    /**
+     * Wrapper for {@link #followAccount(String)} that takes an account object instead of an id.
+     * <p>
+     * Follows the given account.
+     *
+     * @param account the account to follow
+     */
+    public static void followAccount(Account account) throws BigBoneRequestException {
+        followAccount(account.getId());
     }
 
     /**
      * Unfollows the given account.
      *
      * @param id of the account to unfollow
-     * @return the relationship between the logged user and the unfollowed account
      */
-    public static Relationship unfollowAccount(String id) throws BigBoneRequestException {
+    public static void unfollowAccount(String id) throws BigBoneRequestException {
         var request = client.accounts().unfollowAccount(id);
-        return request.execute();
+        RelationshipCache.put(request.execute());
+    }
+
+    /**
+     * Wrapper for {@link #unfollowAccount(String)} that takes an account object instead of an id.
+     * <p>
+     * Unfollows the given account.
+     *
+     * @param account the account to unfollow
+     */
+    public static void unfollowAccount(Account account) throws BigBoneRequestException {
+        unfollowAccount(account.getId());
     }
 
     /**
      * Returns the relationship between the logged user and the given account.
      *
      * @param id id of the account to get the relationship with
-     * @return the relationship between the logged user and the given account
      */
-    public static Relationship getRelationship(String id) throws BigBoneRequestException {
+    protected static Relationship getRelationship(String id) throws BigBoneRequestException {
         var request = client.accounts().getRelationships(List.of(id));
         return request.execute().get(0);
+    }
+
+    /**
+     * Returns the relationships between the logged user and the given accounts.
+     *
+     * @param ids id of the accounts to get the relationship with
+     * @return the relationships between the logged user and the given account
+     */
+    protected static List<Relationship> getRelationships(List<String> ids) throws BigBoneRequestException {
+        var request = client.accounts().getRelationships(ids);
+        return request.execute();
     }
 
     /**
@@ -236,7 +324,9 @@ public class BusinessLogic {
      */
     public static Status getStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().getStatus(id);
-        return request.execute();
+        var status = request.execute();
+        RelationshipCache.addPending(status.getAccount());
+        return status;
     }
 
     /**

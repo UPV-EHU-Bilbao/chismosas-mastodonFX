@@ -32,13 +32,11 @@ public class AccountSelection {
     @FXML
     private void initialize() {
         accountsList.setStyle("-fx-control-inner-background: #18181b");
-        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
-        AddNewAccountBtn.disableProperty().bind(
-                newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty())
-        );
+        AddNewAccountBtn.disableProperty().bind(newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty()));
+        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
     }
 
