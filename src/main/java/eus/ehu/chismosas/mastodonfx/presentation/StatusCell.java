@@ -74,6 +74,7 @@ public class StatusCell extends ListCell<Status> {
 
 
     private Status status;
+    private boolean isReblog;
     private Account account;
     private boolean isLiked;
     private long likes;
@@ -99,6 +100,10 @@ public class StatusCell extends ListCell<Status> {
             return;
         }
 
+        if (status.getReblog() != null) {
+            status = status.getReblog();
+            isReblog = true;
+        }
         account = status.getAccount();
         isLiked = status.isFavourited();
         likes = status.getFavouritesCount();

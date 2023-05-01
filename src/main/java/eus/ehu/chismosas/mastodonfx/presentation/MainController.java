@@ -16,6 +16,9 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * This class is used to control the main view of the application
@@ -62,14 +65,16 @@ public class MainController {
     private Button postButton;
     @FXML
     private Button followBtn;
-    private ListView<Status> tootListView;
-    private List<Status> accountToots;
-    private Pageable<Status> homeTimeline;
-    private ListView<Account> accountListView;
-    private List<Account> followersList;
-    private List<Account> followingList;
     private Scene settingsScene;
+    private ListView<Status> tootListView;
+    private ListView<Account> accountListView;
     private final DropShadow dropShadow = new DropShadow();
+
+    private List<Status> accountToots;
+    private Future<List<Account>> followersList;
+    private Future<List<Account>> followingList;
+    private Future<Pageable<Status>> homeTimeline;
+
 
     public static MainController getInstance() {return instance;}
 
@@ -95,10 +100,8 @@ public class MainController {
 
 
         loadSettingsScene();
-        setProfile(userAccount);
         updateHomeTimeline();
-        RelationshipCache.processPending();
-        showAccountToots();
+        setProfile(userAccount);
 
     }
 
@@ -207,36 +210,53 @@ public class MainController {
      */
     public void showAccountToots() {
         tootListView.getItems().setAll(accountToots);
+        tootListView.scrollTo(0);
         mainPane.setCenter(tootListView);
     }
 
     public void updateHomeTimeline() {
-        try {
-            homeTimeline = BusinessLogic.getHomeTimeline();
-        } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
-        }
+        homeTimeline = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getHomeTimeline();
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     public void showHomeTimeline() {
-        tootListView.getItems().setAll(homeTimeline.getPart());
-        mainPane.setCenter(tootListView);
+        try {
+            tootListView.getItems().setAll(homeTimeline.get().getPart());
+            tootListView.scrollTo(0);
+            mainPane.setCenter(tootListView);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Gets the list of accounts that the user is following and shows it
      */
     public void updateFollowingList() {
-        try {
-            followingList = BusinessLogic.getFollowing(currentAccount);
-        } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
-        }
+        followingList = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getFollowing(currentAccount);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     public void showFollowing() {
-        accountListView.getItems().setAll(followingList);
-        mainPane.setCenter(accountListView);
+        try {
+            accountListView.getItems().setAll(followingList.get());
+            accountListView.scrollTo(0);
+            mainPane.setCenter(accountListView);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -244,16 +264,23 @@ public class MainController {
      * Gets the list of accounts that are following the user and shows it
      */
     public void updateFollowersList() {
-        try {
-            followersList = BusinessLogic.getFollowers(currentAccount);
-        } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
-        }
+        followersList = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getFollowers(currentAccount);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void showFollowers() {
-        accountListView.getItems().setAll(followersList);
-        mainPane.setCenter(accountListView);
+        try {
+            accountListView.getItems().setAll(followersList.get());
+            accountListView.scrollTo(0);
+            mainPane.setCenter(accountListView);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -357,11 +384,8 @@ public class MainController {
      * @param account the account to update
      */
     public void setProfile(Account account) {
-        if (account == currentAccount) return;
 
-        currentAccount = account;
-
-        if (currentAccount.getId().equals(userAccount.getId())) {
+        if (account.getId().equals(userAccount.getId())) {
             profileBtn.setEffect(dropShadow);
             profileBtn.setStyle("-fx-background-color: #212124");
         } else {
@@ -369,12 +393,30 @@ public class MainController {
             profileBtn.setStyle("-fx-background-color: #18181b");
         }
 
-        updateBanner();
-        updateAccountToots();
-        updateFollowingList();
-        updateFollowersList();
+        if (account != currentAccount) {
+            currentAccount = account;
+            updateFollowingList();
+            updateFollowersList();
+            updateBanner();
+            updateAccountToots();
+            updateRelationshipCache();
+        }
+
         switchView("PostedToots");
 
+    }
+
+    public void updateRelationshipCache() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                homeTimeline.get();
+                followingList.get();
+                followersList.get();
+                RelationshipCache.processPending();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @FXML

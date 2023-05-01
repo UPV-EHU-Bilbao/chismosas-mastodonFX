@@ -56,7 +56,6 @@ public class RelationshipCache {
     public static Relationship get(String id) {
         Relationship relationship = cache.get(id);
         if (relationship == null) {
-            System.out.println("Cache miss");
             addPending(id);
             processPending();
             relationship = cache.get(id);
