@@ -379,4 +379,22 @@ public class BusinessLogic {
         return request.execute();
     }
 
+    /**
+     * Unbookmarks a status given its id, using the logged account.
+     * @param id id of the status to unbookmark
+     * @throws BigBoneRequestException
+     */
+    public static void unbookmarkStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().unbookmarkStatus(id);
+        request.execute();
+    }
+    /**
+     * Bookmarks a status given its id, using the logged account.
+     * @param id id of the status to bookmark
+     * @throws BigBoneRequestException
+     */
+    public static void bookmarkStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().bookmarkStatus(id);
+        request.execute();
+    }
 }

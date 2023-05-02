@@ -143,6 +143,7 @@ public class StatusCell extends ListCell<Status> {
         else retweetBtn.setOpacity(0.5);
 
         comment.setText(String.valueOf(status.getRepliesCount()));
+
         if (isBookmarked) bookmarkBtn.setOpacity(1);
         else bookmarkBtn.setOpacity(0.5);
 
@@ -259,7 +260,7 @@ public class StatusCell extends ListCell<Status> {
     }
 
     @FXML
-    private void bookmark() {
+    private void bookmark()  {
         try {
             BusinessLogic.bookmarkStatus(status.getId());
         } catch (BigBoneRequestException e) {
@@ -267,7 +268,7 @@ public class StatusCell extends ListCell<Status> {
         }
     }
 
-    private void unbookmark() {
+    private void unbookmark()  {
         try {
             BusinessLogic.unbookmarkStatus(status.getId());
         } catch (BigBoneRequestException e) {
