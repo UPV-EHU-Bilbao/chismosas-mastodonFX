@@ -228,4 +228,23 @@ public class BusinessLogic {
         return request.execute().get(0);
     }
 
+    /**
+     * Unbookmarks the status to which the id belongs
+     * @param id of the accounts
+     * @throws BigBoneRequestException
+     */
+    public static void unbookmarkStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().unbookmarkStatus(id);
+        request.execute();
+    }
+
+    /**
+     * Bookmarks the status to which the id belongs
+     * @param id of the accounts
+     * @throws BigBoneRequestException
+     */
+    public static void bookmarkStatus(String id) throws BigBoneRequestException {
+        var request = client.statuses().bookmarkStatus(id);
+        request.execute();
+    }
 }
