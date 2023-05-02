@@ -1,7 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +10,7 @@ import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 
-public class AccountSelection{
+public class AccountSelection {
 
 
     @FXML
@@ -29,18 +28,15 @@ public class AccountSelection{
     @FXML
     private TextField newToken;
 
-    private Parent root;
 
     @FXML
     private void initialize() {
         accountsList.setStyle("-fx-control-inner-background: #18181b");
-        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
-        AddNewAccountBtn.disableProperty().bind(
-                newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty())
-        );
+        AddNewAccountBtn.disableProperty().bind(newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty()));
+        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
     }
 
@@ -55,9 +51,9 @@ public class AccountSelection{
         String id = newID.getText();
         String token = newToken.getText();
         try {
-           BusinessLogic.addAccountLogin(id, token);
+            BusinessLogic.addAccountLogin(id, token);
             accountsList.getItems().add(BusinessLogic.getAccount(id));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 
 public class ImageCache {
-    private ImageCache() {}
-
-
     private static final HashMap<String, Image> cache = new HashMap<>();
+
+
+    private ImageCache() {}
 
     public static Image get(String url) {
         if (cache.containsKey(url)) {
