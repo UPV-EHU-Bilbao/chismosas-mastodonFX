@@ -15,6 +15,8 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 import java.io.IOException;
+import javafx.css.*;
+import javafx.scene.effect.ColorAdjust;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -41,9 +43,6 @@ public class MainController {
 
     @FXML
     private ToolBar favsBtn;
-
-    @FXML
-    private ToolBar favsBtn1;
 
     @FXML
     private Button followersBtn;

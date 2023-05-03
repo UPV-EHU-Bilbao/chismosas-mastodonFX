@@ -23,10 +23,6 @@
     -fx-background-color:  #e7e7e8;
 }
 
-.tool-bar:pressed{
-    -fx-background-color:  #e7e7e8;
-}
-
 .button{
     -fx-background-color: white;
     -fx-text-fill: #000000;
@@ -35,10 +31,6 @@
 }
 
 .button:hover{
-    -fx-background-color:  #e7e7e8;
-}
-
-.button:pressed{
     -fx-background-color:  #e7e7e8;
 }
 
@@ -80,7 +72,6 @@
 }
 
 
-
 /*STYLES FOR SPECIFIC ITEMS*/
 
 #followBtn{
@@ -105,6 +96,10 @@
 
 #publishButton:hover{
     -fx-background-color: #6c5de3;
+}
+
+#content{
+    -fx-fill: #000000;
 }
 
 /* Path: src\main\resources\eus\ehu\chismosas\mastodonfx\presentation\styles\light.css */

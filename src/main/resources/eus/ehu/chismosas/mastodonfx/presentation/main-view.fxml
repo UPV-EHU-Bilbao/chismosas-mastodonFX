@@ -124,9 +124,11 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="favsBtn1" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0">
+            <ToolBar fx:id="homeBtn" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0">
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/home.png" />
+                  <image>
+                     <Image url="@icons/home.png" />
+                  </image>
                </ImageView>
                <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
                   <font>

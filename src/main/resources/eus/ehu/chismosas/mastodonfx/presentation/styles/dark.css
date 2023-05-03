@@ -4,6 +4,7 @@
 .root{
     -fx-background-color:  #18181b;
     -fx-font-family: "Ebrima";
+    -fx-text-fill: #ffffff;
 }
 
 .border-pane{
@@ -23,10 +24,6 @@
     -fx-background-color:  #212124;
 }
 
-.tool-bar:pressed{
-    -fx-background-color:  #212124;
-}
-
 .button{
     -fx-background-color: #18181b;
     -fx-text-fill: #ffffff;
@@ -35,10 +32,6 @@
 }
 
 .button:hover{
-    -fx-background-color:  #212124;
-}
-
-.button:pressed{
     -fx-background-color:  #212124;
 }
 
@@ -80,7 +73,6 @@
 }
 
 
-
 /*STYLES FOR SPECIFIC ITEMS*/
 
 #followBtn{
@@ -104,4 +96,7 @@
     -fx-background-color: #6c5de3;
 }
 
+#content{
+    -fx-fill: #ffffff;
+}
 
