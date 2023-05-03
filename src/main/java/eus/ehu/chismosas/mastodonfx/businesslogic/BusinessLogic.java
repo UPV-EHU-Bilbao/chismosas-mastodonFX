@@ -389,4 +389,12 @@ public class BusinessLogic {
             return null;
         }
     }
+
+    public static boolean isTokenInDB(String token) {
+        try {
+            return DBManager.isTokenStored(token);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

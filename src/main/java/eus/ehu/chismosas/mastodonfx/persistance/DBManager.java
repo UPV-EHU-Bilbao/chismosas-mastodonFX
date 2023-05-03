@@ -15,6 +15,7 @@ public class DBManager {
     private static PreparedStatement insertAccount;
     private static PreparedStatement deleteAccount;
     private static PreparedStatement getAccountToken;
+    private static PreparedStatement isTokenStored;
 
 
     static {
@@ -39,6 +40,7 @@ public class DBManager {
         insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
         deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
         getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
+        isTokenStored = connection.prepareStatement("SELECT EXISTS(SELECT 1 FROM Account WHERE token = ?)");
     }
 
     public static void open() throws SQLException {
@@ -78,5 +80,10 @@ public class DBManager {
         return queryResult.next() ? queryResult.getString("token") : null;
     }
 
+    public static boolean isTokenStored(String token) throws SQLException {
+        isTokenStored.setString(1, token);
+        ResultSet queryResult = isTokenStored.executeQuery();
+        return queryResult.next() && queryResult.getBoolean(1);
+    }
 
 }

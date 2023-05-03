@@ -12,6 +12,8 @@ import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class AccountSelection {
 
@@ -31,7 +33,7 @@ public class AccountSelection {
     @FXML
     private TextField newToken;
 
-    private BooleanProperty validTokenEntered;
+
     private Account enteredAccount;
 
 
@@ -41,12 +43,18 @@ public class AccountSelection {
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
-
-        AddNewAccountBtn.disableProperty().bind(newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty()));
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
-        validTokenEntered = new SimpleBooleanProperty(false);
-        AddNewAccountBtn.disableProperty().bind(validTokenEntered.not());
+
+
+        newToken.textProperty().addListener((observable, oldValue, newValue) -> {
+            AddNewAccountBtn.setDisable(true);
+
+            newValue = newValue.trim();
+            newToken.setText(newValue);
+
+            if (newValue.length() == 43) verifyToken();
+        });
     }
 
     @FXML
@@ -57,28 +65,35 @@ public class AccountSelection {
 
     @FXML
     void addNewAccount() {
-        if (validTokenEntered.get()) {
-            BusinessLogic.addAccountLogin(enteredAccount.getId(), newToken.getText());
-        }
+        BusinessLogic.addAccountLogin(enteredAccount.getId(), newToken.getText());
     }
 
     void verifyToken() {
-        CompletableFuture.runAsync(() -> {
-            var account = BusinessLogic.verifyCredentials(newToken.getText());
-            if (account != null) {
-                validTokenEntered.set(true);
-                showValidToken(account);
-            }
-            else showInvalidToken();
-        });
+        if (BusinessLogic.isTokenInDB(newToken.getText())) {
+            showTokenAlreadyStored();
+            return;
+        }
+        enteredAccount = BusinessLogic.verifyCredentials(newToken.getText());
+        if (enteredAccount != null) {
+            showValidToken();
+            AddNewAccountBtn.setDisable(false);
+        }
+        else {
+            showInvalidToken();
+        }
     }
 
-    private void showValidToken(Account account) {
-        System.out.println("Valid token for account " + account.getId());
+
+    private void showValidToken() {
+        System.out.println("Valid token for account " + enteredAccount.getId());
     }
 
     private void showInvalidToken() {
         System.out.println("Invalid token.");
+    }
+
+    private void showTokenAlreadyStored() {
+        System.out.println("Token is already stored.");
     }
 
 
