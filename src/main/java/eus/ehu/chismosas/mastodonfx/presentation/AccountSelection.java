@@ -1,6 +1,8 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +11,7 @@ import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public class AccountSelection {
 
@@ -28,6 +31,9 @@ public class AccountSelection {
     @FXML
     private TextField newToken;
 
+    private BooleanProperty validTokenEntered;
+    private Account enteredAccount;
+
 
     @FXML
     private void initialize() {
@@ -35,9 +41,12 @@ public class AccountSelection {
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
+
         AddNewAccountBtn.disableProperty().bind(newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty()));
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
+        validTokenEntered = new SimpleBooleanProperty(false);
+        AddNewAccountBtn.disableProperty().bind(validTokenEntered.not());
     }
 
     @FXML
@@ -48,14 +57,28 @@ public class AccountSelection {
 
     @FXML
     void addNewAccount() {
-        String id = newID.getText();
-        String token = newToken.getText();
-        try {
-            BusinessLogic.addAccountLogin(id, token);
-            accountsList.getItems().add(BusinessLogic.getAccount(id));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (validTokenEntered.get()) {
+            BusinessLogic.addAccountLogin(enteredAccount.getId(), newToken.getText());
         }
+    }
+
+    void verifyToken() {
+        CompletableFuture.runAsync(() -> {
+            var account = BusinessLogic.verifyCredentials(newToken.getText());
+            if (account != null) {
+                validTokenEntered.set(true);
+                showValidToken(account);
+            }
+            else showInvalidToken();
+        });
+    }
+
+    private void showValidToken(Account account) {
+        System.out.println("Valid token for account " + account.getId());
+    }
+
+    private void showInvalidToken() {
+        System.out.println("Invalid token.");
     }
 
 

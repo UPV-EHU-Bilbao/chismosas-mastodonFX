@@ -379,4 +379,14 @@ public class BusinessLogic {
         return request.execute();
     }
 
+    public static Account verifyCredentials(String token) {
+        var client = new MastodonClient.Builder(instanceName)
+                .accessToken(token)
+                .build();
+        try {
+            return client.accounts().verifyCredentials().execute();
+        } catch (BigBoneRequestException e) {
+            return null;
+        }
+    }
 }
