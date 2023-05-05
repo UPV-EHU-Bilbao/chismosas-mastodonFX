@@ -1,6 +1,7 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -55,6 +56,15 @@ public class AccountSelection {
 
             if (newValue.length() == 43) verifyToken();
         });
+
+        CompletableFuture.runAsync(this::validateStored);
+    }
+
+    private void validateStored() {
+        BusinessLogic.validateStoredAccounts();
+        var loggable = BusinessLogic.getLoggableAccounts();
+        var items = accountsList.getItems();
+        Platform.runLater(() -> items.setAll(loggable));
     }
 
     @FXML
@@ -66,6 +76,8 @@ public class AccountSelection {
     @FXML
     void addNewAccount() {
         BusinessLogic.addAccountLogin(enteredAccount.getId(), newToken.getText());
+        newToken.clear();
+        accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
     }
 
     void verifyToken() {

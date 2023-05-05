@@ -397,4 +397,15 @@ public class BusinessLogic {
             throw new RuntimeException(e);
         }
     }
+
+    public static void validateStoredAccounts() {
+        try {
+            for (String account: DBManager.getLoggableAccountIds()) {
+                if (verifyCredentials(DBManager.getAccountToken(account)) == null)
+                    removeAccountLogin(account);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
