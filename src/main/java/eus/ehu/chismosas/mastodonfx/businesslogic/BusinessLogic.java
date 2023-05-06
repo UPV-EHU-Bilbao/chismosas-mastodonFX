@@ -141,7 +141,7 @@ public class BusinessLogic {
             String token = DBManager.getAccountToken(id);
             if (token == null) return false; // This should never happen
 
-            var retrievedAccount = verifyCredentials(id);
+            var retrievedAccount = verifyCredentials(token);
             if (retrievedAccount == null) return false;
 
             return retrievedAccount.getId().equals(id);
