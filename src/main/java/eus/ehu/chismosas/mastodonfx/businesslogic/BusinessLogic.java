@@ -101,6 +101,7 @@ public class BusinessLogic {
 
     /**
      * Return whether the given token is stored in the database.
+     *
      * @param token the token to check
      * @return whether the given token is stored in the database
      */
@@ -114,6 +115,7 @@ public class BusinessLogic {
 
     /**
      * Returns the account corresponding to the given access token. If the token is invalid, returns null.
+     *
      * @param token the access token to verify
      * @return the account corresponding to the given access token, or null if the token is invalid
      */
@@ -130,6 +132,7 @@ public class BusinessLogic {
 
     /**
      * Checks if the credentials stored for the account with the given id are valid.
+     *
      * @param id the id of the account to check
      * @return whether the credentials stored for the given account are valid
      */
@@ -142,14 +145,14 @@ public class BusinessLogic {
             if (retrievedAccount == null) return false;
 
             return retrievedAccount.getId().equals(id);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
      * Checks if the credentials stored for the given account are valid.
+     *
      * @param account the account to check
      * @return whether the credentials stored for the given account are valid
      */
@@ -243,7 +246,7 @@ public class BusinessLogic {
      * @param account the account to get statuses from
      * @return a list of the last 20 statuses posted by the account
      */
-    public static List<Status> getStatuses(Account account) throws BigBoneRequestException{
+    public static List<Status> getStatuses(Account account) throws BigBoneRequestException {
         return getStatuses(account.getId());
     }
 
@@ -426,7 +429,6 @@ public class BusinessLogic {
         var request = client.timelines().getHomeTimeline();
         return request.execute();
     }
-
 
 
 }

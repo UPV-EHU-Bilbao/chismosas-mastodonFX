@@ -39,6 +39,7 @@ public class AccountSelection {
         removeAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
         tokenStatusLabel.setVisible(false);
+        AddAccountBtn.setDisable(true);
         tokenField.textProperty().addListener((observable, oldValue, newValue) -> {
             newValue = newValue.trim();
             tokenField.setText(newValue);
