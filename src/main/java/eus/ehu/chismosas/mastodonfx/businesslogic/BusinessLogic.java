@@ -100,6 +100,64 @@ public class BusinessLogic {
     }
 
     /**
+     * Return whether the given token is stored in the database.
+     * @param token the token to check
+     * @return whether the given token is stored in the database
+     */
+    public static boolean isTokenStored(String token) {
+        try {
+            return DBManager.isTokenStored(token);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Returns the account corresponding to the given access token. If the token is invalid, returns null.
+     * @param token the access token to verify
+     * @return the account corresponding to the given access token, or null if the token is invalid
+     */
+    public static Account verifyCredentials(String token) {
+        var client = new MastodonClient.Builder(instanceName)
+                .accessToken(token)
+                .build();
+        try {
+            return client.accounts().verifyCredentials().execute();
+        } catch (BigBoneRequestException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Checks if the credentials stored for the account with the given id are valid.
+     * @param id the id of the account to check
+     * @return whether the credentials stored for the given account are valid
+     */
+    public static boolean verifyAccountCredentials(String id) {
+        try {
+            String token = DBManager.getAccountToken(id);
+            if (token == null) return false; // This should never happen
+
+            var retrievedAccount = verifyCredentials(id);
+            if (retrievedAccount == null) return false;
+
+            return retrievedAccount.getId().equals(id);
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Checks if the credentials stored for the given account are valid.
+     * @param account the account to check
+     * @return whether the credentials stored for the given account are valid
+     */
+    public static boolean verifyAccountCredentials(Account account) {
+        return verifyAccountCredentials(account.getId());
+    }
+
+    /**
      * Logs in into an account. {@code account} must correspond to one of
      * the accounts stored in the database (obtained with {@link #getLoggableAccounts()}).
      *
@@ -286,16 +344,6 @@ public class BusinessLogic {
     }
 
     /**
-     * Returns the relationship between the logged user and the given account.
-     *
-     * @param id id of the account to get the relationship with
-     */
-    protected static Relationship getRelationship(String id) throws BigBoneRequestException {
-        var request = client.accounts().getRelationships(List.of(id));
-        return request.execute().get(0);
-    }
-
-    /**
      * Returns the relationships between the logged user and the given accounts.
      *
      * @param ids id of the accounts to get the relationship with
@@ -379,33 +427,6 @@ public class BusinessLogic {
         return request.execute();
     }
 
-    public static Account verifyCredentials(String token) {
-        var client = new MastodonClient.Builder(instanceName)
-                .accessToken(token)
-                .build();
-        try {
-            return client.accounts().verifyCredentials().execute();
-        } catch (BigBoneRequestException e) {
-            return null;
-        }
-    }
 
-    public static boolean isTokenInDB(String token) {
-        try {
-            return DBManager.isTokenStored(token);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public static void validateStoredAccounts() {
-        try {
-            for (String account: DBManager.getLoggableAccountIds()) {
-                if (verifyCredentials(DBManager.getAccountToken(account)) == null)
-                    removeAccountLogin(account);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

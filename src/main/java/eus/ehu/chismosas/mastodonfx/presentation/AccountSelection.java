@@ -1,9 +1,6 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,27 +10,21 @@ import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class AccountSelection {
 
-
     @FXML
     private ListView<Account> accountsList;
-
     @FXML
     private Button chooseAccountBtn;
-
     @FXML
-    private Button AddNewAccountBtn;
-
+    private Button removeAccountBtn;
     @FXML
-    private TextField newID;
-
+    private TextField tokenField;
     @FXML
-    private TextField newToken;
-
+    private Label tokenStatusLabel;
+    @FXML
+    private Button AddAccountBtn;
 
     private Account enteredAccount;
 
@@ -45,67 +36,77 @@ public class AccountSelection {
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
+        removeAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
 
-
-
-        newToken.textProperty().addListener((observable, oldValue, newValue) -> {
-            AddNewAccountBtn.setDisable(true);
-
+        tokenStatusLabel.setVisible(false);
+        tokenField.textProperty().addListener((observable, oldValue, newValue) -> {
             newValue = newValue.trim();
-            newToken.setText(newValue);
+            tokenField.setText(newValue);
 
-            if (newValue.length() == 43) verifyToken();
+            if (newValue.length() == 43)
+                verifyToken();
+            else {
+                tokenStatusLabel.setVisible(false);
+                AddAccountBtn.setDisable(true);
+            }
         });
 
-        CompletableFuture.runAsync(this::validateStored);
-    }
-
-    private void validateStored() {
-        BusinessLogic.validateStoredAccounts();
-        var loggable = BusinessLogic.getLoggableAccounts();
-        var items = accountsList.getItems();
-        Platform.runLater(() -> items.setAll(loggable));
     }
 
     @FXML
     private void chooseAccount() {
         var account = accountsList.getSelectionModel().getSelectedItem();
-        MainApplication.login(account);
+        if (BusinessLogic.verifyAccountCredentials(account))
+            MainApplication.login(account);
+        else {
+            System.out.println("Invalid account!");
+            accountsList.getItems().remove(account);
+            CompletableFuture.runAsync(() -> BusinessLogic.removeAccountLogin(account.getId()));
+        }
     }
 
     @FXML
-    void addNewAccount() {
-        BusinessLogic.addAccountLogin(enteredAccount.getId(), newToken.getText());
-        newToken.clear();
+    private void removeAccount() {
+        Account account = accountsList.getSelectionModel().getSelectedItem();
+        CompletableFuture.runAsync(() -> BusinessLogic.removeAccountLogin(account.getId()));
+        accountsList.getItems().remove(account);
+    }
+
+    @FXML
+    private void addAccount() {
+        BusinessLogic.addAccountLogin(enteredAccount.getId(), tokenField.getText());
+        tokenField.clear();
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
     }
 
-    void verifyToken() {
-        if (BusinessLogic.isTokenInDB(newToken.getText())) {
+
+    private void verifyToken() {
+        if (BusinessLogic.isTokenStored(tokenField.getText())) {
             showTokenAlreadyStored();
             return;
         }
-        enteredAccount = BusinessLogic.verifyCredentials(newToken.getText());
-        if (enteredAccount != null) {
-            showValidToken();
-            AddNewAccountBtn.setDisable(false);
-        }
+
+        enteredAccount = BusinessLogic.verifyCredentials(tokenField.getText());
+        if (enteredAccount == null) showInvalidToken();
         else {
-            showInvalidToken();
+            showValidToken();
+            AddAccountBtn.setDisable(false);
         }
     }
 
-
     private void showValidToken() {
-        System.out.println("Valid token for account " + enteredAccount.getId());
+        tokenStatusLabel.setText("Valid token for account @" + enteredAccount.getUsername());
+        tokenStatusLabel.setVisible(true);
     }
 
     private void showInvalidToken() {
-        System.out.println("Invalid token.");
+        tokenStatusLabel.setText("Invalid token");
+        tokenStatusLabel.setVisible(true);
     }
 
     private void showTokenAlreadyStored() {
-        System.out.println("Token is already stored.");
+        tokenStatusLabel.setText("Token is already stored");
+        tokenStatusLabel.setVisible(true);
     }
 
 

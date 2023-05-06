@@ -49,11 +49,12 @@ public class DBManager {
     }
 
     public static void close() throws SQLException {
-        connection.close();
         selectAccountIds.close();
         insertAccount.close();
         deleteAccount.close();
         getAccountToken.close();
+        isTokenStored.close();
+        connection.close();
     }
 
     public static Set<String> getLoggableAccountIds() throws SQLException {
