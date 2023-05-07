@@ -4,7 +4,6 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -14,10 +13,8 @@ import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
-import java.io.IOException;
-import javafx.css.*;
-import javafx.scene.effect.ColorAdjust;
 
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -94,16 +91,12 @@ public class MainController {
     private Scene settingsScene;
     private DropShadow dropShadow;
 
-    private String lightTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/light.css").toExternalForm();
-
-    private String darkTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/dark.css").toExternalForm();
     /**
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
     void initialize(){
         instance = this;
-        darkButton();
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
         followingListView = new ListView<>();
@@ -112,10 +105,6 @@ public class MainController {
         followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
 
-
-        tootListView.setStyle("-fx-control-inner-background: #18181b");
-        followingListView.setStyle("-fx-control-inner-background: #18181b");
-        followersListView.setStyle("-fx-control-inner-background: #18181b");
 
         publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
@@ -379,14 +368,7 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
-    public void lightButton(){
-        mainPane.getStylesheets().clear();
-        mainPane.getStylesheets().add(lightTheme);
-    }
-    public void darkButton(){
-        mainPane.getStylesheets().clear();
-        mainPane.getStylesheets().add(darkTheme);
-    }
+
     /**
      * Changes the profile to the given id
      * @param id the id of the account to update

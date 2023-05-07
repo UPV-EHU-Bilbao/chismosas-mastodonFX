@@ -8,8 +8,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import java.io.IOException;
-
 public class SettingsController {
     @FXML
     private RadioButton darkBtn;
@@ -30,15 +28,13 @@ public class SettingsController {
     @FXML
     public void selectDarkTheme(ActionEvent event) {
         lightBtn.setSelected(false);
-        MainController.getInstance().darkButton();
-        AccountSelection.getInstance().setDarkTheme();
+        MainApplication.setTheme("dark");
     }
 
     @FXML
-    public void selectLightTheme(ActionEvent event) throws IOException {
+    public void selectLightTheme(ActionEvent event) {
         darkBtn.setSelected(false);
-        MainController.getInstance().lightButton();
-        AccountSelection.getInstance().setLightTheme();
+        MainApplication.setTheme("light");
     }
 
     @FXML
