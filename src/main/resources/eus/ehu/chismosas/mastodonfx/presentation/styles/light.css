@@ -102,4 +102,72 @@
     -fx-fill: #000000;
 }
 
+#appearance{
+    -fx-image: url(../lightThemeIcons/appearance.png);
+}
+
+#bell{
+    -fx-image: url(../lightThemeIcons/bell.png);
+}
+
+#bookmark{
+    -fx-image: url(../lightThemeIcons/bookmark.png);
+}
+
+#brightness{
+    -fx-image: url(../lightThemeIcons/brightness.png);
+}
+
+#comments{
+    -fx-image: url(../lightThemeIcons/comment.png);
+}
+
+#edit{
+     -fx-image: url(../lightThemeIcons/edit.png);
+}
+
+#explore{
+     -fx-image: url(../lightThemeIcons/explore.png);
+}
+
+#fav{
+     -fx-image: url(../lightThemeIcons/fav.png);
+}
+
+#home{
+     -fx-image: url(../lightThemeIcons/home.png);
+}
+
+#like{
+     -fx-image: url(../lightThemeIcons/like.png);
+}
+
+#logo{
+     -fx-image: url(../lightThemeIcons/logo.png);
+}
+
+#selectorLogo{
+     -fx-image: url(../lightThemeIcons/logo.png);
+}
+
+#logout{
+     -fx-image: url(../lightThemeIcons/logout.png);
+}
+
+#msg{
+     -fx-image: url(../lightThemeIcons/msg.png);
+}
+
+#retweet{
+     -fx-image: url(../lightThemeIcons/retweet.png);
+}
+
+#settings{
+     -fx-image: url(../lightThemeIcons/settings.png);
+}
+
+#user{
+     -fx-image: url(../lightThemeIcons/user.png);
+}
+
 /* Path: src\main\resources\eus\ehu\chismosas\mastodonfx\presentation\styles\light.css */

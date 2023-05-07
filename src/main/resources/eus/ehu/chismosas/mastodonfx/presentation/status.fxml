@@ -58,39 +58,35 @@
          <Insets right="10.0" />
       </GridPane.margin>
     </HBox>
-    <ImageView fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="bookmark" fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets />
         </GridPane.margin>
-        <Image url="@icons/bookmark.png" />
     </ImageView>
-    <ImageView fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" onMouseClicked="#onLikeBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="like" fx:id="likeBtn" fitHeight="20.0" fitWidth="20.0" nodeOrientation="INHERIT" onMouseClicked="#onLikeBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/like.png" />
     </ImageView>
     <Label fx:id="like" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onRetootBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="retweet" fx:id="retweetBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onRetootBtn" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/retweet.png" />
     </ImageView>
     <Label fx:id="retweet" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView id="comments" fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="comments" fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: url(icons\retweet.png);" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>
-        <Image url="@icons/comment.png" />
     </ImageView>
     <Label fx:id="comment" prefHeight="17.0" prefWidth="30.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
@@ -101,6 +97,9 @@
         <GridPane.margin>
             <Insets bottom="90.0" left="5.0" />
         </GridPane.margin>
+      <image>
+         <Image url="@darkThemeIcons/user.png" />
+      </image>
     </ImageView>
    <TextFlow maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
       <opaqueInsets>

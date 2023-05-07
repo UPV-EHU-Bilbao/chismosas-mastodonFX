@@ -14,7 +14,7 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </HBox.margin>
          <image>
-            <Image url="@icons/user.png" />
+            <Image url="@darkThemeIcons/user.png" />
          </image>
       </ImageView>
       <Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" text="User name" textFill="WHITE">

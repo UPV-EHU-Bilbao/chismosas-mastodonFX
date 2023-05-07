@@ -100,3 +100,70 @@
     -fx-fill: #ffffff;
 }
 
+#appearance{
+    -fx-image: url(../darkThemeIcons/appearance.png);
+}
+
+#bell{
+    -fx-image: url(../darkThemeIcons/bell.png);
+}
+
+#bookmark{
+    -fx-image: url(../darkThemeIcons/bookmark.png);
+}
+
+#brightness{
+    -fx-image: url(../darkThemeIcons/brightness.png);
+}
+
+#comments{
+    -fx-image: url(../darkThemeIcons/comment.png);
+}
+
+#edit{
+     -fx-image: url(../darkThemeIcons/edit.png);
+}
+
+#explore{
+     -fx-image: url(../darkThemeIcons/explore.png);
+}
+
+#fav{
+     -fx-image: url(../darkThemeIcons/fav.png);
+}
+
+#home{
+     -fx-image: url(../darkThemeIcons/home.png);
+}
+
+#like{
+     -fx-image: url(../darkThemeIcons/like.png);
+}
+
+#logo{
+     -fx-image: url(../darkThemeIcons/logo.png);
+}
+
+#selectorLogo{
+     -fx-image: url(../darkThemeIcons/logo.png);
+}
+
+#logout{
+     -fx-image: url(../darkThemeIcons/logout.png);
+}
+
+#msg{
+     -fx-image: url(../darkThemeIcons/msg.png);
+}
+
+#retweet{
+     -fx-image: url(../darkThemeIcons/retweet.png);
+}
+
+#settings{
+     -fx-image: url(../darkThemeIcons/settings.png);
+}
+
+#user{
+     -fx-image: url(../darkThemeIcons/user.png);
+}

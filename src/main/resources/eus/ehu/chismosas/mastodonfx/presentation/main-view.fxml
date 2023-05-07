@@ -47,9 +47,7 @@
                <Insets left="15.0" right="15.0" />
             </padding>
             <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" GridPane.rowIndex="1">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/user.png" />
-               </ImageView>
+               <ImageView id="user" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="64.0" text="Profile" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -60,9 +58,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="notificationsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="2">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/bell.png" />
-               </ImageView>
+               <ImageView id="bell" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Notifications" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -73,9 +69,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="msgBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="3">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/msg.png" />
-               </ImageView>
+               <ImageView id="msg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Messages" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -86,9 +80,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="exploreBtn" opacity="0.4" prefHeight="25.0" prefWidth="137.0" GridPane.rowIndex="4">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/explore.png" />
-               </ImageView>
+               <ImageView id="explore" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Explore" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -99,9 +91,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="bookmarksBtn" opacity="0.4" prefHeight="24.0" prefWidth="137.0" GridPane.rowIndex="5">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/bookmark.png" />
-               </ImageView>
+               <ImageView id="bookmark" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Bookmarks" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -112,9 +102,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="favsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="6">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/fav.png" />
-               </ImageView>
+               <ImageView id="fav" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Favourites" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -125,11 +113,7 @@
                </Label>
             </ToolBar>
             <ToolBar fx:id="homeBtn" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@icons/home.png" />
-                  </image>
-               </ImageView>
+               <ImageView id="home" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -153,16 +137,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <Pane prefHeight="125.0" prefWidth="170.0">
-            <ImageView id="bellImg" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" x="20.0">
+            <ImageView id="logo" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" x="20.0">
                <effect>
                   <DropShadow offsetX="5.0" offsetY="5.0" />
                </effect>
-               <Image url="@icons/logo.png" />
             </ImageView>
             <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/settings.png" />
-               </ImageView>
+               <ImageView id="settings" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
@@ -197,7 +178,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-               <Image url="@icons/user.png" />
+               <Image url="@darkThemeIcons/user.png" />
             </ImageView>
             <Label fx:id="userNameLabel" text="\@username" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                <font>

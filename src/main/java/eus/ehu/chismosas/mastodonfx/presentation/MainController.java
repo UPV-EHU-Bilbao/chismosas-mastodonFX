@@ -103,8 +103,7 @@ public class MainController {
     @FXML
     void initialize(){
         instance = this;
-        mainPane.getStylesheets().clear();
-        mainPane.getStylesheets().add(darkTheme);
+        mainPane.getStylesheets().clear();         mainPane.getStylesheets().add(darkTheme);
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
         followingListView = new ListView<>();

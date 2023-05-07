@@ -21,7 +21,7 @@
         <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <ImageView fx:id="avatar" fitHeight="48.0" fitWidth="48.0" onMouseClicked="#goAccount" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowSpan="2">
-        <Image url="@icons/user.png" />
+        <Image url="@darkThemeIcons/user.png" />
     </ImageView>
     <Label fx:id="displayName" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
         <GridPane.margin>
