@@ -74,6 +74,13 @@
 
 /*STYLES FOR SPECIFIC ITEMS*/
 
+#chooseText{
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 18px;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
 #followBtn{
     -fx-background-color:  transparent;
     -fx-border-color: #000000;
@@ -87,13 +94,27 @@
     -fx-background-color:  #e7e7e8;
 }
 
-#publishButton{
+#publish{
     -fx-background-color: #5c4de3;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Ebrima";
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
-
+#chooseAccount{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+#addAccount{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
 #publishButton:hover{
     -fx-background-color: #6c5de3;
 }
@@ -168,6 +189,10 @@
 
 #user{
      -fx-image: url(../lightThemeIcons/user.png);
+}
+
+#accountSelectionPane{
+    -fx-stylesheets: url(light.css);
 }
 
 /* Path: src\main\resources\eus\ehu\chismosas\mastodonfx\presentation\styles\light.css */

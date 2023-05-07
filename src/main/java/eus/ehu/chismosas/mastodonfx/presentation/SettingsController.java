@@ -26,19 +26,19 @@ public class SettingsController {
     @FXML
     private TextField usernameField;
 
+
     @FXML
     public void selectDarkTheme(ActionEvent event) {
         lightBtn.setSelected(false);
         MainController.getInstance().darkButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-
+        AccountSelection.getInstance().setDarkTheme();
     }
 
     @FXML
     public void selectLightTheme(ActionEvent event) throws IOException {
         darkBtn.setSelected(false);
         MainController.getInstance().lightButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("light.css").toExternalForm());
+        AccountSelection.getInstance().setLightTheme();
     }
 
     @FXML

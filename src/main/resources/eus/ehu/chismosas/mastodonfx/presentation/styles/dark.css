@@ -75,6 +75,13 @@
 
 /*STYLES FOR SPECIFIC ITEMS*/
 
+#chooseText{
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 18px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
 #followBtn{
     -fx-background-color:  transparent;
     -fx-border-color: #ffffff;
@@ -86,11 +93,26 @@
 #followBtn:hover{
     -fx-background-color:  #212124;
 }
-#publishButton{
+#publish{
     -fx-background-color: #5c4de3;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Ebrima";
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+#chooseAccount{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+#addAccount{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 #publishButton:hover{
     -fx-background-color: #6c5de3;
@@ -166,4 +188,8 @@
 
 #user{
      -fx-image: url(../darkThemeIcons/user.png);
+}
+
+#accountSelectionPane{
+    -fx-stylesheets: url(dark.css);
 }

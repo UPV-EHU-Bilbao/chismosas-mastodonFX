@@ -83,7 +83,7 @@
             <Insets left="30.0" />
         </GridPane.margin>
     </Label>
-    <ImageView id="comments" fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: url(icons\retweet.png);" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="comments" fx:id="commentBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets right="50.0" />
         </GridPane.margin>

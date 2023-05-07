@@ -7,12 +7,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 
 public class AccountSelection{
 
+    public static AccountSelection instance;
+
+    public static AccountSelection getInstance() {
+        return instance;
+    }
+
+    @FXML
+    private Pane loginPane;
 
     @FXML
     private ListView<Account> accountsList;
@@ -31,9 +40,14 @@ public class AccountSelection{
 
     private Parent root;
 
+    private String lightTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/light.css").toExternalForm();
+    private String darkTheme = getClass().getResource("/eus/ehu/chismosas/mastodonfx/presentation/styles/dark.css").toExternalForm();
+
     @FXML
     private void initialize() {
-        accountsList.setStyle("-fx-control-inner-background: #18181b");
+        instance = this;
+        setDarkTheme();
+
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
@@ -62,6 +76,24 @@ public class AccountSelection{
         }
     }
 
+
+    /**
+     * This method is called when the user clicks on the "Light" button.
+     * It changes the theme of the account selection screen to light.
+     */
+    public void setLightTheme() {
+        loginPane.getStylesheets().clear();
+        loginPane.getStylesheets().add(lightTheme);
+    }
+
+    /**
+     * This method is called when the user clicks on the "Dark" button.
+     * It changes the theme of the account selection screen to dark.
+     */
+    public void setDarkTheme() {
+        loginPane.getStylesheets().clear();
+        loginPane.getStylesheets().add(darkTheme);
+    }
 
     public class AccountSelectionCell extends ListCell<Account> {
         private Parent root;

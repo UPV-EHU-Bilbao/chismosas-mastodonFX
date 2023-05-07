@@ -8,21 +8,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="600.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.AccountSelection">
+<Pane id="accountSelectionPane" fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.AccountSelection">
    <children>
-      <Label layoutX="115.0" layoutY="79.0" prefHeight="27.0" prefWidth="370.0" text="Choose an account to enter mastodon with" textFill="WHITE" wrapText="true">
+      <Label id="chooseText" layoutX="115.0" layoutY="79.0" prefHeight="27.0" prefWidth="370.0" text="Choose an account to enter mastodon with" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ListView fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" style="-fx-background-color: #18181b;" />
+      <ListView fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" />
       <ImageView id="selectorLogo" fitHeight="30.0" fitWidth="142.0" layoutX="240.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="chooseAccountBtn" layoutX="446.0" layoutY="542.0" mnemonicParsing="false" onAction="#chooseAccount" onMouseClicked="#chooseAccount" style="-fx-background-color: #5c4de3;" text="Choose accunt" textFill="WHITE">
+      <Button id="chooseAccount" fx:id="chooseAccountBtn" layoutX="446.0" layoutY="542.0" mnemonicParsing="false" onAction="#chooseAccount" onMouseClicked="#chooseAccount" style="-fx-background-color: #5c4de3;" text="Choose accunt" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="AddNewAccountBtn" layoutX="144.0" layoutY="542.0" mnemonicParsing="false" onAction="#addNewAccount" style="-fx-background-color: #5c4de3;" text="Add new account" textFill="WHITE">
+      <Button id="addAccount" fx:id="AddNewAccountBtn" layoutX="144.0" layoutY="542.0" mnemonicParsing="false" onAction="#addNewAccount" style="-fx-background-color: #5c4de3;" text="Add new account" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
