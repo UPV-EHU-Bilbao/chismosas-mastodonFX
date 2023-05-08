@@ -190,12 +190,12 @@
                   <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button styleClass="menu-button" fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font name="Ebrima" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button styleClass="menu-button" fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>

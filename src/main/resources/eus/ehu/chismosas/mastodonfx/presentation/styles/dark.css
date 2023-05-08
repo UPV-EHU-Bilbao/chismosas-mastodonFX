@@ -25,13 +25,21 @@
 }
 
 .button{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 14px;
+}
+
+
+.menu-button{
     -fx-background-color: #18181b;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Ebrima";
     -fx-font-size: 14px;
 }
 
-.button:hover{
+.menu-button:hover{
     -fx-background-color:  #212124;
 }
 
