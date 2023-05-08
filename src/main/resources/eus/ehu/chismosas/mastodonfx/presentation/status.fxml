@@ -59,7 +59,7 @@
          <Insets right="10.0" />
       </GridPane.margin>
     </HBox>
-    <ImageView fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets />
         </GridPane.margin>

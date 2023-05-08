@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -81,6 +82,7 @@ public class StatusCell extends ListCell<Status> {
     private boolean isReblogged;
     private long reblogs;
     private Parent root;
+    private boolean isBookmarked;
 
 
     /**
@@ -109,6 +111,7 @@ public class StatusCell extends ListCell<Status> {
         likes = status.getFavouritesCount();
         isReblogged = status.isReblogged();
         reblogs = status.getReblogsCount();
+        isBookmarked = status.isBookmarked();
 
         if (root == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("status.fxml"));
@@ -140,6 +143,9 @@ public class StatusCell extends ListCell<Status> {
         else retweetBtn.setOpacity(0.5);
 
         comment.setText(String.valueOf(status.getRepliesCount()));
+
+        if (isBookmarked) bookmarkBtn.setOpacity(1);
+        else bookmarkBtn.setOpacity(0.5);
 
         setText(null);
         setGraphic(root);
@@ -234,6 +240,40 @@ public class StatusCell extends ListCell<Status> {
         else
             return (timeFormatterYear.format(creationDateTime));
 
+    }
+    /**
+     * Method that bookmarks a status
+     */
+    @FXML
+    void onBookmark() {
+        if (isBookmarked) {
+            bookmarkBtn.setOpacity(0.5);
+            CompletableFuture.runAsync(this::unbookmark);
+            isBookmarked = true;
+        }
+        else {
+            bookmarkBtn.setOpacity(1);
+            CompletableFuture.runAsync(this::bookmark);
+            isBookmarked = false;
+        }
+
+    }
+
+    @FXML
+    private void bookmark()  {
+        try {
+            BusinessLogic.bookmarkStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void unbookmark()  {
+        try {
+            BusinessLogic.unbookmarkStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
