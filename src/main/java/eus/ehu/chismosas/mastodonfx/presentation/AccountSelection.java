@@ -81,7 +81,7 @@ public class AccountSelection{
         private ImageView avatar;
 
         @FXML
-        private Label userName;
+        private Label username;
 
         @Override
         protected void updateItem(Account item, boolean empty) {
@@ -111,7 +111,7 @@ public class AccountSelection{
             setText(null);
             setGraphic(root);
 
-            userName.setText("@" + item.getUsername());
+            username.setText("@" + item.getUsername());
             avatar.setImage(ImageCache.get(item.getAvatar()));
 
         }

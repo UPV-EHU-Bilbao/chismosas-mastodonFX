@@ -2,28 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fx:id="avatar" fitHeight="40.0" fitWidth="40.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-         <HBox.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </HBox.margin>
-         <image>
-            <Image url="@darkThemeIcons/user.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" text="User name" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-         <HBox.margin>
-            <Insets bottom="31.0" left="15.0" right="20.0" top="31.0" />
-         </HBox.margin>
-      </Label>
-   </children>
+<HBox alignment="CENTER_LEFT" prefHeight="80.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <ImageView fx:id="avatar" fitHeight="64.0" fitWidth="64.0" preserveRatio="true">
+      <HBox.margin>
+         <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+      </HBox.margin>
+   </ImageView>
+   <Label fx:id="username" text="\@username">
+   </Label>
 </HBox>
