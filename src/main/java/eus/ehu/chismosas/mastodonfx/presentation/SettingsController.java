@@ -47,7 +47,8 @@ public class SettingsController {
             MainController.getInstance().updateBanner();
         }
         catch (Exception e){
-            usernameField.setText("Error");
+            usernameField.setText("");
+            usernameField.setPromptText("Error");
         }
     }
 }
