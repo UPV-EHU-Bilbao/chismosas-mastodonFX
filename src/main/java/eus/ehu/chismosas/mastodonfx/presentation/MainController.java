@@ -26,9 +26,7 @@ import java.util.concurrent.Future;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainController {
-    private static MainController instance;
-    private Account userAccount;
-    private Account currentAccount;
+    private final DropShadow dropShadow = new DropShadow();
     @FXML
     private ToolBar bookmarksBtn;
     @FXML
@@ -65,11 +63,13 @@ public class MainController {
     private Button postButton;
     @FXML
     private Button followBtn;
+
+    private static MainController instance;
+    private Account userAccount;
+    private Account currentAccount;
     private Scene settingsScene;
     private ListView<Status> tootListView;
     private ListView<Account> accountListView;
-    private final DropShadow dropShadow = new DropShadow();
-
     private List<Status> accountToots;
     private Future<List<Account>> followersList;
     private Future<List<Account>> followingList;

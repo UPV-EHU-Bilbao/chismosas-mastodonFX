@@ -88,7 +88,6 @@ public class AccountCell extends ListCell<Account> {
 
     /**
      * Follow the account on which the button is clicked
-     *
      */
     @FXML
     void followAccount() {
