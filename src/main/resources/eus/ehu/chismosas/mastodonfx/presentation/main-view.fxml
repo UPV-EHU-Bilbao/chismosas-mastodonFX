@@ -53,7 +53,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/user.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="64.0" text="Profile" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="64.0" text="%Profile" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -66,7 +66,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/bell.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Notifications" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Notifications" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -79,7 +79,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/msg.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Messages" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Messages" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -92,7 +92,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/explore.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Explore" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Explore" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -105,7 +105,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/bookmark.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Bookmarks" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Bookmarks" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -118,7 +118,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/fav.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Favourites" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Favourites" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -131,7 +131,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/home.png" />
                </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Home" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -164,7 +164,7 @@
                <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   <Image url="@icons/settings.png" />
                </ImageView>
-               <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
+               <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="%Settings" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -210,17 +210,17 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="%Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="%Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: lightblue;" text="Follow" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: lightblue;" text="%Follow" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>

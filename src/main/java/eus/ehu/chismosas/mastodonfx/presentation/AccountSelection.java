@@ -4,12 +4,16 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+
+import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
 
 public class AccountSelection {
 
@@ -130,7 +134,7 @@ public class AccountSelection {
             }
 
             if (root == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("account-selection-cell.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("account-selection-cell.fxml"), t());
                 loader.setController(this);
                 try {
                     loader.load();

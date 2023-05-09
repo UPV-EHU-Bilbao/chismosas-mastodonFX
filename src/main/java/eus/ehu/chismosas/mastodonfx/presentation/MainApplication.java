@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * This is the main class of the application. It loads the main view and shows it on the screen.
@@ -21,7 +23,7 @@ public class MainApplication extends Application {
 
     public static void login(Account account) {
         BusinessLogic.login(account);
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t());
         try {
             Scene scene = new Scene(fxmlLoader.load());
             instance.mainStage.setScene(scene);
@@ -33,7 +35,7 @@ public class MainApplication extends Application {
 
     public static void logout() {
         BusinessLogic.logout();
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"), t());
         try {
             Scene scene = new Scene(fxmlLoader.load());
             instance.mainStage.setScene(scene);
@@ -41,6 +43,10 @@ public class MainApplication extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ResourceBundle t(){
+        return ResourceBundle.getBundle("strings", new Locale("eus_ES"));
     }
 
     public static void main(String[] args) {
@@ -52,11 +58,17 @@ public class MainApplication extends Application {
         MainApplication.instance = this;
         this.mainStage = stage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                MainApplication.class.getResource("account-selection.fxml"),
+                t());
+        ResourceBundle bundle = t();
+
         Scene scene = new Scene(fxmlLoader.load());
-        mainStage.setTitle("MastodonFX - Account selection");
+        mainStage.setTitle(bundle.getString("MastodonFX - Account selection"));
         mainStage.setScene(scene);
         mainStage.show();
         mainStage.requestFocus();
+
+
     }
 }

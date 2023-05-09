@@ -20,6 +20,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
+
 /**
  * This class is used to control the main view of the application
  *
@@ -347,7 +349,7 @@ public class MainController {
 
     public void loadSettingsScene() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t());
             settingsScene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
