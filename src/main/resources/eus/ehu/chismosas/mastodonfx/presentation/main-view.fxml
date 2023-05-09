@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -21,7 +20,7 @@
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
-         <Button id="publish" fx:id="publishButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#publishToot" style="-fx-background-color: #5c4de3;" text="Publish!" textFill="WHITE">
+         <Button id="publish" fx:id="publishButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#publishToot" style="-fx-background-color: #5c4de3;" styleClass="blueBtn" text="Publish!" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
@@ -46,7 +45,7 @@
             <padding>
                <Insets left="15.0" right="15.0" />
             </padding>
-            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" GridPane.rowIndex="1">
+            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" styleClass="section" GridPane.rowIndex="1">
                <ImageView id="user" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="64.0" text="Profile" textFill="WHITE">
                   <font>
@@ -112,7 +111,7 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="homeBtn" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0">
+            <ToolBar fx:id="homeBtn" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0" styleClass="section">
                <ImageView id="home" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
                   <font>
@@ -137,12 +136,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <Pane prefHeight="125.0" prefWidth="170.0">
-            <ImageView id="logo" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" x="20.0">
-               <effect>
-                  <DropShadow offsetX="5.0" offsetY="5.0" />
-               </effect>
-            </ImageView>
-            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0">
+            <ImageView id="logo" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" x="20.0" />
+            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0" styleClass="section">
                <ImageView id="settings" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
                   <font>
@@ -153,7 +148,7 @@
                   </padding>
                </Label>
             </ToolBar>
-            <Line endX="73.5" layoutX="85.0" layoutY="113.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
+            <Line id="separator" endX="73.5" layoutX="85.0" layoutY="113.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
          </Pane>
          <Pane prefHeight="139.0" prefWidth="220.0" GridPane.columnIndex="2">
             <TextField fx:id="searcher" disable="true" layoutX="14.0" layoutY="44.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="Search" />
@@ -190,17 +185,17 @@
                   <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Button styleClass="menu-button" fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" styleClass="section" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font name="Ebrima" size="15.0" />
                </font>
             </Button>
-            <Button styleClass="menu-button" fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" styleClass="section" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" text="Follow" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" styleClass="followage" text="Follow" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>

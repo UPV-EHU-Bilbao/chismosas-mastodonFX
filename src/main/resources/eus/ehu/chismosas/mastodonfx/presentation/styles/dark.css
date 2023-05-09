@@ -5,125 +5,99 @@
     -fx-background-color:  #18181b;
     -fx-font-family: "Ebrima";
     -fx-text-fill: #ffffff;
-}
-
-.border-pane{
-    -fx-background-color:  #18181b;
+    -fx-font-size: 14px;
 }
 
 .label{
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: inherit;
 }
+
 .tool-bar{
-    -fx-background-color: #18181b;
+    -fx-background-color: inherit;
+    -fx-background-radius: 20px;
 }
 
-.tool-bar:hover{
-    -fx-background-color:  #212124;
-}
-
-.button{
+.blueBtn{
     -fx-background-color: #5c4de3;
     -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
 }
 
-
-.menu-button{
-    -fx-background-color: #18181b;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
-.menu-button:hover{
-    -fx-background-color:  #212124;
+.blueBtn:hover{
+    -fx-background-color: #6c5de3;
 }
 
 .text-field{
+    -fx-text-fill: white;
     -fx-background-color: #212124;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+    -fx-border-color: #2d2d33;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
 }
 
-.text-area{
-    -fx-background-color: #212124;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+.section{
+    -fx-background-color: inherit;
+      -fx-background-radius: 20px;
+}
+
+.section:hover{
+    -fx-background-color:  #212124;
 }
 
 .scroll-bar{
-    -fx-background-radius: 0;
     -fx-background-color: #212124;
 }
 
-.radio-button{
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
 .list-view{
-    -fx-background-color: #18181b;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+    -fx-background-color: inherit;
+    -fx-text-fill: inherit;
 }
 
 .list-cell{
-    -fx-background-color: #18181b;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+    -fx-background-color: inherit;
+    -fx-text-fill: inherit;
 }
 
-
-/*STYLES FOR SPECIFIC ITEMS*/
-
-#chooseText{
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 18px;
-    -fx-text-fill: #ffffff;
-    -fx-font-weight: bold;
-}
-
-#followBtn{
+.followage{
     -fx-background-color:  transparent;
     -fx-border-color: #ffffff;
     -fx-border-radius: 5px;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+    -fx-text-fill: white;
 }
-#followBtn:hover{
+.followage:hover{
     -fx-background-color:  #212124;
 }
-#publish{
-    -fx-background-color: #5c4de3;
+
+.pane-with-border{
+    -fx-border-color: #ababab;
     -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+    -fx-border-radius: 10px;
 }
-#chooseAccount{
-    -fx-background-color: #5c4de3;
+
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#selected{
+    -fx-background-color: #6153e6;
+    -fx-text-weight: bold;
     -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
 }
-#addAccount{
-    -fx-background-color: #5c4de3;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+
+#login-list{
+    -fx-border-color: #ababab;
 }
-#publishButton:hover{
-    -fx-background-color: #6c5de3;
+
+#login-cell{
+    -fx-border-color:  transparent transparent #ababab transparent;
+}
+
+#separator{
+    -fx-background-color: #ababab;
+}
+
+#chooseText{
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }
 
 #content{

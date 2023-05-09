@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="723.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.SettingsController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="723.0" prefWidth="600.0" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.SettingsController">
    <children>
       <HBox prefHeight="183.0" prefWidth="600.0">
          <children>
@@ -34,17 +34,17 @@
                         <ImageView id="brightness" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                         <Label text="Theme selector:" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </items>
                   </ToolBar>
-                  <RadioButton fx:id="darkBtn" mnemonicParsing="false" onAction="#selectDarkTheme" selected="true" text="DARK" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <RadioButton fx:id="darkBtn" mnemonicParsing="false" onAction="#selectDarkTheme" selected="true" text="Dark" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="lightBtn" mnemonicParsing="false" onAction="#selectLightTheme" text="LIGHT" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <RadioButton fx:id="lightBtn" mnemonicParsing="false" onAction="#selectLightTheme" text="Light" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <ImageView id="appearance" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                         <Label text="Appearance:" textFill="WHITE">
                            <font>
-                              <Font size="20.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </items>
@@ -103,7 +103,7 @@
                         <ImageView id="edit" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                         <Label text="Profile settings:" textFill="WHITE">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </items>
@@ -111,7 +111,7 @@
                   <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <items>
                         <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="239.0" promptText="Change your username" />
-                      <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" text="Done" />
+                      <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" styleClass="blueBtn" text="Done" />
                     </items>
                   </ToolBar>
                </children>
@@ -125,7 +125,7 @@
                   <ImageView id="logout" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                   <Label text="Log out" textFill="WHITE">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                      <padding>
                         <Insets left="10.0" />

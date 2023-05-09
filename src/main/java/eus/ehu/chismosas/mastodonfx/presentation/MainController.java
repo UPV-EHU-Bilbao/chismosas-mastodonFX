@@ -42,6 +42,9 @@ public class MainController {
     private ToolBar favsBtn;
 
     @FXML
+    private ToolBar homeBtn;
+
+    @FXML
     private Button followersBtn;
 
     @FXML
@@ -105,7 +108,6 @@ public class MainController {
         followersListView.setCellFactory(param -> new AccountCell());
         dropShadow = new DropShadow();
 
-
         publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
         currentID = userID;
@@ -161,73 +163,55 @@ public class MainController {
      * @param scene the scene to be shown
      */
     private void sceneSwitch(String scene) {
+        selectBtn(scene);
         var settingsRoot = settingsScene.getRoot();
         switch (scene) {
             case "Profile" -> {
-                /**
-                if (currentID.equals(userID)) {
-                   // profileBtn.setEffect(dropShadow);
-                    profileBtn.setStyle("-fx-background-color: #212124");
-                }
-                else {
-                  //  profileBtn.setEffect(null);
-                    profileBtn.setStyle("-fx-background-color: #18181b");
-                }
-                 */
-                //followingBtn.setEffect(null);
-                //followersBtn.setEffect(null);
-                //followingBtn.setStyle("-fx-background-color:  #18181b");
-                //followersBtn.setStyle("-fx-background-color:  #18181b");
 
                 showAccountToots();
                 mainPane.setCenter(tootListView);
             }
             case "HomeTimeline" -> {
-              //  profileBtn.setEffect(null);
-              //  followingBtn.setEffect(null);
-              //  followersBtn.setEffect(null);
-              //  settingsBtn.setEffect(null);
 
                 showHometimeline();
                 mainPane.setCenter(tootListView);
             }
             case "Following" -> {
-              //  profileBtn.setEffect(null);
-              //  followingBtn.setEffect(dropShadow);
-              // followersBtn.setEffect(null);
-              //  settingsBtn.setEffect(null);
-              //  followersBtn.setStyle("-fx-background-color:  #18181b");
-              //  profileBtn.setStyle("-fx-background-color: #18181b");
-              //  followingBtn.setStyle("-fx-background-color: #212124");
 
                 mainPane.setCenter(followingListView);
                 updateFollowingListView();
             }
             case "Followers" -> {
-              //  profileBtn.setEffect(null);
-              //  followingBtn.setEffect(null);
-              //  followersBtn.setEffect(dropShadow);
-              //  settingsBtn.setEffect(null);
-              //  profileBtn.setStyle("-fx-background-color: #18181b");
-             //   followingBtn.setStyle("-fx-background-color: #18181b");
-              //  followersBtn.setStyle("-fx-background-color: #212124");
-
                 mainPane.setCenter(followersListView);
                 updateFollowersListView();
             }
             case "Settings" -> {
-             //   profileBtn.setEffect(null);
-             //   followingBtn.setEffect(null);
-             //   followersBtn.setEffect(null);
-             //   settingsBtn.setEffect(dropShadow);
                 mainPane.setCenter(settingsRoot);
-
                 //BUG: If I don't update the pane the settings window doesn't show up
                 mainPane.setCenter(followersListView);
                 mainPane.setCenter(settingsRoot);
             }
 
         }
+    }
+
+    /**
+     * This method sets the style of the button that has just been pressed
+     * so it can diffrentiate it from the rest
+     * @param btn is the selected button
+     */
+    public void selectBtn(String btn){
+        if(btn.equals("Profile")) profileBtn.setId("selected");
+        else profileBtn.setId("");
+        if(btn.equals("HomeTimeline")) homeBtn.setId("selected");
+        else homeBtn.setId("");
+        if(btn.equals("Following")) followingBtn.setId("selected");
+        else followingBtn.setId("");
+        if(btn.equals("Followers")) followersBtn.setId("selected");
+        else followersBtn.setId("");
+        if(btn.equals("Settings")) settingsBtn.setId("selected");
+        else settingsBtn.setId("");
+
     }
 
     /**

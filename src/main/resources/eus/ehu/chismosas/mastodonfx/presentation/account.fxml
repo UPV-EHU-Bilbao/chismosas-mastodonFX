@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane styleClass="pane-with-border" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" />
         <ColumnConstraints hgrow="SOMETIMES" prefWidth="100" />
@@ -35,6 +35,6 @@
           <Insets bottom="10.0" />
         </GridPane.margin>
     </Label>
-   <Button fx:id="followBtn" onAction="#followAccount" prefWidth="95.0" text="Follow" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2">
+   <Button fx:id="followBtn" onAction="#followAccount" prefWidth="95.0" styleClass="followage" text="Follow" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2">
    </Button>
 </GridPane>

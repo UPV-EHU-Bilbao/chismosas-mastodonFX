@@ -2,121 +2,108 @@
 /*STYLES FOR CLASES*/
 
 .root{
-    -fx-background-color: white;
+    -fx-background-color: #F4F9F9;
     -fx-font-family: "Ebrima";
-}
-
-.border-pane{
-    -fx-background-color: white;
-}
-
-.label{
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
     -fx-text-fill: #000000;
+    -fx-font-size: 14px;
 }
+
 .tool-bar{
-    -fx-background-color: white;
-}
+    -fx-background-color: inherit;
+    -fx-border-radius: 20px;
+     -fx-background-radius: 20px;
 
-.tool-bar:hover{
-    -fx-background-color:  #e7e7e8;
-}
-
-.button{
-    -fx-background-color: white;
-    -fx-text-fill: #000000;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
-.button:hover{
-    -fx-background-color:  #e7e7e8;
-}
-
-.text-field{
-    -fx-background-color: #e7e7e8;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
-.text-area{
-    -fx-background-color: #e7e7e8;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
-.scroll-bar{
-    -fx-background-radius: 0;
-    -fx-background-color: transparent;
 }
 
 .radio-button{
     -fx-text-fill: #000000;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
 }
 
-.list-view{
-    -fx-background-color: white;
-    -fx-text-fill: #000000;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+.label{
+    -fx-text-fill: black;
 }
 
-.list-cell{
-    -fx-background-color: white;
-    -fx-text-fill: #000000;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-}
-
-
-/*STYLES FOR SPECIFIC ITEMS*/
-
-#chooseText{
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 18px;
-    -fx-text-fill: #000000;
+.blueBtn{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
+    -fx-background-radius: 20px;
 }
 
-#followBtn{
-    -fx-background-color:  transparent;
-    -fx-border-color: #000000;
-    -fx-border-radius: 5px;
-    -fx-text-fill: #000000;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
+.blueBtn:hover{
+    -fx-background-color: #6c5de3;
 }
 
-#followBtn:hover{
+.text-field{
+    -fx-background-color: #e7e7e8;
+    -fx-text-fill: black;
+    -fx-border-color: #8c8c91;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.section{
+    -fx-background-color: inherit;
+    -fx-text-fill: inherit;
+    -fx-background-radius: 20px;
+}
+
+.section:hover{
     -fx-background-color:  #e7e7e8;
 }
 
-#publish{
-    -fx-background-color: #5c4de3;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+.scroll-bar{
+    -fx-background-color: #e7e7e8;
 }
-#chooseAccount{
-    -fx-background-color: #5c4de3;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+
+.list-view{
+    -fx-background-color: inherit;
 }
-#addAccount{
-    -fx-background-color: #5c4de3;
-    -fx-text-fill: #ffffff;
-    -fx-font-family: "Ebrima";
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+
+.list-cell{
+    -fx-background-color: inherit;
+    -fx-text-fill: inherit;
 }
-#publishButton:hover{
-    -fx-background-color: #6c5de3;
+
+.followage{
+    -fx-background-color:  transparent;
+    -fx-border-color: black;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #000000;
+}
+
+.followage:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+.pane-with-border{
+    -fx-border-color: #ababab;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 10px;
+}
+
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#login-list{
+    -fx-border-color: #ababab;
+}
+
+#login-cell{
+    -fx-border-color:  transparent transparent #ababab transparent;
+}
+
+#selected{
+    -fx-background-color: #6153e6;
+    -fx-text-weight: bold;
+}
+
+#separator{
+    -fx-background-color: #ababab;
+}
+
+#chooseText{
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
 }
 
 #content{
