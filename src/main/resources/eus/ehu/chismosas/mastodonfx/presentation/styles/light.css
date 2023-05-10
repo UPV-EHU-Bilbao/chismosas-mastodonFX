@@ -10,7 +10,6 @@
 
 .tool-bar{
     -fx-background-color: inherit;
-    -fx-border-radius: 20px;
      -fx-background-radius: 20px;
 
 }
@@ -44,8 +43,8 @@
 
 .section{
     -fx-background-color: inherit;
-    -fx-text-fill: inherit;
     -fx-background-radius: 20px;
+    -fx-text-fill: black;
 }
 
 .section:hover{
@@ -68,7 +67,7 @@
 .followage{
     -fx-background-color:  transparent;
     -fx-border-color: black;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 20px;
     -fx-text-fill: #000000;
 }
 
@@ -77,20 +76,20 @@
 }
 
 .pane-with-border{
-    -fx-border-color: #ababab;
+    -fx-border-color:transparent #ababab transparent #ababab;
     -fx-text-fill: #000000;
-    -fx-border-radius: 10px;
 }
 
+.lists-content{
+    -fx-border-color:  transparent transparent #ababab transparent;
+}
 /*STYLES FOR SPECIFIC ITEMS*/
 
 #login-list{
     -fx-border-color: #ababab;
 }
 
-#login-cell{
-    -fx-border-color:  transparent transparent #ababab transparent;
-}
+
 
 #selected{
     -fx-background-color: #6153e6;

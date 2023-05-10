@@ -9,7 +9,7 @@
 }
 
 .label{
-    -fx-text-fill: inherit;
+    -fx-text-fill: white;
 }
 
 .tool-bar{
@@ -51,18 +51,17 @@
 
 .list-view{
     -fx-background-color: inherit;
-    -fx-text-fill: inherit;
 }
 
 .list-cell{
     -fx-background-color: inherit;
-    -fx-text-fill: inherit;
+    -fx-text-fill: white;
 }
 
 .followage{
     -fx-background-color:  transparent;
     -fx-border-color: #ffffff;
-    -fx-border-radius: 5px;
+    -fx-border-radius: 20px;
     -fx-text-fill: white;
 }
 .followage:hover{
@@ -70,9 +69,12 @@
 }
 
 .pane-with-border{
-    -fx-border-color: #ababab;
+    -fx-border-color: transparent #ababab transparent #ababab;
     -fx-text-fill: #ffffff;
-    -fx-border-radius: 10px;
+}
+
+.lists-content{
+    -fx-border-color:  transparent transparent #ababab transparent;
 }
 
 /*STYLES FOR SPECIFIC ITEMS*/
@@ -85,10 +87,6 @@
 
 #login-list{
     -fx-border-color: #ababab;
-}
-
-#login-cell{
-    -fx-border-color:  transparent transparent #ababab transparent;
 }
 
 #separator{
