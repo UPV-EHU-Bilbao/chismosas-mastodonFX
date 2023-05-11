@@ -349,7 +349,7 @@ public class MainController {
 
     public void loadSettingsScene() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t(SettingsController.len));
             settingsScene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -435,5 +435,6 @@ public class MainController {
             throw new RuntimeException(e);
         }
     }
+
 
 }

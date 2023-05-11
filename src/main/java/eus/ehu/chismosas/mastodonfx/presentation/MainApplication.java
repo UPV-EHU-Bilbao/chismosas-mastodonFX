@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -18,12 +19,11 @@ import java.util.ResourceBundle;
  */
 public class MainApplication extends Application {
     private static MainApplication instance;
-    private Stage mainStage;
-
+    public static Stage mainStage;
 
     public static void login(Account account) {
         BusinessLogic.login(account);
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t());
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t(SettingsController.len));
         try {
             Scene scene = new Scene(fxmlLoader.load());
             instance.mainStage.setScene(scene);
@@ -35,7 +35,7 @@ public class MainApplication extends Application {
 
     public static void logout() {
         BusinessLogic.logout();
-        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"), t());
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"), t(SettingsController.len));
         try {
             Scene scene = new Scene(fxmlLoader.load());
             instance.mainStage.setScene(scene);
@@ -45,12 +45,25 @@ public class MainApplication extends Application {
         }
     }
 
-    public static ResourceBundle t(){
-        return ResourceBundle.getBundle("strings", new Locale("eus_ES"));
+   public static ResourceBundle t(String leng){
+        return ResourceBundle.getBundle("strings", new Locale(leng));
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void setProfile() {
+        var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t(SettingsController.len));
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            instance.mainStage.setScene(scene);
+            instance.mainStage.show();
+            instance.mainStage.requestFocus();
+           // instance.mainStage.setTitle("MastodonFX - Profile");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -59,9 +72,8 @@ public class MainApplication extends Application {
         this.mainStage = stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-                MainApplication.class.getResource("account-selection.fxml"),
-                t());
-        ResourceBundle bundle = t();
+                MainApplication.class.getResource("account-selection.fxml"), t(SettingsController.len));
+        ResourceBundle bundle = t(SettingsController.len);
 
         Scene scene = new Scene(fxmlLoader.load());
         mainStage.setTitle(bundle.getString("MastodonFX - Account selection"));

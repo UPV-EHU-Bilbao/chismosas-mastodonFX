@@ -60,7 +60,7 @@ public class AccountCell extends ListCell<Account> {
         }
 
         if (root == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"), t());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"), t("eus_ES"));
             loader.setController(this);
             try {
                 root = loader.load();

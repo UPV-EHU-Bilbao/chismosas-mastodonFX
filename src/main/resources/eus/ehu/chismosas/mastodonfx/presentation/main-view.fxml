@@ -20,8 +20,8 @@
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="899.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
-         <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
-         <Button fx:id="postButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot" style="-fx-background-color: #5c4de3;" text="Post!" textFill="WHITE">
+         <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="%What are your thoughts?" />
+         <Button fx:id="postButton" layoutX="123.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot" prefHeight="29.0" prefWidth="69.0" style="-fx-background-color: #5c4de3;" text="%Post!" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
@@ -176,7 +176,7 @@
             <Line endX="73.5" layoutX="85.0" layoutY="113.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
          </Pane>
          <Pane prefHeight="139.0" prefWidth="220.0" GridPane.columnIndex="2">
-            <TextField fx:id="searcher" disable="true" layoutX="20.0" layoutY="57.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="Search" style="-fx-background-color: #282c37;" />
+            <TextField fx:id="searcher" disable="true" layoutX="20.0" layoutY="57.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="%Search" style="-fx-background-color: #282c37;" />
          </Pane>
          <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="139.0" prefWidth="488.0" GridPane.columnIndex="1">
             <columnConstraints>

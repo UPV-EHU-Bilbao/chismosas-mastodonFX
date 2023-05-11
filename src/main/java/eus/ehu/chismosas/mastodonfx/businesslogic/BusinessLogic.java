@@ -461,4 +461,8 @@ public class BusinessLogic {
         var request = client.statuses().bookmarkStatus(id);
         request.execute();
     }
+
+    public static Account getLoggedAccount() throws BigBoneRequestException {
+        return getAccount(userID);
+    }
 }
