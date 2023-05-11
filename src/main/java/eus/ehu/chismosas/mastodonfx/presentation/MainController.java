@@ -89,7 +89,6 @@ public class MainController {
         instance = this;
         userAccount = BusinessLogic.getUserAccount();
 
-
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
         accountListView = new ListView<>();
@@ -97,11 +96,9 @@ public class MainController {
 
         postButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
-
         loadSettingsScene();
         updateHomeTimeline();
         setProfile(userAccount);
-
     }
 
     /**
@@ -172,7 +169,7 @@ public class MainController {
      * @param btn is the selected button
      */
     public void selectBtn(String btn){
-        if(btn.equals("Profile")) profileBtn.setId("selected");
+        if(btn.equals("PostedToots")) profileBtn.setId("selected");
         else profileBtn.setId("");
         if(btn.equals("HomeTimeline")) homeBtn.setId("selected");
         else homeBtn.setId("");
@@ -348,15 +345,6 @@ public class MainController {
      * @param account the account to update
      */
     public void setProfile(Account account) {
-
-        if (account.getId().equals(userAccount.getId())) {
-            profileBtn.setEffect(dropShadow);
-            profileBtn.setStyle("-fx-background-color: #212124");
-        } else {
-            profileBtn.setEffect(null);
-            profileBtn.setStyle("-fx-background-color: #18181b");
-        }
-
         if (account != currentAccount) {
             currentAccount = account;
             updateFollowingList();
@@ -365,9 +353,7 @@ public class MainController {
             updateAccountToots();
             updateRelationshipCache();
         }
-
         switchView("PostedToots");
-
     }
 
     public void updateRelationshipCache() {

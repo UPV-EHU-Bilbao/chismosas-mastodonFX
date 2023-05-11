@@ -11,6 +11,7 @@
 .tool-bar{
     -fx-background-color: inherit;
      -fx-background-radius: 20px;
+     -fx-text-fill: inherit;
 
 }
 
@@ -23,7 +24,7 @@
 }
 
 .blueBtn{
-    -fx-background-color: #5c4de3;
+    -fx-background-color: #056CFF;
     -fx-text-fill: #ffffff;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
@@ -92,8 +93,9 @@
 
 
 #selected{
-    -fx-background-color: #6153e6;
+    -fx-background-color: #056CFF;
     -fx-text-weight: bold;
+    -fx-text-fill: #ffffff;
 }
 
 #separator{
