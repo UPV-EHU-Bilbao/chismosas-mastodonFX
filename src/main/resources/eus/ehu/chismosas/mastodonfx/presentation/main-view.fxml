@@ -20,12 +20,18 @@
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="899.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
-         <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
-         <Button fx:id="postButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot" style="-fx-background-color: #5c4de3;" text="Post!" textFill="WHITE">
+         <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="31.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
+         <Button fx:id="postButton" layoutX="149.0" layoutY="166.0" mnemonicParsing="false" onAction="#postToot" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #5c4de3;" text="Post!" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
          </Button>
+         <Button fx:id="selectImgButton" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #5c4de3;" text="Select an image" textFill="WHITE">
+            <font>
+               <Font size="13.0" />
+            </font>
+         </Button>
+         <ImageView fx:id="recentImage" fitHeight="121.0" fitWidth="178.0" layoutX="19.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
       </Pane>
    </right>
    <left>

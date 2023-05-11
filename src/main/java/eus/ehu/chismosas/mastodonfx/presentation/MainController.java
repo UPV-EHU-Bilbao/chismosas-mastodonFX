@@ -2,6 +2,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,12 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -62,7 +67,12 @@ public class MainController {
     @FXML
     private Button postButton;
     @FXML
+    private Button selectImgButton;
+    @FXML
     private Button followBtn;
+
+    @FXML
+    private ImageView recentImage;
 
     private static MainController instance;
     private Account userAccount;
@@ -73,7 +83,9 @@ public class MainController {
     private List<Status> accountToots;
     private Future<List<Account>> followersList;
     private Future<List<Account>> followingList;
-    private Future<Pageable<Status>> homeTimeline;
+    private CompletableFuture<Pageable<Status>> homeTimeline;
+
+    private ArrayList<String> mediaIds = new ArrayList<>();
 
 
     public static MainController getInstance() {return instance;}
@@ -99,6 +111,14 @@ public class MainController {
         postButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
 
+
+        //CompletableFuture.runAsync(() -> {
+        //    try {
+        //        homeTimeline = BusinessLogic.getHomeTimeline();
+        //    } catch (BigBoneRequestException e) {
+        //        throw new RuntimeException(e);
+        //    }
+        //});
         loadSettingsScene();
         updateHomeTimeline();
         setProfile(userAccount);
@@ -363,7 +383,6 @@ public class MainController {
         profileBtn.opacityProperty().setValue(0.4);
         settingsBtn.opacityProperty().setValue(0.4);
         tootListView.setStyle("-fx-background-color: #ffffff");
-        accountListView.setStyle("-fx-background-color: #ffffff");
     }
 
     public void darkButton() {
@@ -434,4 +453,28 @@ public class MainController {
         }
     }
 
+    @FXML
+    void selectImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(mainPane.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                MediaAttachment media = BusinessLogic.getImage(selectedFile);
+                addImageToList(media);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    void addImageToList(MediaAttachment media) {
+        mediaIds.add(media.getId());
+    }
+
+    public ArrayList<String> getMediaIds() {
+        return mediaIds;
+    }
 }

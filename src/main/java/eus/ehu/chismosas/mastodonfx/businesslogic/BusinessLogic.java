@@ -1,17 +1,22 @@
 package eus.ehu.chismosas.mastodonfx.businesslogic;
 
 import eus.ehu.chismosas.mastodonfx.persistance.DBManager;
+import eus.ehu.chismosas.mastodonfx.presentation.MainController;
 import social.bigbone.MastodonClient;
 import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 /**
  * This class is in charge of the application's business logic.
@@ -363,7 +368,8 @@ public class BusinessLogic {
      * @param content text content of the status
      */
     public static void postStatus(String content) throws BigBoneRequestException {
-        var request = client.statuses().postStatus(content);
+        ArrayList<String> mediaIds = MainController.getInstance().getMediaIds();
+        var request = client.statuses().postStatus(content, Status.Visibility.valueOf("Public"),"", mediaIds);
         request.execute();
     }
 
@@ -447,5 +453,17 @@ public class BusinessLogic {
     public static void bookmarkStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().bookmarkStatus(id);
         request.execute();
+    }
+
+    public static void changeAvatar (File file) throws BigBoneRequestException {
+        var media = client.media().uploadMedia(file, "image").execute();
+        System.out.println(media);
+        var request = client.accounts().updateCredentials(null, null, media.getUrl(), null);
+        request.execute();
+    }
+
+    public static MediaAttachment getImage (File file) throws BigBoneRequestException {
+        var media = client.media().uploadMedia(file, "image").execute();
+        return media;
     }
 }
