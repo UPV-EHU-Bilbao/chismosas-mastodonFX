@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -74,12 +75,14 @@ public class StatusCell extends ListCell<Status> {
 
 
     private Status status;
+    private boolean isReblog;
     private Account account;
     private boolean isLiked;
     private long likes;
     private boolean isReblogged;
     private long reblogs;
     private Parent root;
+    private boolean isBookmarked;
 
 
     /**
@@ -90,20 +93,25 @@ public class StatusCell extends ListCell<Status> {
      */
     @Override
     protected void updateItem(Status item, boolean empty) {
-        super.updateItem(item, empty);
+        status = item;
 
+        super.updateItem(item, empty);
         if (empty || item == null) {
             setGraphic(null);
             setText(null);
             return;
         }
 
-        status = item;
+        if (status.getReblog() != null) {
+            status = status.getReblog();
+            isReblog = true;
+        }
         account = status.getAccount();
         isLiked = status.isFavourited();
         likes = status.getFavouritesCount();
         isReblogged = status.isReblogged();
         reblogs = status.getReblogsCount();
+        isBookmarked = status.isBookmarked();
 
         if (root == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("status.fxml"));
@@ -122,7 +130,6 @@ public class StatusCell extends ListCell<Status> {
 //        List<Element> children = contentDoc.getAllElements();
 
         date.setText(getPrettyDate(status.getCreatedAt()));
-
         displayName.setText(account.getDisplayName());
         userName.setText("@" + account.getUsername());
         avatar.setImage(ImageCache.get(account.getAvatar()));
@@ -130,10 +137,15 @@ public class StatusCell extends ListCell<Status> {
         like.setText(String.valueOf(likes));
         if (isLiked) likeBtn.setOpacity(1);
         else likeBtn.setOpacity(0.5);
+
         retweet.setText(String.valueOf(reblogs));
         if (isReblogged) retweetBtn.setOpacity(1);
         else retweetBtn.setOpacity(0.5);
+
         comment.setText(String.valueOf(status.getRepliesCount()));
+
+        if (isBookmarked) bookmarkBtn.setOpacity(1);
+        else bookmarkBtn.setOpacity(0.5);
 
         setText(null);
         setGraphic(root);
@@ -148,8 +160,7 @@ public class StatusCell extends ListCell<Status> {
             like.setText(String.valueOf(--likes));
             CompletableFuture.runAsync(this::unlike);
             isLiked = false;
-        }
-        else {
+        } else {
             likeBtn.setOpacity(1);
             like.setText(String.valueOf(++likes));
             CompletableFuture.runAsync(this::like);
@@ -181,8 +192,7 @@ public class StatusCell extends ListCell<Status> {
             retweet.setText(String.valueOf(--reblogs));
             CompletableFuture.runAsync(this::unreblog);
             isReblogged = false;
-        }
-        else {
+        } else {
             retweetBtn.setOpacity(1);
             retweet.setText(String.valueOf(++reblogs));
             CompletableFuture.runAsync(this::reblog);
@@ -208,6 +218,7 @@ public class StatusCell extends ListCell<Status> {
 
     /**
      * Converts the createdAt string of the status to a String to display in the toot date
+     *
      * @param createdAt Attribute of the status
      * @return String to display in the toot date
      */
@@ -217,18 +228,52 @@ public class StatusCell extends ListCell<Status> {
         var timeSinceCreation = Duration.between(creationDateTime, now);
 
         if (timeSinceCreation.toSeconds() < 60)
-            return(timeSinceCreation.getSeconds() + "s ago");
+            return (timeSinceCreation.getSeconds() + "s ago");
         else if (timeSinceCreation.toMinutes() < 60)
-            return(timeSinceCreation.toMinutes() + "m ago");
+            return (timeSinceCreation.toMinutes() + "m ago");
         else if (timeSinceCreation.toHours() < 24)
-            return(timeSinceCreation.toHours() + "h ago");
+            return (timeSinceCreation.toHours() + "h ago");
         else if (timeSinceCreation.toDays() < 7)
-            return(timeSinceCreation.toDays() + "d ago");
+            return (timeSinceCreation.toDays() + "d ago");
         else if (creationDateTime.getYear() == now.getYear())
-            return(timeFormatter.format(creationDateTime));
+            return (timeFormatter.format(creationDateTime));
         else
-            return(timeFormatterYear.format(creationDateTime));
+            return (timeFormatterYear.format(creationDateTime));
 
+    }
+    /**
+     * Method that bookmarks a status
+     */
+    @FXML
+    void onBookmark() {
+        if (isBookmarked) {
+            bookmarkBtn.setOpacity(0.5);
+            CompletableFuture.runAsync(this::unbookmark);
+            isBookmarked = true;
+        }
+        else {
+            bookmarkBtn.setOpacity(1);
+            CompletableFuture.runAsync(this::bookmark);
+            isBookmarked = false;
+        }
+
+    }
+
+    @FXML
+    private void bookmark()  {
+        try {
+            BusinessLogic.bookmarkStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void unbookmark()  {
+        try {
+            BusinessLogic.unbookmarkStatus(status.getId());
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -236,9 +281,8 @@ public class StatusCell extends ListCell<Status> {
      * Method to go to the profile of the account
      */
     @FXML
-    public void goAccount(){
-        String id = account.getId();
-        MainController.getInstance().showProfile(id);
+    public void goAccount() {
+        MainController.getInstance().setProfile(account);
     }
 
 }

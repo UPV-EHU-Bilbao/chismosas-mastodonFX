@@ -15,6 +15,7 @@ public class DBManager {
     private static PreparedStatement insertAccount;
     private static PreparedStatement deleteAccount;
     private static PreparedStatement getAccountToken;
+    private static PreparedStatement isTokenStored;
 
 
     static {
@@ -28,8 +29,7 @@ public class DBManager {
             stmt.execute("CREATE TABLE IF NOT EXISTS Account (id TEXT PRIMARY KEY, token TEXT UNIQUE)");
 
             prepareStatements();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -40,6 +40,7 @@ public class DBManager {
         insertAccount = connection.prepareStatement("INSERT INTO Account VALUES (?, ?)");
         deleteAccount = connection.prepareStatement("DELETE FROM Account WHERE id = ?");
         getAccountToken = connection.prepareStatement("SELECT token FROM Account WHERE id = ?");
+        isTokenStored = connection.prepareStatement("SELECT EXISTS(SELECT 1 FROM Account WHERE token = ?)");
     }
 
     public static void open() throws SQLException {
@@ -48,11 +49,12 @@ public class DBManager {
     }
 
     public static void close() throws SQLException {
-        connection.close();
         selectAccountIds.close();
         insertAccount.close();
         deleteAccount.close();
         getAccountToken.close();
+        isTokenStored.close();
+        connection.close();
     }
 
     public static Set<String> getLoggableAccountIds() throws SQLException {
@@ -79,5 +81,10 @@ public class DBManager {
         return queryResult.next() ? queryResult.getString("token") : null;
     }
 
+    public static boolean isTokenStored(String token) throws SQLException {
+        isTokenStored.setString(1, token);
+        ResultSet queryResult = isTokenStored.executeQuery();
+        return queryResult.next() && queryResult.getBoolean(1);
+    }
 
 }

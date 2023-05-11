@@ -58,6 +58,10 @@ public class MainApplication extends Application {
         instance.mainStage.getScene().getStylesheets().setAll(currentTheme);
     }
 
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         MainApplication.instance = this;
@@ -72,9 +76,5 @@ public class MainApplication extends Application {
         mainStage.setScene(scene);
         mainStage.show();
         mainStage.requestFocus();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

@@ -1,7 +1,7 @@
 package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
-import javafx.collections.FXCollections;
+import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +15,10 @@ import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * This class is used to control the main view of the application
@@ -23,106 +26,81 @@ import java.util.concurrent.CompletableFuture;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainController {
-    private static MainController instance;
-    public static MainController getInstance() {return instance;}
-
-    private final String userID = BusinessLogic.getUserId();
-    private String currentID;
-
+    private final DropShadow dropShadow = new DropShadow();
     @FXML
     private ToolBar bookmarksBtn;
-
     @FXML
     private Label displayNameLabel;
-
     @FXML
     private ToolBar exploreBtn;
-
     @FXML
     private ToolBar favsBtn;
-
+    @FXML
+    private ToolBar favsBtn1;
     @FXML
     private ToolBar homeBtn;
 
     @FXML
     private Button followersBtn;
-
     @FXML
     private Button followingBtn;
-
     @FXML
     private BorderPane mainPane;
-
     @FXML
     private ToolBar msgBtn;
-
     @FXML
     private TextArea newTootArea;
-
     @FXML
     private ToolBar notificationsBtn;
-
     @FXML
     private ToolBar profileBtn;
-
     @FXML
     private ImageView profilePic;
-
     @FXML
     private TextField searcher;
-
     @FXML
     private ToolBar settingsBtn;
-
     @FXML
     private Label userNameLabel;
-
     @FXML
-    private Button publishButton;
-
+    private Button postButton;
     @FXML
     private Button followBtn;
 
-
-
-
-    private ListView<Status> tootListView;
-    private Pageable<Status> homeTimeline;
-    private ListView<Account> followersListView;
-    private ListView<Account> followingListView;
-
+    private static MainController instance;
+    private Account userAccount;
+    private Account currentAccount;
     private Scene settingsScene;
-    private DropShadow dropShadow;
+    private ListView<Status> tootListView;
+    private ListView<Account> accountListView;
+    private List<Status> accountToots;
+    private Future<List<Account>> followersList;
+    private Future<List<Account>> followingList;
+    private Future<Pageable<Status>> homeTimeline;
+
+
+    public static MainController getInstance() {return instance;}
 
     /**
      * Initialize the main controller by setting the toots in a list
      */
     @FXML
-    void initialize(){
+    void initialize() {
         instance = this;
+        userAccount = BusinessLogic.getUserAccount();
+
+
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
-        followingListView = new ListView<>();
-        followingListView.setCellFactory(param -> new AccountCell());
-        followersListView = new ListView<>();
-        followersListView.setCellFactory(param -> new AccountCell());
-        dropShadow = new DropShadow();
+        accountListView = new ListView<>();
+        accountListView.setCellFactory(param -> new AccountCell());
 
-        publishButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
+        postButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
-        currentID = userID;
-        updateBanner();
-        showAccountToots();
-        mainPane.setCenter(tootListView);
-        settingsSceneLoader();
 
-        CompletableFuture.runAsync(() -> {
-            try {
-                homeTimeline = BusinessLogic.getHomeTimeline();
-            } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        loadSettingsScene();
+        updateHomeTimeline();
+        setProfile(userAccount);
 
     }
 
@@ -131,7 +109,12 @@ public class MainController {
      */
     @FXML
     void mouseProfile() {
-        showProfile(userID);
+        setProfile(userAccount);
+    }
+
+    @FXML
+    void mouseFollowers() {
+        switchView("Followers");
     }
 
     /**
@@ -139,56 +122,44 @@ public class MainController {
      */
     @FXML
     void mouseFollowing() {
-        sceneSwitch("Following");
-    }
-
-    /**
-     * switches the scene to the followers list when the followers button is pressed
-     */
-    @FXML
-    void mouseFollowers() {
-        sceneSwitch("Followers");
+        switchView("Following");
     }
 
     @FXML
-    void mouseSettings() { sceneSwitch("Settings");}
+    void mouseSettings() {
+        switchView("Settings");
+    }
 
     @FXML
     void mouseHome() {
-        sceneSwitch("HomeTimeline");
+        switchView("HomeTimeline");
     }
 
     /**
      * changes the main scene's center to the asked scene
+     *
      * @param scene the scene to be shown
      */
-    private void sceneSwitch(String scene) {
+    private void switchView(String scene) {
         selectBtn(scene);
         var settingsRoot = settingsScene.getRoot();
         switch (scene) {
-            case "Profile" -> {
-
+            case "PostedToots" -> {
                 showAccountToots();
-                mainPane.setCenter(tootListView);
             }
             case "HomeTimeline" -> {
-
-                showHometimeline();
-                mainPane.setCenter(tootListView);
+                showHomeTimeline();
             }
             case "Following" -> {
-
-                mainPane.setCenter(followingListView);
-                updateFollowingListView();
+                showFollowing();
             }
             case "Followers" -> {
-                mainPane.setCenter(followersListView);
-                updateFollowersListView();
+                showFollowers();
             }
             case "Settings" -> {
                 mainPane.setCenter(settingsRoot);
                 //BUG: If I don't update the pane the settings window doesn't show up
-                mainPane.setCenter(followersListView);
+                mainPane.setCenter(accountListView);
                 mainPane.setCenter(settingsRoot);
             }
 
@@ -214,62 +185,88 @@ public class MainController {
 
     }
 
-    /**
-     * gets the statuses of the user and shows them in a list
-     */
-    public void showAccountToots() {
+    public void updateAccountToots() {
         try {
-            var statusList = BusinessLogic.getStatuses(currentID);
-
-            // Process reblogs and filters out toots that we cannot display yet
-            var statusIterator = statusList.listIterator();
-            while (statusIterator.hasNext()) {
-                Status status = statusIterator.next();
-
-                if (status.getReblog() != null) {
-                    status = status.getReblog();
-                    statusIterator.set(status);
-                }
-                if (status.getContent().equals("")) {
-                    statusIterator.remove();
-                }
-            }
-
-            var items = FXCollections.observableArrayList(statusList);
-            tootListView.setItems(items);
-        }
-        catch (BigBoneRequestException e) {
+            accountToots = BusinessLogic.getStatuses(currentAccount);
+        } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void showHometimeline() {
-        var items = FXCollections.observableArrayList(homeTimeline.getPart());
-        tootListView.setItems(items);
+    /**
+     * gets the statuses of the user and shows them in a list
+     */
+    public void showAccountToots() {
+        tootListView.getItems().setAll(accountToots);
+        tootListView.scrollTo(0);
+        mainPane.setCenter(tootListView);
+    }
+
+    public void updateHomeTimeline() {
+        homeTimeline = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getHomeTimeline();
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    public void showHomeTimeline() {
+        try {
+            tootListView.getItems().setAll(homeTimeline.get().getPart());
+            tootListView.scrollTo(0);
+            mainPane.setCenter(tootListView);
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Gets the list of accounts that the user is following and shows it
      */
-    public void updateFollowingListView() {
+    public void updateFollowingList() {
+        followingList = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getFollowing(currentAccount);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    public void showFollowing() {
         try {
-            var followingList = BusinessLogic.getFollowing(currentID);
-            var following = FXCollections.observableList(followingList);
-            followingListView.setItems(following);
-        } catch (BigBoneRequestException e) {
+            accountListView.getItems().setAll(followingList.get());
+            accountListView.scrollTo(0);
+            mainPane.setCenter(accountListView);
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
 
+
     /**
      * Gets the list of accounts that are following the user and shows it
      */
-    public void updateFollowersListView() {
+    public void updateFollowersList() {
+        followersList = CompletableFuture.supplyAsync(() -> {
+            try {
+                return BusinessLogic.getFollowers(currentAccount);
+            } catch (BigBoneRequestException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public void showFollowers() {
         try {
-            var followersList = BusinessLogic.getFollowers(currentID);
-            var followers = FXCollections.observableList(followersList);
-            followersListView.setItems(followers);
-        } catch (BigBoneRequestException e) {
+            accountListView.getItems().setAll(followersList.get());
+            accountListView.scrollTo(0);
+            mainPane.setCenter(accountListView);
+        } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
     }
@@ -278,44 +275,34 @@ public class MainController {
      * Sets the profile picture, username and display name of the user
      */
     public void updateBanner() {
-        try {
-            var account = BusinessLogic.getAccount(currentID);
-            profilePic.setImage(ImageCache.get(account.getAvatar()));
-            userNameLabel.setText("@" + account.getUsername());
-            displayNameLabel.setText(account.getDisplayName());
-            showFollowButton();
-        }
-        catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
-        }
+        profilePic.setImage(ImageCache.get(currentAccount.getAvatar()));
+        userNameLabel.setText("@" + currentAccount.getUsername());
+        displayNameLabel.setText(currentAccount.getDisplayName());
+        showFollowButton();
     }
+
     /**
      * Shows the follow button if the user is not in their own profile
      */
     public void showFollowButton() {
-        if (userID.equals(currentID)) {
+        if (currentAccount.getId().equals(userAccount.getId()))
             followBtn.setVisible(false);
-        } else {
-            try {
-                if(BusinessLogic.getRelationship(currentID).isFollowing()){
-                    followBtn.setText("Unfollow");
-                }
-                else{
-                    followBtn.setText("Follow");
-                }
-                followBtn.setVisible(true);
-            } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
-            }
+        else {
+            if (RelationshipCache.get(currentAccount).isFollowing())
+                followBtn.setText("Unfollow");
+            else
+                followBtn.setText("Follow");
+
+            followBtn.setVisible(true);
         }
     }
 
 
-
     /**
-     * Publishes the toot written in the text area
+     * Posts the toot written in the text area
      */
-    public void publishToot() {
+    @FXML
+    public void postToot() {
         String toot = newTootArea.getText();
         try {
             BusinessLogic.postStatus(toot);
@@ -328,6 +315,7 @@ public class MainController {
 
     /**
      * Requests the status with the given id and updates it in the list
+     *
      * @param id the id of the status to update
      */
     public void updateStatus(String id) {
@@ -344,7 +332,8 @@ public class MainController {
             }
         }
     }
-    public void settingsSceneLoader() {
+
+    public void loadSettingsScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
             settingsScene = new Scene(loader.load());
@@ -355,24 +344,53 @@ public class MainController {
 
     /**
      * Changes the profile to the given id
-     * @param id the id of the account to update
+     *
+     * @param account the account to update
      */
-    public void showProfile(String id) {
+    public void setProfile(Account account) {
 
-        currentID = id;
-        updateBanner();
-        sceneSwitch("Profile");
+        if (account.getId().equals(userAccount.getId())) {
+            profileBtn.setEffect(dropShadow);
+            profileBtn.setStyle("-fx-background-color: #212124");
+        } else {
+            profileBtn.setEffect(null);
+            profileBtn.setStyle("-fx-background-color: #18181b");
+        }
+
+        if (account != currentAccount) {
+            currentAccount = account;
+            updateFollowingList();
+            updateFollowersList();
+            updateBanner();
+            updateAccountToots();
+            updateRelationshipCache();
+        }
+
+        switchView("PostedToots");
 
     }
+
+    public void updateRelationshipCache() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                homeTimeline.get();
+                followingList.get();
+                followersList.get();
+                RelationshipCache.processPending();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     @FXML
     void followAccount() {
         try {
-            if(!BusinessLogic.getRelationship(currentID).isFollowing()){
-                BusinessLogic.followAccount(currentID);
+            if (!RelationshipCache.get(currentAccount).isFollowing()) {
+                BusinessLogic.followAccount(currentAccount.getId());
                 followBtn.setText("Unfollow");
-            }
-            else{
-                BusinessLogic.unfollowAccount(currentID);
+            } else {
+                BusinessLogic.unfollowAccount(currentAccount.getId());
                 followBtn.setText("Follow");
             }
         } catch (BigBoneRequestException e) {

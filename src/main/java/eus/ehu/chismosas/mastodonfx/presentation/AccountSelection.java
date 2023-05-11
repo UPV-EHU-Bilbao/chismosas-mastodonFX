@@ -10,8 +10,9 @@ import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
-public class AccountSelection{
+public class AccountSelection {
 
     public static AccountSelection instance;
 
@@ -24,52 +25,101 @@ public class AccountSelection{
 
     @FXML
     private ListView<Account> accountsList;
-
     @FXML
     private Button chooseAccountBtn;
-
     @FXML
-    private Button AddNewAccountBtn;
-
+    private Button removeAccountBtn;
     @FXML
-    private TextField newID;
-
+    private TextField tokenField;
     @FXML
-    private TextField newToken;
+    private Label tokenStatusLabel;
+    @FXML
+    private Button AddAccountBtn;
 
-    private Parent root;
+    private Account enteredAccount;
+
 
 
     @FXML
     private void initialize() {
-        instance = this;
 
         chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
-        AddNewAccountBtn.disableProperty().bind(
-                newID.textProperty().isEmpty().or(newToken.textProperty().isEmpty())
-        );
+        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
+        removeAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
+
+        tokenStatusLabel.setVisible(false);
+        AddAccountBtn.setDisable(true);
+        tokenField.textProperty().addListener((observable, oldValue, newValue) -> {
+            newValue = newValue.trim();
+            tokenField.setText(newValue);
+
+            if (newValue.length() == 43)
+                verifyToken();
+            else {
+                tokenStatusLabel.setVisible(false);
+                AddAccountBtn.setDisable(true);
+            }
+        });
 
     }
 
     @FXML
     private void chooseAccount() {
         var account = accountsList.getSelectionModel().getSelectedItem();
-        MainApplication.login(account);
+        if (BusinessLogic.verifyAccountCredentials(account))
+            MainApplication.login(account);
+        else {
+            System.out.println("Invalid account!");
+            accountsList.getItems().remove(account);
+            CompletableFuture.runAsync(() -> BusinessLogic.removeAccountLogin(account.getId()));
+        }
     }
 
     @FXML
-    void addNewAccount() {
-        String id = newID.getText();
-        String token = newToken.getText();
-        try {
-           BusinessLogic.addAccountLogin(id, token);
-            accountsList.getItems().add(BusinessLogic.getAccount(id));
-        }catch (Exception e){
-            e.printStackTrace();
+    private void removeAccount() {
+        Account account = accountsList.getSelectionModel().getSelectedItem();
+        CompletableFuture.runAsync(() -> BusinessLogic.removeAccountLogin(account.getId()));
+        accountsList.getItems().remove(account);
+    }
+
+    @FXML
+    private void addAccount() {
+        BusinessLogic.addAccountLogin(enteredAccount.getId(), tokenField.getText());
+        tokenField.clear();
+        accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
+    }
+
+
+    private void verifyToken() {
+        if (BusinessLogic.isTokenStored(tokenField.getText())) {
+            showTokenAlreadyStored();
+            return;
         }
+
+        enteredAccount = BusinessLogic.verifyCredentials(tokenField.getText());
+        if (enteredAccount == null) showInvalidToken();
+        else {
+            showValidToken();
+            AddAccountBtn.setDisable(false);
+        }
+    }
+
+    private void showValidToken() {
+        tokenStatusLabel.setText("Valid token for account @" + enteredAccount.getUsername());
+        tokenStatusLabel.setVisible(true);
+    }
+
+    private void showInvalidToken() {
+        tokenStatusLabel.setText("Invalid token");
+        tokenStatusLabel.setVisible(true);
+    }
+
+    private void showTokenAlreadyStored() {
+        tokenStatusLabel.setText("Token is already stored");
+        tokenStatusLabel.setVisible(true);
     }
 
 

@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<!--suppress XmlHighlighting-->
 <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="385.0" styleClass="lists-content" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
@@ -58,7 +59,7 @@
          <Insets right="10.0" />
       </GridPane.margin>
     </HBox>
-    <ImageView id="bookmark" fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+    <ImageView id="bookmark" fx:id="bookmarkBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets />
         </GridPane.margin>
