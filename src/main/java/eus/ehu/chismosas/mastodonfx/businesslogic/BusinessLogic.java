@@ -456,10 +456,10 @@ public class BusinessLogic {
     }
 
     public static void changeAvatar (File file) throws BigBoneRequestException {
-        var media = client.media().uploadMedia(file, "image").execute();
+        /*var media = client.media().uploadMedia(file, "image").execute();
         System.out.println(media);
         var request = client.accounts().updateCredentials(null, null, media.getUrl(), null);
-        request.execute();
+        request.execute();*/
     }
 
     public static MediaAttachment getImage (File file) throws BigBoneRequestException {

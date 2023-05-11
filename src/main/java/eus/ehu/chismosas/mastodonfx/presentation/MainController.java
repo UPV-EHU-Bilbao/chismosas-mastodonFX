@@ -339,6 +339,7 @@ public class MainController {
         try {
             BusinessLogic.postStatus(toot);
             newTootArea.clear();
+            mediaIds.clear();
             showAccountToots();
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
@@ -472,6 +473,8 @@ public class MainController {
 
     void addImageToList(MediaAttachment media) {
         mediaIds.add(media.getId());
+        recentImage.setPreserveRatio(true);
+        recentImage.setImage(ImageCache.get(media.getPreviewUrl()));
     }
 
     public ArrayList<String> getMediaIds() {
