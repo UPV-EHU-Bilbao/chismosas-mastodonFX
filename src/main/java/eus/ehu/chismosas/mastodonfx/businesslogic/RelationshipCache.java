@@ -4,9 +4,9 @@ import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * This class works as a cache for {@link Relationship} objects.
@@ -45,7 +45,7 @@ public class RelationshipCache {
 
     public static void processPending() {
         try {
-            for (Relationship relationship : BusinessLogic.getRelationships(List.copyOf(pending)))
+            for (Relationship relationship : BusinessLogic.getRelationships(new ArrayList<>(pending)))
                 cache.put(relationship.getId(), relationship);
             pending.clear();
         } catch (BigBoneRequestException e) {
