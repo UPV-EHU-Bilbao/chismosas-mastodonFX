@@ -79,7 +79,7 @@
 
 /*STYLES FOR SPECIFIC ITEMS*/
 
-#selected{
+#selected-button{
     -fx-background-color: #6153e6;
     -fx-text-weight: bold;
     -fx-text-fill: #ffffff;

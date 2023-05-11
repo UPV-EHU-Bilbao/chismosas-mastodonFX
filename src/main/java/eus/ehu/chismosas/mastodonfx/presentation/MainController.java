@@ -165,19 +165,19 @@ public class MainController {
 
     /**
      * This method sets the style of the button that has just been pressed
-     * so it can diffrentiate it from the rest
+     * so it can differentiate it from the rest
      * @param btn is the selected button
      */
     public void selectBtn(String btn){
-        if(btn.equals("PostedToots")) profileBtn.setId("selected");
+        if(btn.equals("PostedToots")) profileBtn.setId("selected-button");
         else profileBtn.setId("");
-        if(btn.equals("HomeTimeline")) homeBtn.setId("selected");
+        if(btn.equals("HomeTimeline")) homeBtn.setId("selected-button");
         else homeBtn.setId("");
-        if(btn.equals("Following")) followingBtn.setId("selected");
+        if(btn.equals("Following")) followingBtn.setId("selected-button");
         else followingBtn.setId("");
-        if(btn.equals("Followers")) followersBtn.setId("selected");
+        if(btn.equals("Followers")) followersBtn.setId("selected-button");
         else followersBtn.setId("");
-        if(btn.equals("Settings")) settingsBtn.setId("selected");
+        if(btn.equals("Settings")) settingsBtn.setId("selected-button");
         else settingsBtn.setId("");
 
     }
