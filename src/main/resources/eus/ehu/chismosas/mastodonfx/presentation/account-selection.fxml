@@ -4,45 +4,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="600.0" style="-fx-background-color: #18181b;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.AccountSelection">
-    <Label layoutX="115.0" layoutY="79.0" prefHeight="27.0" prefWidth="370.0" text="Choose an account to enter mastodon with" textFill="WHITE" wrapText="true">
-        <font>
-          <Font name="System Bold" size="18.0" />
-        </font>
-    </Label>
-    <ListView fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" style="-fx-background-color: #18181b;" />
-    <ImageView fitHeight="30.0" fitWidth="142.0" layoutX="240.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@icons/logo.png" />
-    </ImageView>
-    <Button fx:id="chooseAccountBtn" layoutX="446.0" layoutY="459.0" mnemonicParsing="false" onAction="#chooseAccount" style="-fx-background-color: #5c4de3;" text="Choose account" textFill="WHITE">
-        <font>
-          <Font name="System Bold" size="14.0" />
-        </font>
-    </Button>
-    <Button fx:id="AddAccountBtn" layoutX="144.0" layoutY="542.0" mnemonicParsing="false" onAction="#addAccount" style="-fx-background-color: #5c4de3;" text="Add account" textFill="WHITE">
-        <font>
-          <Font name="System Bold" size="14.0" />
-        </font>
-    </Button>
-    <Label layoutX="36.0" layoutY="449.0" text="Account token:" textFill="WHITE">
-        <font>
-          <Font size="14.0" />
-        </font>
-    </Label>
-    <TextField fx:id="tokenField" layoutX="142.0" layoutY="447.0" prefHeight="25.0" prefWidth="208.0" />
-   <Button fx:id="removeAccountBtn" layoutX="446.0" layoutY="527.0" mnemonicParsing="false" onAction="#removeAccount" style="-fx-background-color: #5c4de3;" text="Remove account" textFill="WHITE">
-      <font>
-         <Font name="System Bold" size="14.0" />
-      </font>
-   </Button>
-   <Label fx:id="tokenStatusLabel" layoutX="144.0" layoutY="499.0" text="token status" textFill="WHITE">
-      <font>
-         <Font size="14.0" />
-      </font>
+<Pane fx:id="loginPane" prefHeight="615.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.AccountSelection">
+   <Label id="chooseText" layoutX="115.0" layoutY="79.0" prefWidth="370.0" text="Choose an account to enter mastodon with" wrapText="true">
    </Label>
+   <ListView id="login-list" fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" />
+   <ImageView id="selectorLogo" fitHeight="30.0" fitWidth="142.0" layoutX="240.0" layoutY="31.0" preserveRatio="true" />
+   <Button fx:id="chooseAccountBtn" layoutX="446.0" layoutY="498.0" onAction="#chooseAccount" styleClass="blueBtn" text="Choose account" />
+   <Button fx:id="AddAccountBtn" layoutX="194.0" layoutY="542.0" onAction="#addAccount" styleClass="blueBtn" text="Add new account" />
+   <Button fx:id="removeAccountBtn" layoutX="444.0" layoutY="542.0" mnemonicParsing="false" onAction="#removeAccount" styleClass="blueBtn" text="Remove account" />
+   <Label layoutX="33.0" layoutY="500.0" text="Account token:" />
+   <Label fx:id="tokenStatusLabel" layoutX="33.0" layoutY="546.0" text="token status" textFill="WHITE" />
+   <TextField fx:id="tokenField" layoutX="152.0" layoutY="494.0" promptText="Insert account token" />
 </Pane>

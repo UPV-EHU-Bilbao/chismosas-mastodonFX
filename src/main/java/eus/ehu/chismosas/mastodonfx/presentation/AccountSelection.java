@@ -6,12 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import social.bigbone.api.entity.Account;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class AccountSelection {
+
+    public static AccountSelection instance;
+
+    public static AccountSelection getInstance() {
+        return instance;
+    }
+
+    @FXML
+    private Pane loginPane;
 
     @FXML
     private ListView<Account> accountsList;
@@ -29,9 +39,11 @@ public class AccountSelection {
     private Account enteredAccount;
 
 
+
     @FXML
     private void initialize() {
-        accountsList.setStyle("-fx-control-inner-background: #18181b");
+
+        chooseAccountBtn.disableProperty().bind(accountsList.getSelectionModel().selectedItemProperty().isNull());
         accountsList.setCellFactory(param -> new AccountSelectionCell());
         accountsList.getItems().setAll(BusinessLogic.getLoggableAccounts());
 
@@ -111,6 +123,7 @@ public class AccountSelection {
     }
 
 
+
     public class AccountSelectionCell extends ListCell<Account> {
         private Parent root;
 
@@ -118,7 +131,7 @@ public class AccountSelection {
         private ImageView avatar;
 
         @FXML
-        private Label userName;
+        private Label username;
 
         @Override
         protected void updateItem(Account item, boolean empty) {
@@ -148,7 +161,7 @@ public class AccountSelection {
             setText(null);
             setGraphic(root);
 
-            userName.setText("@" + item.getUsername());
+            username.setText("@" + item.getUsername());
             avatar.setImage(ImageCache.get(item.getAvatar()));
 
         }

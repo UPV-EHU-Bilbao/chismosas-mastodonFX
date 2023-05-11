@@ -1,0 +1,190 @@
+
+/*STYLES FOR CLASES*/
+
+.root{
+    -fx-background-color: #F4F9F9;
+    -fx-font-family: "Ebrima";
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+}
+
+.tool-bar{
+    -fx-background-color: inherit;
+     -fx-background-radius: 20px;
+     -fx-text-fill: inherit;
+
+}
+
+.radio-button{
+    -fx-text-fill: #000000;
+}
+
+.label{
+    -fx-text-fill: black;
+}
+
+.blueBtn{
+    -fx-background-color: #056CFF;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+}
+
+.blueBtn:hover{
+    -fx-background-color: #226cd6;
+}
+
+.text-field{
+    -fx-background-color: #e7e7e8;
+    -fx-text-fill: black;
+    -fx-border-color: #8c8c91;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.section{
+    -fx-background-color: inherit;
+    -fx-background-radius: 20px;
+    -fx-text-fill: black;
+}
+
+.section:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+.scroll-bar{
+    -fx-background-color: #e7e7e8;
+}
+
+.list-view{
+    -fx-background-color: inherit;
+}
+
+.list-cell{
+    -fx-background-color: inherit;
+    -fx-text-fill: inherit;
+}
+
+.followage{
+    -fx-background-color:  transparent;
+    -fx-border-color: black;
+    -fx-border-radius: 20px;
+    -fx-text-fill: #000000;
+}
+
+.followage:hover{
+    -fx-background-color:  #e7e7e8;
+}
+
+.pane-with-border{
+    -fx-border-color:transparent #ababab transparent #ababab;
+    -fx-text-fill: #000000;
+}
+
+.lists-content{
+    -fx-border-color:  transparent transparent #ababab transparent;
+}
+
+#login-list .list-cell:selected{
+    -fx-background-color: #9e93fa;
+}
+
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#login-list{
+    -fx-border-color: #ababab;
+}
+
+
+
+#selected{
+    -fx-background-color: #9e93fa;
+    -fx-text-weight: bold;
+}
+
+#separator{
+    -fx-background-color: #ababab;
+}
+
+#chooseText{
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#content{
+    -fx-fill: #000000;
+}
+
+#appearance{
+    -fx-image: url(../lightThemeIcons/appearance.png);
+}
+
+#bell{
+    -fx-image: url(../lightThemeIcons/bell.png);
+}
+
+#bookmark{
+    -fx-image: url(../lightThemeIcons/bookmark.png);
+}
+
+#brightness{
+    -fx-image: url(../lightThemeIcons/brightness.png);
+}
+
+#comments{
+    -fx-image: url(../lightThemeIcons/comment.png);
+}
+
+#edit{
+     -fx-image: url(../lightThemeIcons/edit.png);
+}
+
+#explore{
+     -fx-image: url(../lightThemeIcons/explore.png);
+}
+
+#fav{
+     -fx-image: url(../lightThemeIcons/fav.png);
+}
+
+#home{
+     -fx-image: url(../lightThemeIcons/home.png);
+}
+
+#like{
+     -fx-image: url(../lightThemeIcons/like.png);
+}
+
+#logo{
+     -fx-image: url(../lightThemeIcons/logo.png);
+}
+
+#selectorLogo{
+     -fx-image: url(../lightThemeIcons/logo.png);
+}
+
+#logout{
+     -fx-image: url(../lightThemeIcons/logout.png);
+}
+
+#msg{
+     -fx-image: url(../lightThemeIcons/msg.png);
+}
+
+#retweet{
+     -fx-image: url(../lightThemeIcons/retweet.png);
+}
+
+#settings{
+     -fx-image: url(../lightThemeIcons/settings.png);
+}
+
+#user{
+     -fx-image: url(../lightThemeIcons/user.png);
+}
+
+#accountSelectionPane{
+    -fx-stylesheets: url(light.css);
+}
+
+/* Path: src\main\resources\eus\ehu\chismosas\mastodonfx\presentation\styles\light.css */

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class SettingsController {
     @FXML
@@ -15,24 +16,25 @@ public class SettingsController {
     private RadioButton lightBtn;
 
     @FXML
+    private ImageView homeImg;
+
+    @FXML
     private Button usernameBtn;
 
     @FXML
     private TextField usernameField;
 
+
     @FXML
     public void selectDarkTheme(ActionEvent event) {
         lightBtn.setSelected(false);
-        MainController.getInstance().darkButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-
+        MainApplication.setTheme("dark");
     }
 
     @FXML
     public void selectLightTheme(ActionEvent event) {
         darkBtn.setSelected(false);
-        MainController.getInstance().lightButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("light.css").toExternalForm());
+        MainApplication.setTheme("light");
     }
 
     @FXML
