@@ -77,6 +77,9 @@
     -fx-border-color:  transparent transparent #ababab transparent;
 }
 
+#login-list .list-cell:selected{
+    -fx-background-color: #9e93fa;
+}
 /*STYLES FOR SPECIFIC ITEMS*/
 
 #selected-button{

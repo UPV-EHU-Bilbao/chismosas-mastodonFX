@@ -31,7 +31,7 @@
 }
 
 .blueBtn:hover{
-    -fx-background-color: #6c5de3;
+    -fx-background-color: #226cd6;
 }
 
 .text-field{
@@ -84,6 +84,11 @@
 .lists-content{
     -fx-border-color:  transparent transparent #ababab transparent;
 }
+
+#login-list .list-cell:selected{
+    -fx-background-color: #9e93fa;
+}
+
 /*STYLES FOR SPECIFIC ITEMS*/
 
 #login-list{
@@ -93,9 +98,8 @@
 
 
 #selected{
-    -fx-background-color: #056CFF;
+    -fx-background-color: #9e93fa;
     -fx-text-weight: bold;
-    -fx-text-fill: #ffffff;
 }
 
 #separator{
