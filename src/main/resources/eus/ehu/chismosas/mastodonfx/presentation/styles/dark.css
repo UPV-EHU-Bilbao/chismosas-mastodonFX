@@ -17,6 +17,14 @@
     -fx-background-radius: 20px;
 }
 
+.button {
+    -fx-cursor: hand;
+}
+
+#bookmark,#like,#retweet,#comments {
+    -fx-cursor: hand;
+}
+
 .blueBtn{
     -fx-background-color: #5c4de3;
     -fx-text-fill: #ffffff;
@@ -38,7 +46,8 @@
 
 .section{
     -fx-background-color: inherit;
-      -fx-background-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-cursor: hand;
 }
 
 .section:hover{

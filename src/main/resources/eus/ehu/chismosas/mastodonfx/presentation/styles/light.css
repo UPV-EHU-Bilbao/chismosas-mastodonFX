@@ -15,6 +15,14 @@
 
 }
 
+.button {
+    -fx-cursor: hand;
+}
+
+#bookmark,#like,#retweet,#comments {
+    -fx-cursor: hand;
+}
+
 .radio-button{
     -fx-text-fill: #000000;
 }
@@ -46,6 +54,7 @@
     -fx-background-color: inherit;
     -fx-background-radius: 20px;
     -fx-text-fill: black;
+    -fx-cursor: hand;
 }
 
 .section:hover{

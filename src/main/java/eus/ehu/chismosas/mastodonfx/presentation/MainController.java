@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -81,7 +80,8 @@ public class MainController {
     private List<Status> favouritedToots;
     private Future<List<Account>> followersList;
     private Future<List<Account>> followingList;
-    private Future<Pageable<Status>> homeTimeline;
+    private Future<List<Status>> homeTimeline;
+    private String currentView;
 
 
     public static MainController getInstance() {return instance;}
@@ -158,24 +158,30 @@ public class MainController {
         switch (scene) {
             case "PostedToots" -> {
                 showAccountToots();
+                currentView = "PostedToots";
             }
             case "HomeTimeline" -> {
                 showHomeTimeline();
+                currentView = "HomeTimeline";
             }
             case "Following" -> {
                 showFollowing();
+                currentView = "Following";
             }
             case "Followers" -> {
                 showFollowers();
+                currentView = "Followers";
             }
             case "Favourites" -> {
                 showFavourites();
+                currentView = "Favourites";
             }
             case "Settings" -> {
                 mainPane.setCenter(settingsRoot);
                 //BUG: If I don't update the pane the settings window doesn't show up
                 mainPane.setCenter(accountListView);
                 mainPane.setCenter(settingsRoot);
+                currentView = "Settings";
             }
 
         }
@@ -237,7 +243,7 @@ public class MainController {
     public void updateHomeTimeline() {
         homeTimeline = CompletableFuture.supplyAsync(() -> {
             try {
-                return BusinessLogic.getHomeTimeline();
+                return BusinessLogic.getHomeTimeline().getPart();
             } catch (BigBoneRequestException e) {
                 throw new RuntimeException(e);
             }
@@ -249,7 +255,7 @@ public class MainController {
      */
     public void showHomeTimeline() {
         try {
-            tootListView.getItems().setAll(homeTimeline.get().getPart());
+            tootListView.getItems().setAll(homeTimeline.get());
             tootListView.scrollTo(0);
             mainPane.setCenter(tootListView);
         } catch (InterruptedException | ExecutionException e) {
@@ -405,18 +411,15 @@ public class MainController {
     }
 
     /**
-     * Requests the status with the given id and updates it in the accountToots list
-     *
+     * Updates the status in the given list.
      * @param id the id of the status to update
      */
-    public void updateAccountTootsStatus(String id) {
-        for (int i = 0; i < accountToots.size(); i++) {
-            if (accountToots.get(i).getId().equals(id)) {
+    private void updateStatus(List<Status> list, String id) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(id)) {
                 try {
-                    accountToots.set(i, BusinessLogic.getStatus(id));
-                    Platform.runLater(() -> {
-                        tootListView.getItems().setAll(accountToots);
-                    });
+                    list.set(i, BusinessLogic.getStatus(id));
+                    Platform.runLater(() -> tootListView.getItems().setAll(list));
                 } catch (BigBoneRequestException e) {
                     throw new RuntimeException(e);
                 }
@@ -424,6 +427,26 @@ public class MainController {
             }
         }
     }
+
+    /**
+     * Updates the given status in the list that is currently being shown.
+     * @param id the id of the status to update
+     */
+    public void updateStatus(String id) {
+        switch (currentView) {
+            case "PostedToots" -> {updateStatus(accountToots, id);}
+            case "Favourites" -> {updateStatus(favouritedToots, id);}
+            case "HomeTimeline" -> {
+                try {
+                    updateStatus(homeTimeline.get(), id);
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+    }
+
     /**
      * Shows the settings view
      */

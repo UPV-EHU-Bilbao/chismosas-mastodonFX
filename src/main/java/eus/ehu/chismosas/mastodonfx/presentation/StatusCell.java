@@ -155,7 +155,7 @@ public class StatusCell extends ListCell<Status> {
     private void like() {
         try {
             BusinessLogic.favouriteStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -164,7 +164,7 @@ public class StatusCell extends ListCell<Status> {
     private void unlike() {
         try {
             BusinessLogic.unfavouriteStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -182,7 +182,7 @@ public class StatusCell extends ListCell<Status> {
     private void reblog() {
         try {
             BusinessLogic.reblogStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -191,7 +191,7 @@ public class StatusCell extends ListCell<Status> {
     private void unreblog() {
         try {
             BusinessLogic.unreblogStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -239,7 +239,7 @@ public class StatusCell extends ListCell<Status> {
     private void bookmark()  {
         try {
             BusinessLogic.bookmarkStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -248,7 +248,7 @@ public class StatusCell extends ListCell<Status> {
     private void unbookmark()  {
         try {
             BusinessLogic.unbookmarkStatus(status.getId());
-            mainController.updateAccountTootsStatus(status.getId());
+            mainController.updateStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
