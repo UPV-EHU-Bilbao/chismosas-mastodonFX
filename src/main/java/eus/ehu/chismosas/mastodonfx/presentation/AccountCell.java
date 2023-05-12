@@ -93,17 +93,14 @@ public class AccountCell extends ListCell<Account> {
      */
     @FXML
     void followAccount() {
-        try {
-            if (!RelationshipCache.get(account).isFollowing()) {
-                BusinessLogic.followAccount(account);
-                followBtn.setText(MainController.getInstance().showUnfollow());
-            } else {
-                BusinessLogic.unfollowAccount(account);
-                followBtn.setText(MainController.getInstance().showFollow());
-            }
+        MainController mc = MainController.getInstance();
 
-        } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+        if (!RelationshipCache.get(account).isFollowing()) {
+            mc.followAccount(account);
+            followBtn.setText(MainController.getInstance().showUnfollow());
+        } else {
+            mc.unfollowAccount(account);
+            followBtn.setText(MainController.getInstance().showFollow());
         }
     }
 

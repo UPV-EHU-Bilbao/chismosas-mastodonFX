@@ -437,7 +437,7 @@ public class MainController {
     }
 
     @FXML
-    void followAccount() {
+    void followCurrentAccount() {
         try {
             if (!RelationshipCache.get(currentAccount).isFollowing()) {
                 BusinessLogic.followAccount(currentAccount.getId());
@@ -446,6 +446,26 @@ public class MainController {
                 BusinessLogic.unfollowAccount(currentAccount.getId());
                 followBtn.setText(showFollow());
             }
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void followAccount(Account acc) {
+        try {
+            BusinessLogic.followAccount(acc);
+            if (currentAccount == userAccount)
+                updateFollowingList();
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void unfollowAccount(Account acc) {
+        try {
+            BusinessLogic.unfollowAccount(acc);
+            if (currentAccount == userAccount)
+                updateFollowingList();
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
