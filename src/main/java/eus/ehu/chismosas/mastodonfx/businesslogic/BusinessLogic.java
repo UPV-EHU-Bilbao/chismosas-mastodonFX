@@ -387,10 +387,9 @@ public class BusinessLogic {
      * @return a list of the statuses that the logged user has favourited
      */
     public static List<Status> getFavouritedStatuses() throws BigBoneRequestException {
-        var request = client.favourites();
-        var statuses = request.getFavourites().execute().getPart();
-        for (Status status : statuses) RelationshipCache.addPending(status.getAccount());
-        return statuses;
+        var request = client.favourites().getFavourites().execute().getPart();
+        for (Status status : request) RelationshipCache.addPending(status.getAccount());
+        return request;
     }
 
     /**
