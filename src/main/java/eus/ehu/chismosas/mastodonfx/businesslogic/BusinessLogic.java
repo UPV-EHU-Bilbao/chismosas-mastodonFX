@@ -8,6 +8,7 @@ import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.net.ProxySelector;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -232,8 +233,20 @@ public class BusinessLogic {
      */
     public static List<Status> getStatuses(String id) throws BigBoneRequestException {
         var request = client.accounts().getStatuses(id);
-        var statuses = request.execute().getPart();
-        for (Status status : statuses) RelationshipCache.addPending(status.getAccount());
+        Pageable<Status> paging = request.execute();
+        var statuses = paging.getPart();
+        for (Status status : statuses) {
+            RelationshipCache.addPending(status.getAccount());
+        }
+        if (statuses.size()== 20) {
+                paging.nextRange(100);
+                request = client.accounts().getStatuses(id, false, false, false , paging.nextRange(100));
+                paging = request.execute();
+                statuses.addAll(paging.getPart());
+                for (Status status : statuses) {
+                    RelationshipCache.addPending(status.getAccount());
+                }
+            }
         return statuses;
     }
 
@@ -459,5 +472,9 @@ public class BusinessLogic {
     public static void bookmarkStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().bookmarkStatus(id);
         request.execute();
+    }
+
+    public static Account getLoggedAccount() throws BigBoneRequestException {
+        return getAccount(userID);
     }
 }

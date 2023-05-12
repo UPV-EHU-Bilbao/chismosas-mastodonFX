@@ -20,6 +20,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
+
 /**
  * This class is used to control the main view of the application
  *
@@ -320,14 +322,44 @@ public class MainController {
             followBtn.setVisible(false);
         else {
             if (RelationshipCache.get(currentAccount).isFollowing())
-                followBtn.setText("Unfollow");
+                followBtn.setText(showUnfollow());
             else
-                followBtn.setText("Follow");
+                followBtn.setText(showFollow());
 
             followBtn.setVisible(true);
         }
     }
 
+    /**
+     * Shows the Follow button in the language selected
+     * @return l, the language selected in the settings
+     */
+    public String showFollow(){
+        String l = "sdkjkfhis";
+        if (SettingsController.len.equals("eus_ES")){
+            l = "Jarraitu";
+        } else if (SettingsController.len.equals("es_ES")){
+            l = "Seguir";
+        } else if (SettingsController.len.equals("eng_US")){
+            l = "Follow";
+        }
+        return l;
+    }
+    /**
+     * Shows the Unfollow button in the language selected
+     * @return l, the language selected in the settings
+     */
+    public String showUnfollow(){
+        String l = "sdkjkfhis";
+        if (SettingsController.len.equals("eus_ES")){
+            l = "Jarraitzen";
+        } else if (SettingsController.len.equals("es_ES")){
+            l = "Siguiendo";
+        } else if (SettingsController.len.equals("eng_US")){
+            l = "Unfollow";
+        }
+        return l;
+    }
 
     /**
      * Posts the toot written in the text area
@@ -366,7 +398,7 @@ public class MainController {
 
     public void loadSettingsScene() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t(SettingsController.len));
             settingsScene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -409,14 +441,15 @@ public class MainController {
         try {
             if (!RelationshipCache.get(currentAccount).isFollowing()) {
                 BusinessLogic.followAccount(currentAccount.getId());
-                followBtn.setText("Unfollow");
+                followBtn.setText(showUnfollow());
             } else {
                 BusinessLogic.unfollowAccount(currentAccount.getId());
-                followBtn.setText("Follow");
+                followBtn.setText(showFollow());
             }
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
     }
+
 
 }

@@ -17,7 +17,7 @@
             <Image url="@darkThemeIcons/user.png" />
          </image>
       </ImageView>
-      <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" text="User name" textFill="WHITE">
+      <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" text="%User name" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

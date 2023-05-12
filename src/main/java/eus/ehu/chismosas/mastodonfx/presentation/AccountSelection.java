@@ -12,6 +12,8 @@ import social.bigbone.api.entity.Account;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
+import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
+
 public class AccountSelection {
 
     public static AccountSelection instance;
@@ -143,7 +145,7 @@ public class AccountSelection {
             }
 
             if (root == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("account-selection-cell.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("account-selection-cell.fxml"), t("eus_ES"));
                 loader.setController(this);
                 try {
                     loader.load();

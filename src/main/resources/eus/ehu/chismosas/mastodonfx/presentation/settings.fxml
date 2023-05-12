@@ -2,10 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -32,19 +34,19 @@
                   <ToolBar prefHeight="69.0" prefWidth="220.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="brightness" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Theme selector:" textFill="WHITE">
+                        <Label text="%Theme selector:" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
                      </items>
                   </ToolBar>
-                  <RadioButton fx:id="darkBtn" mnemonicParsing="false" onAction="#selectDarkTheme" selected="true" text="Dark" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <RadioButton fx:id="darkBtn" mnemonicParsing="false" onAction="#selectDarkTheme" selected="true" text="%Dark" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="lightBtn" mnemonicParsing="false" onAction="#selectLightTheme" text="Light" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                  <RadioButton fx:id="lightBtn" mnemonicParsing="false" onAction="#selectLightTheme" text="%Light" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -69,7 +71,7 @@
                   <ToolBar prefHeight="69.0" prefWidth="220.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="appearance" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Appearance:" textFill="WHITE">
+                        <Label text="%Appearance:" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -101,7 +103,7 @@
                   <ToolBar prefHeight="60.0" prefWidth="249.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="edit" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Profile settings:" textFill="WHITE">
+                        <Label text="%Profile settings:" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -110,8 +112,8 @@
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <items>
-                        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="239.0" promptText="Change your username" />
-                      <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" styleClass="blueBtn" text="Done" />
+                        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="239.0" promptText="%Change your username" />
+                      <Button fx:id="usernameBtn" mnemonicParsing="false" onAction="#changeUsername" styleClass="blueBtn" text="%Done" />
                     </items>
                   </ToolBar>
                </children>
@@ -123,7 +125,7 @@
             <ToolBar onMouseClicked="#logOut" prefHeight="76.0" prefWidth="185.0">
                <items>
                   <ImageView id="logout" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label text="Log out" textFill="WHITE">
+                  <Label text="%Log out" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
