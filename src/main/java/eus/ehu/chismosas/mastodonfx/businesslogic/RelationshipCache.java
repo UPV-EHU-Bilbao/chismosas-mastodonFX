@@ -5,8 +5,10 @@ import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class works as a cache for {@link Relationship} objects.
@@ -21,13 +23,13 @@ import java.util.HashSet;
  * @author Iñigo Imaña
  */
 public class RelationshipCache {
-    private static HashMap<String, Relationship> cache;
-    private static HashSet<String> pending;
+    private static ConcurrentHashMap<String, Relationship> cache;
+    private static Set<String> pending;
 
 
     public static void initialize() {
-        cache = new HashMap<>();
-        pending = new HashSet<>();
+        cache = new ConcurrentHashMap<>();
+        pending = Collections.synchronizedSet(new HashSet<>());
     }
 
     public static void addPending(String id) {
