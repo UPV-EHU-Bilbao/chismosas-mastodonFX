@@ -85,12 +85,25 @@
     -fx-border-color:  transparent transparent #ababab transparent;
 }
 
-#login-list .list-cell:selected{
-    -fx-background-color: #9e93fa;
+.combo-box{
+    -fx-background-color: #e7e7e8;
+    -fx-border-color:grey;
 }
 
+.combo-box .list-cell{
+    -fx-border-color: grey;
+}
+/*
+.combo-box .list-cell:even{
+    -fx-background-color: #cccccf;
+}
+*/
 /*STYLES FOR SPECIFIC ITEMS*/
 
+#login-list .list-cell:selected{
+
+    -fx-background-color: #9e93fa;
+}
 #login-list{
     -fx-border-color: #ababab;
 }

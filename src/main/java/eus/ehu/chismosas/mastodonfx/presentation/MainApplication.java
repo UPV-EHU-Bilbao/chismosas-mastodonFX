@@ -78,6 +78,7 @@ public class MainApplication extends Application {
             instance.mainStage.setScene(scene);
             instance.mainStage.show();
             instance.mainStage.requestFocus();
+            instance.mainStage.getScene().getStylesheets().setAll(currentTheme);
            // instance.mainStage.setTitle("MastodonFX - Profile");
         } catch (IOException e) {
             throw new RuntimeException(e);

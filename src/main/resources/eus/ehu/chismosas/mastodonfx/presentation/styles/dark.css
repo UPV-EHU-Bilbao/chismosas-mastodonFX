@@ -77,11 +77,24 @@
     -fx-border-color:  transparent transparent #ababab transparent;
 }
 
+.combo-box{
+    -fx-background-color: #212124;
+    -fx-border-color: grey;
+}
+
+.combo-box .list-cell{
+    -fx-border-color: grey;
+}
+
+/*.combo-box .list-cell:even{
+    -fx-background-color: #3a3a3d;
+}
+*/
+/*STYLES FOR SPECIFIC ITEMS*/
+
 #login-list .list-cell:selected{
     -fx-background-color: #9e93fa;
 }
-/*STYLES FOR SPECIFIC ITEMS*/
-
 #selected-button{
     -fx-background-color: #6153e6;
     -fx-text-weight: bold;
