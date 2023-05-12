@@ -71,7 +71,6 @@
                 </Label>
             </ToolBar>
          <Label prefHeight="17.0" prefWidth="51.0" text="Avatar:" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         <Button fx:id="avatarButton" mnemonicParsing="false" onAction="#selectAvatar" text="Select image" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
     </HBox>
     <HBox prefHeight="183.0" prefWidth="600.0" style="-fx-background-color: #18181b;">

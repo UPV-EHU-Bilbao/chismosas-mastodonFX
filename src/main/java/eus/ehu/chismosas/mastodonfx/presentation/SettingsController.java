@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.File;
 
@@ -23,9 +21,6 @@ public class SettingsController {
 
     @FXML
     private TextField usernameField;
-
-    @FXML
-    private Button avatarButton;
 
     @FXML
     public void selectDarkTheme(ActionEvent event) {
@@ -52,22 +47,6 @@ public class SettingsController {
         } catch (Exception e) {
             usernameField.setText("");
             usernameField.setPromptText("Error");
-        }
-    }
-
-    @FXML
-    public void selectAvatar(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Image");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-        File selectedFile = fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            try {
-                BusinessLogic.changeAvatar(selectedFile);
-            } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

@@ -28,6 +28,8 @@ public class AccountSelection {
 
     private Account enteredAccount;
 
+    private Alert a = new Alert(Alert.AlertType.NONE);
+
 
     @FXML
     private void initialize() {
@@ -136,7 +138,12 @@ public class AccountSelection {
                     loader.load();
                     root = loader.getRoot();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    // set alert type
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    // set content text
+                    a.setContentText("Failed to update item");
+                    // show the dialog
+                    a.show();
                 }
             }
 

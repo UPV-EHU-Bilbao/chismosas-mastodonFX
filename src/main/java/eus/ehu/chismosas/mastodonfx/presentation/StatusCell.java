@@ -4,6 +4,7 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
+
 
 /**
  * This class is used to update and show the status information
@@ -83,6 +85,8 @@ public class StatusCell extends ListCell<Status> {
     private long reblogs;
     private Parent root;
     private boolean isBookmarked;
+
+    private Alert a = new Alert(Alert.AlertType.NONE);
 
 
     /**
@@ -173,7 +177,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.favouriteStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't like the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -181,7 +190,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.unfavouriteStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't unlike the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -204,7 +218,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.reblogStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't reblog the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -212,7 +231,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.unreblogStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't unreblog the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -264,7 +288,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.bookmarkStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't bookmark the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -272,7 +301,12 @@ public class StatusCell extends ListCell<Status> {
         try {
             BusinessLogic.unbookmarkStatus(status.getId());
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(Alert.AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't unbookmark the toot");
+            // show the dialog
+            a.show();
         }
     }
 
