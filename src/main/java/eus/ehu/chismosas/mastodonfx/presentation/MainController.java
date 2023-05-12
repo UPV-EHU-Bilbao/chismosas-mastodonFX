@@ -180,7 +180,7 @@ public class MainController {
      * @param btn is the selected button
      */
     public void selectBtn(String btn){
-        if(btn.equals("PostedToots")) profileBtn.setId("selected-button");
+        if(btn.equals("PostedToots") && currentAccount.getId().equals(userAccount.getId())) profileBtn.setId("selected-button");
         else profileBtn.setId("");
         if(btn.equals("HomeTimeline")) homeBtn.setId("selected-button");
         else homeBtn.setId("");
