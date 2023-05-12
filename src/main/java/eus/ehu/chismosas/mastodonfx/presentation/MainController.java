@@ -303,14 +303,44 @@ public class MainController {
             followBtn.setVisible(false);
         else {
             if (RelationshipCache.get(currentAccount).isFollowing())
-                followBtn.setText("Unfollow");
+                followBtn.setText(showUnfollow());
             else
-                followBtn.setText("Follow");
+                followBtn.setText(showFollow());
 
             followBtn.setVisible(true);
         }
     }
 
+    /**
+     * Shows the Follow button in the language selected
+     * @return l, the language selected in the settings
+     */
+    public String showFollow(){
+        String l = "sdkjkfhis";
+        if (SettingsController.len.equals("eus_ES")){
+            l = "Jarraitu";
+        } else if (SettingsController.len.equals("es_ES")){
+            l = "Seguir";
+        } else if (SettingsController.len.equals("eng_US")){
+            l = "Follow";
+        }
+        return l;
+    }
+    /**
+     * Shows the Unfollow button in the language selected
+     * @return l, the language selected in the settings
+     */
+    public String showUnfollow(){
+        String l = "sdkjkfhis";
+        if (SettingsController.len.equals("eus_ES")){
+            l = "EzJarraitu";
+        } else if (SettingsController.len.equals("es_ES")){
+            l = "Deseguir";
+        } else if (SettingsController.len.equals("eng_US")){
+            l = "Unfollow";
+        }
+        return l;
+    }
 
     /**
      * Posts the toot written in the text area
@@ -426,10 +456,10 @@ public class MainController {
         try {
             if (!RelationshipCache.get(currentAccount).isFollowing()) {
                 BusinessLogic.followAccount(currentAccount.getId());
-                followBtn.setText("Unfollow");
+                followBtn.setText(showUnfollow());
             } else {
                 BusinessLogic.unfollowAccount(currentAccount.getId());
-                followBtn.setText("Follow");
+                followBtn.setText(showFollow());
             }
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);

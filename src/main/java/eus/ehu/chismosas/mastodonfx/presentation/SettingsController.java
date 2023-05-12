@@ -50,7 +50,6 @@ public class SettingsController {
     private void setUpComboBox(){
         String[] lenguages = {"ES","EUS","ENG"};
         lenguage.getItems().addAll(lenguages);
-        len = lenguage.getValue();
     }
     @FXML
     public void selectDarkTheme(ActionEvent event) {
