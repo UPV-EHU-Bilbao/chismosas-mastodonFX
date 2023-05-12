@@ -13,9 +13,9 @@
    <ListView id="login-list" fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" />
    <ImageView id="selectorLogo" fitHeight="142.0" fitWidth="353.0" layoutX="229.0" layoutY="-27.0" preserveRatio="true" />
    <Button fx:id="chooseAccountBtn" layoutX="446.0" layoutY="498.0" onAction="#chooseAccount" styleClass="blueBtn" text="%Choose account" />
-   <Button fx:id="AddAccountBtn" layoutX="209.0" layoutY="542.0" onAction="#addAccount" styleClass="blueBtn" text="%Add new account" />
+   <Button fx:id="AddAccountBtn" layoutX="139.0" layoutY="555.0" onAction="#addAccount" styleClass="blueBtn" text="%Add new account" />
    <Button fx:id="removeAccountBtn" layoutX="444.0" layoutY="542.0" mnemonicParsing="false" onAction="#removeAccount" styleClass="blueBtn" text="%Remove account" />
-   <Label layoutX="33.0" layoutY="500.0" text="%Account token:" />
-   <Label fx:id="tokenStatusLabel" layoutX="33.0" layoutY="546.0" text="%token status" textFill="WHITE" />
-   <TextField fx:id="tokenField" layoutX="178.0" layoutY="496.0" promptText="%Insert account token" />
+   <Label layoutX="33.0" layoutY="447.0" text="%Account token:" />
+   <Label fx:id="tokenStatusLabel" alignment="CENTER" layoutX="36.0" layoutY="521.0" prefHeight="17.0" prefWidth="343.0" text="%token status" textFill="WHITE" />
+   <TextField fx:id="tokenField" layoutX="33.0" layoutY="479.0" prefHeight="25.0" prefWidth="343.0" promptText="%Insert account token" />
 </Pane>
