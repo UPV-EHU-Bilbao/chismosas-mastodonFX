@@ -231,6 +231,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Gets the list of toots that the user has favourited.
+     */
     public void updateFavourites() {
         try {
             favouritedToots = BusinessLogic.getFavouritedStatuses();
@@ -240,6 +243,9 @@ public class MainController {
 
     }
 
+    /**
+     * Shows the list of toots that the user has favourited.
+     */
     private void showFavourites() {
         if(favouritedToots!=null) {
             tootListView.getItems().setAll(favouritedToots);
