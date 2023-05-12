@@ -74,6 +74,8 @@ public class MainController {
     private ListView<Status> tootListView;
     private ListView<Account> accountListView;
     private List<Status> accountToots;
+
+    private List<Status> favouritedToots;
     private Future<List<Account>> followersList;
     private Future<List<Account>> followingList;
     private Future<Pageable<Status>> homeTimeline;
@@ -132,6 +134,9 @@ public class MainController {
         switchView("HomeTimeline");
     }
 
+    @FXML
+    void mouseFavourited() {switchView("Favourites");}
+
     /**
      * changes the main scene's center to the asked scene
      *
@@ -153,6 +158,9 @@ public class MainController {
             case "Followers" -> {
                 showFollowers();
             }
+            case "Favourites" -> {
+                showFavourites();
+            }
             case "Settings" -> {
                 mainPane.setCenter(settingsRoot);
                 //BUG: If I don't update the pane the settings window doesn't show up
@@ -162,6 +170,7 @@ public class MainController {
 
         }
     }
+
 
     /**
      * This method sets the style of the button that has just been pressed
@@ -179,6 +188,8 @@ public class MainController {
         else followersBtn.setId("");
         if(btn.equals("Settings")) settingsBtn.setId("selected-button");
         else settingsBtn.setId("");
+        if(btn.equals("Favourites")) favsBtn.setId("selected-button");
+        else favsBtn.setId("");
 
     }
 
@@ -217,6 +228,23 @@ public class MainController {
             mainPane.setCenter(tootListView);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updateFavourites() {
+        try {
+            favouritedToots = BusinessLogic.getFavouritedStatuses();
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void showFavourites() {
+        if(favouritedToots!=null) {
+            tootListView.getItems().setAll(favouritedToots);
+            tootListView.scrollTo(0);
+            mainPane.setCenter(tootListView);
         }
     }
 
@@ -351,6 +379,7 @@ public class MainController {
             updateFollowersList();
             updateBanner();
             updateAccountToots();
+            updateFavourites();
             updateRelationshipCache();
         }
         switchView("PostedToots");

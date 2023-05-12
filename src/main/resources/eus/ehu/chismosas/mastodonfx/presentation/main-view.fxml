@@ -20,7 +20,7 @@
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
-         <Button fx:id="postButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot"  styleClass="blueBtn" text="Post!" textFill="WHITE" />
+         <Button fx:id="postButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot" styleClass="blueBtn" text="Post!" textFill="WHITE" />
       </Pane>
    </right>
    <left>
@@ -96,7 +96,7 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="favsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="6">
+            <ToolBar fx:id="favsBtn" onMouseClicked="#mouseFavourited" prefHeight="23.0" prefWidth="137.0" styleClass="section" GridPane.rowIndex="6">
                <ImageView id="fav" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
                <Label prefHeight="20.0" prefWidth="91.0" text="Favourites" textFill="WHITE">
                   <font>

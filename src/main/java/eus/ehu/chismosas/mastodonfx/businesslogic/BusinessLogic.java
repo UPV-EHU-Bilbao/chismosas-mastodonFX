@@ -291,6 +291,8 @@ public class BusinessLogic {
         return following;
     }
 
+
+
     /**
      * Wrapper for {@link #getFollowing(String)} that takes an account object instead of an id.
      * <p>
@@ -378,6 +380,17 @@ public class BusinessLogic {
         var status = request.execute();
         RelationshipCache.addPending(status.getAccount());
         return status;
+    }
+
+    /**
+     * This method is used to get the statuses that the logged user has favourited.
+     * @return a list of the statuses that the logged user has favourited
+     */
+    public static List<Status> getFavouritedStatuses() throws BigBoneRequestException {
+        var request = client.favourites();
+        var statuses = request.getFavourites().execute().getPart();
+        for (Status status : statuses) RelationshipCache.addPending(status.getAccount());
+        return statuses;
     }
 
     /**
