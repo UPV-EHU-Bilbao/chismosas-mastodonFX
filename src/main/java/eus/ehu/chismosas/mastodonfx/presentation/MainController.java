@@ -126,16 +126,23 @@ public class MainController {
         switchView("Following");
     }
 
+    /**
+     * switches the scene to the settings view when the settings button is pressed
+     */
     @FXML
     void mouseSettings() {
         switchView("Settings");
     }
-
+    /**
+     * switches the scene to the home view when the home button is pressed
+     */
     @FXML
     void mouseHome() {
         switchView("HomeTimeline");
     }
-
+     /**
+     * switches the scene to the favourites view when the favourites button is pressed
+     */
     @FXML
     void mouseFavourited() {switchView("Favourites");}
 
@@ -195,6 +202,9 @@ public class MainController {
 
     }
 
+    /**
+     * Updates the statuses of the current account
+     */
     public void updateAccountToots() {
         try {
             accountToots = BusinessLogic.getStatuses(currentAccount);
@@ -211,7 +221,9 @@ public class MainController {
         tootListView.scrollTo(0);
         mainPane.setCenter(tootListView);
     }
-
+    /**
+     * Updates the home view of the user
+     */
     public void updateHomeTimeline() {
         homeTimeline = CompletableFuture.supplyAsync(() -> {
             try {
@@ -222,7 +234,9 @@ public class MainController {
         });
 
     }
-
+    /**
+     * Shows the timeline of the user
+     */
     public void showHomeTimeline() {
         try {
             tootListView.getItems().setAll(homeTimeline.get().getPart());
@@ -269,7 +283,9 @@ public class MainController {
         });
 
     }
-
+    /**
+     * Shows the following list of the account that is currently logged in
+     */
     public void showFollowing() {
         try {
             accountListView.getItems().setAll(followingList.get());
@@ -293,7 +309,9 @@ public class MainController {
             }
         });
     }
-
+    /**
+     * Shows the followers list of the account that is currently logged in
+     */
     public void showFollowers() {
         try {
             accountListView.getItems().setAll(followersList.get());
@@ -395,7 +413,9 @@ public class MainController {
             }
         }
     }
-
+    /**
+     * Shows the settings view
+     */
     public void loadSettingsScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t(SettingsController.len));
@@ -422,7 +442,9 @@ public class MainController {
         }
         switchView("PostedToots");
     }
-
+    /**
+     * Updates the relationship cache
+     */
     public void updateRelationshipCache() {
         CompletableFuture.runAsync(() -> {
             try {
@@ -435,7 +457,9 @@ public class MainController {
             }
         });
     }
-
+    /**
+     * Shows if the current user is following their followers and following list
+     */
     @FXML
     void followCurrentAccount() {
         try {
