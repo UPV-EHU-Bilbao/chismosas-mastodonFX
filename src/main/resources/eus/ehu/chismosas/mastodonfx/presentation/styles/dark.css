@@ -1,0 +1,191 @@
+
+/*STYLES FOR CLASES*/
+
+.root{
+    -fx-background-color:  #18181b;
+    -fx-font-family: "Ebrima";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+}
+
+.label{
+    -fx-text-fill: white;
+}
+
+.tool-bar{
+    -fx-background-color: inherit;
+    -fx-background-radius: 20px;
+}
+
+.blueBtn{
+    -fx-background-color: #5c4de3;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+}
+
+.blueBtn:hover{
+    -fx-background-color: #6c5de3;
+}
+
+.text-field{
+    -fx-text-fill: white;
+    -fx-background-color: #212124;
+    -fx-border-color: #2d2d33;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+
+.section{
+    -fx-background-color: inherit;
+      -fx-background-radius: 20px;
+}
+
+.section:hover{
+    -fx-background-color:  #212124;
+}
+
+.scroll-bar{
+    -fx-background-color: #212124;
+}
+
+.list-view{
+    -fx-background-color: inherit;
+}
+
+.list-cell{
+    -fx-background-color: inherit;
+    -fx-text-fill: white;
+}
+
+.followage{
+    -fx-background-color:  transparent;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 20px;
+    -fx-text-fill: white;
+}
+.followage:hover{
+    -fx-background-color:  #212124;
+}
+
+.pane-with-border{
+    -fx-border-color: transparent #ababab transparent #ababab;
+    -fx-text-fill: #ffffff;
+}
+
+.lists-content{
+    -fx-border-color:  transparent transparent #ababab transparent;
+}
+
+.combo-box{
+    -fx-background-color: #212124;
+    -fx-border-color: grey;
+}
+
+.combo-box .list-cell{
+    -fx-border-color: grey;
+}
+
+/*.combo-box .list-cell:even{
+    -fx-background-color: #3a3a3d;
+}
+*/
+/*STYLES FOR SPECIFIC ITEMS*/
+
+#login-list .list-cell:selected{
+    -fx-background-color: #9e93fa;
+}
+#selected-button{
+    -fx-background-color: #6153e6;
+    -fx-text-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+#login-list{
+    -fx-border-color: #ababab;
+}
+
+#separator{
+    -fx-background-color: #ababab;
+}
+
+#chooseText{
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#content{
+    -fx-fill: #ffffff;
+}
+
+#appearance{
+    -fx-image: url(../darkThemeIcons/appearance.png);
+}
+
+#bell{
+    -fx-image: url(../darkThemeIcons/bell.png);
+}
+
+#bookmark{
+    -fx-image: url(../darkThemeIcons/bookmark.png);
+}
+
+#brightness{
+    -fx-image: url(../darkThemeIcons/brightness.png);
+}
+
+#comments{
+    -fx-image: url(../darkThemeIcons/comment.png);
+}
+
+#edit{
+     -fx-image: url(../darkThemeIcons/edit.png);
+}
+
+#explore{
+     -fx-image: url(../darkThemeIcons/explore.png);
+}
+
+#fav{
+     -fx-image: url(../darkThemeIcons/fav.png);
+}
+
+#home{
+     -fx-image: url(../darkThemeIcons/home.png);
+}
+
+#like{
+     -fx-image: url(../darkThemeIcons/like.png);
+}
+
+#logo{
+     -fx-image: url(../darkThemeIcons/logo.png);
+}
+
+#selectorLogo{
+     -fx-image: url(../darkThemeIcons/logo.png);
+}
+
+#logout{
+     -fx-image: url(../darkThemeIcons/logout.png);
+}
+
+#msg{
+     -fx-image: url(../darkThemeIcons/msg.png);
+}
+
+#retweet{
+     -fx-image: url(../darkThemeIcons/retweet.png);
+}
+
+#settings{
+     -fx-image: url(../darkThemeIcons/settings.png);
+}
+
+#user{
+     -fx-image: url(../darkThemeIcons/user.png);
+}
+
+#accountSelectionPane{
+    -fx-stylesheets: url(dark.css);
+}

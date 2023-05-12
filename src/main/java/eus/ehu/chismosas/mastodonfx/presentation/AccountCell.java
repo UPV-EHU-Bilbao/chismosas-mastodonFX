@@ -12,6 +12,8 @@ import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
 
+import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
+
 /**
  * This class is used to update and show the account information
  * in the list that will be shown in the main view when button 'following'
@@ -57,7 +59,7 @@ public class AccountCell extends ListCell<Account> {
         }
 
         if (root == null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"), t("eus_ES"));
             loader.setController(this);
             try {
                 root = loader.load();
@@ -78,9 +80,9 @@ public class AccountCell extends ListCell<Account> {
         if (account.getId().equals(BusinessLogic.getUserId())) followBtn.setVisible(false);
         else {
             if (RelationshipCache.get(account).isFollowing())
-                followBtn.setText("Unfollow");
+                followBtn.setText(MainController.getInstance().showUnfollow());
             else
-                followBtn.setText("Follow");
+                followBtn.setText(MainController.getInstance().showFollow());
 
             followBtn.setVisible(true);
         }
@@ -95,22 +97,14 @@ public class AccountCell extends ListCell<Account> {
      */
     @FXML
     void followAccount() {
-        try {
-            if (!RelationshipCache.get(account).isFollowing()) {
-                BusinessLogic.followAccount(account);
-                followBtn.setText("Unfollow");
-            } else {
-                BusinessLogic.unfollowAccount(account);
-                followBtn.setText("Follow");
-            }
+        MainController mc = MainController.getInstance();
 
-        } catch (BigBoneRequestException e) {
-            // set alert type
-            a.setAlertType(Alert.AlertType.ERROR);
-            // set content text
-            a.setContentText("We couldn't follow the account");
-            // show the dialog
-            a.show();
+        if (!RelationshipCache.get(account).isFollowing()) {
+            mc.followAccount(account);
+            followBtn.setText(MainController.getInstance().showUnfollow());
+        } else {
+            mc.unfollowAccount(account);
+            followBtn.setText(MainController.getInstance().showFollow());
         }
     }
 

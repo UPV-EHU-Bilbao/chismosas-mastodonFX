@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -23,18 +22,11 @@
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
          <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="31.0" prefHeight="123.0" prefWidth="179.0" promptText="What are your thoughts?" />
          <Button fx:id="postButton" layoutX="149.0" layoutY="166.0" mnemonicParsing="false" onAction="#postToot" prefHeight="31.0" prefWidth="49.0" style="-fx-background-color: #5c4de3;" text="Post!" textFill="WHITE">
-            <font>
-               <Font size="14.0" />
-            </font>
          </Button>
          <Button fx:id="selectImgButton" layoutX="19.0" layoutY="166.0" mnemonicParsing="false" onAction="#selectImage" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #5c4de3;" text="Select an image" textFill="WHITE">
-            <font>
-               <Font size="13.0" />
-            </font>
          </Button>
          <ImageView fx:id="recentImage" fitHeight="121.0" fitWidth="160.0" layoutX="27.0" layoutY="214.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
             <viewport>
-               <Rectangle2D />
             </viewport>
          </ImageView>
       </Pane>
@@ -57,14 +49,9 @@
             <padding>
                <Insets left="15.0" right="15.0" />
             </padding>
-            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" style="-fx-background-color: #212124;" GridPane.rowIndex="1">
-               <effect>
-                  <DropShadow />
-               </effect>
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/user.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="64.0" text="Profile" textFill="WHITE">
+            <ToolBar fx:id="profileBtn" onMouseClicked="#mouseProfile" prefHeight="28.0" prefWidth="137.0" styleClass="section" GridPane.rowIndex="1">
+               <ImageView id="user" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="64.0" text="%Profile" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -73,11 +60,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="notificationsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="2">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/bell.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Notifications" textFill="WHITE">
+            <ToolBar fx:id="notificationsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="2">
+               <ImageView id="bell" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Notifications" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -86,11 +71,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="msgBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="3">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/msg.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Messages" textFill="WHITE">
+            <ToolBar fx:id="msgBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" GridPane.rowIndex="3">
+               <ImageView id="msg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Messages" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -99,11 +82,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="exploreBtn" opacity="0.4" prefHeight="25.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="4">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/explore.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Explore" textFill="WHITE">
+            <ToolBar fx:id="exploreBtn" opacity="0.4" prefHeight="25.0" prefWidth="137.0" GridPane.rowIndex="4">
+               <ImageView id="explore" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Explore" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -112,11 +93,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="bookmarksBtn" opacity="0.4" prefHeight="24.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="5">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/bookmark.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Bookmarks" textFill="WHITE">
+            <ToolBar fx:id="bookmarksBtn" opacity="0.4" prefHeight="24.0" prefWidth="137.0" GridPane.rowIndex="5">
+               <ImageView id="bookmark" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Bookmarks" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -125,11 +104,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="favsBtn" opacity="0.4" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #18181b;" GridPane.rowIndex="6">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/fav.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Favourites" textFill="WHITE">
+            <ToolBar fx:id="favsBtn" onMouseClicked="#mouseFavourited" prefHeight="23.0" prefWidth="137.0" styleClass="section" GridPane.rowIndex="6">
+               <ImageView id="fav" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Favourites" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -138,11 +115,9 @@
                   </padding>
                </Label>
             </ToolBar>
-            <ToolBar fx:id="favsBtn1" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0" style="-fx-background-color: #18181b;">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/home.png" />
-               </ImageView>
-               <Label prefHeight="20.0" prefWidth="91.0" text="Home" textFill="WHITE">
+            <ToolBar fx:id="homeBtn" onMouseClicked="#mouseHome" prefHeight="32.0" prefWidth="158.0" styleClass="section">
+               <ImageView id="home" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label prefHeight="20.0" prefWidth="91.0" text="%Home" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -165,17 +140,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <Pane prefHeight="125.0" prefWidth="170.0">
-            <ImageView id="bellImg" fitHeight="34.0" fitWidth="113.0" layoutX="-6.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" x="20.0">
-               <effect>
-                  <DropShadow offsetX="5.0" offsetY="5.0" />
-               </effect>
-               <Image url="@icons/logo.png" />
-            </ImageView>
-            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0" style="-fx-background-color: #18181b;">
-               <ImageView id="bellImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  <Image url="@icons/settings.png" />
-               </ImageView>
-               <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="Settings" textFill="WHITE">
+            <ImageView id="logo" fitHeight="126.0" fitWidth="111.0" layoutX="-6.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true" x="20.0" />
+            <ToolBar fx:id="settingsBtn" layoutX="21.0" layoutY="62.0" prefHeight="39.0" prefWidth="137.0" styleClass="section">
+               <ImageView id="settings" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" />
+               <Label onMouseClicked="#mouseSettings" prefHeight="20.0" prefWidth="91.0" text="%Settings" textFill="WHITE">
                   <font>
                      <Font size="14.0" />
                   </font>
@@ -184,10 +152,10 @@
                   </padding>
                </Label>
             </ToolBar>
-            <Line endX="73.5" layoutX="85.0" layoutY="113.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
+            <Line id="separator" endX="73.5" layoutX="85.0" layoutY="113.0" opacity="0.26" startX="-69.5" stroke="#ababab" />
          </Pane>
          <Pane prefHeight="139.0" prefWidth="220.0" GridPane.columnIndex="2">
-            <TextField fx:id="searcher" disable="true" layoutX="20.0" layoutY="57.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="Search" style="-fx-background-color: #282c37;" />
+            <TextField fx:id="searcher" disable="true" layoutX="14.0" layoutY="44.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="176.0" promptText="%Search" />
          </Pane>
          <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="139.0" prefWidth="488.0" GridPane.columnIndex="1">
             <columnConstraints>
@@ -209,7 +177,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
-               <Image url="@icons/user.png" />
+               <Image url="@darkThemeIcons/user.png" />
             </ImageView>
             <Label fx:id="userNameLabel" text="\@username" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                <font>
@@ -218,20 +186,20 @@
             </Label>
             <Label fx:id="displayNameLabel" prefHeight="20.0" prefWidth="174.0" text="username" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #18181b;" text="Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followingBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowing" prefHeight="31.0" prefWidth="94.0" styleClass="section" text="%Following" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Ebrima" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" styleClass="section" text="%Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="followersBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#mouseFollowers" style="-fx-background-color: #18181b;" text="Followers" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followAccount" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: lightblue;" text="Follow" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <Button fx:id="followBtn" mnemonicParsing="false" onAction="#followCurrentAccount" prefHeight="30.0" prefWidth="89.0" styleClass="followage" text="%Follow" textFill="WHITE" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font></Button>

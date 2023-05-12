@@ -10,6 +10,7 @@ import social.bigbone.api.entity.Relationship;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.net.ProxySelector;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -237,8 +238,20 @@ public class BusinessLogic {
      */
     public static List<Status> getStatuses(String id) throws BigBoneRequestException {
         var request = client.accounts().getStatuses(id);
-        var statuses = request.execute().getPart();
-        for (Status status : statuses) RelationshipCache.addPending(status.getAccount());
+        Pageable<Status> paging = request.execute();
+        var statuses = paging.getPart();
+        for (Status status : statuses) {
+            RelationshipCache.addPending(status.getAccount());
+        }
+        if (statuses.size()== 20) {
+                paging.nextRange(100);
+                request = client.accounts().getStatuses(id, false, false, false , paging.nextRange(100));
+                paging = request.execute();
+                statuses.addAll(paging.getPart());
+                for (Status status : statuses) {
+                    RelationshipCache.addPending(status.getAccount());
+                }
+            }
         return statuses;
     }
 
@@ -295,6 +308,8 @@ public class BusinessLogic {
         following.forEach(RelationshipCache::addPending);
         return following;
     }
+
+
 
     /**
      * Wrapper for {@link #getFollowing(String)} that takes an account object instead of an id.
@@ -387,6 +402,16 @@ public class BusinessLogic {
     }
 
     /**
+     * This method is used to get the statuses that the logged user has favourited.
+     * @return a list of the statuses that the logged user has favourited
+     */
+    public static List<Status> getFavouritedStatuses() throws BigBoneRequestException {
+        var request = client.favourites().getFavourites().execute().getPart();
+        for (Status status : request) RelationshipCache.addPending(status.getAccount());
+        return request;
+    }
+
+    /**
      * Marks a status as favourite for the logged account.
      *
      * @param id id of the status to favourite
@@ -453,6 +478,10 @@ public class BusinessLogic {
     public static void bookmarkStatus(String id) throws BigBoneRequestException {
         var request = client.statuses().bookmarkStatus(id);
         request.execute();
+    }
+
+    public static Account getLoggedAccount() throws BigBoneRequestException {
+        return getAccount(userID);
     }
 
     public static void changeAvatar (File file) throws BigBoneRequestException {
