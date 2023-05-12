@@ -40,6 +40,9 @@ public class MainController {
     @FXML
     private ToolBar favsBtn1;
     @FXML
+    private ToolBar homeBtn;
+
+    @FXML
     private Button followersBtn;
     @FXML
     private Button followingBtn;
@@ -73,6 +76,8 @@ public class MainController {
     private ListView<Status> tootListView;
     private ListView<Account> accountListView;
     private List<Status> accountToots;
+
+    private List<Status> favouritedToots;
     private Future<List<Account>> followersList;
     private Future<List<Account>> followingList;
     private Future<Pageable<Status>> homeTimeline;
@@ -88,23 +93,16 @@ public class MainController {
         instance = this;
         userAccount = BusinessLogic.getUserAccount();
 
-
         tootListView = new ListView<>();
         tootListView.setCellFactory(param -> new StatusCell());
         accountListView = new ListView<>();
         accountListView.setCellFactory(param -> new AccountCell());
 
-
-        tootListView.setStyle("-fx-control-inner-background: #18181b");
-        accountListView.setStyle("-fx-control-inner-background: #18181b");
-
         postButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
-
 
         loadSettingsScene();
         updateHomeTimeline();
         setProfile(userAccount);
-
     }
 
     /**
@@ -138,65 +136,63 @@ public class MainController {
         switchView("HomeTimeline");
     }
 
+    @FXML
+    void mouseFavourited() {switchView("Favourites");}
+
     /**
      * changes the main scene's center to the asked scene
      *
      * @param scene the scene to be shown
      */
     private void switchView(String scene) {
+        selectBtn(scene);
         var settingsRoot = settingsScene.getRoot();
         switch (scene) {
             case "PostedToots" -> {
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                followingBtn.setStyle("-fx-background-color:  #18181b");
-                followersBtn.setStyle("-fx-background-color:  #18181b");
-
                 showAccountToots();
             }
             case "HomeTimeline" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(null);
-
                 showHomeTimeline();
             }
             case "Following" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(dropShadow);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(null);
-                followersBtn.setStyle("-fx-background-color:  #18181b");
-                profileBtn.setStyle("-fx-background-color: #18181b");
-                followingBtn.setStyle("-fx-background-color: #212124");
-
                 showFollowing();
             }
             case "Followers" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(dropShadow);
-                settingsBtn.setEffect(null);
-                profileBtn.setStyle("-fx-background-color: #18181b");
-                followingBtn.setStyle("-fx-background-color: #18181b");
-                followersBtn.setStyle("-fx-background-color: #212124");
-
                 showFollowers();
             }
+            case "Favourites" -> {
+                showFavourites();
+            }
             case "Settings" -> {
-                profileBtn.setEffect(null);
-                followingBtn.setEffect(null);
-                followersBtn.setEffect(null);
-                settingsBtn.setEffect(dropShadow);
                 mainPane.setCenter(settingsRoot);
-
                 //BUG: If I don't update the pane the settings window doesn't show up
                 mainPane.setCenter(accountListView);
                 mainPane.setCenter(settingsRoot);
             }
 
         }
+    }
+
+
+    /**
+     * This method sets the style of the button that has just been pressed
+     * so it can differentiate it from the rest
+     * @param btn is the selected button
+     */
+    public void selectBtn(String btn){
+        if(btn.equals("PostedToots")) profileBtn.setId("selected-button");
+        else profileBtn.setId("");
+        if(btn.equals("HomeTimeline")) homeBtn.setId("selected-button");
+        else homeBtn.setId("");
+        if(btn.equals("Following")) followingBtn.setId("selected-button");
+        else followingBtn.setId("");
+        if(btn.equals("Followers")) followersBtn.setId("selected-button");
+        else followersBtn.setId("");
+        if(btn.equals("Settings")) settingsBtn.setId("selected-button");
+        else settingsBtn.setId("");
+        if(btn.equals("Favourites")) favsBtn.setId("selected-button");
+        else favsBtn.setId("");
+
     }
 
     public void updateAccountToots() {
@@ -234,6 +230,29 @@ public class MainController {
             mainPane.setCenter(tootListView);
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Gets the list of toots that the user has favourited.
+     */
+    public void updateFavourites() {
+        try {
+            favouritedToots = BusinessLogic.getFavouritedStatuses();
+        } catch (BigBoneRequestException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Shows the list of toots that the user has favourited.
+     */
+    private void showFavourites() {
+        if(favouritedToots!=null) {
+            tootListView.getItems().setAll(favouritedToots);
+            tootListView.scrollTo(0);
+            mainPane.setCenter(tootListView);
         }
     }
 
@@ -386,56 +405,22 @@ public class MainController {
         }
     }
 
-    public void lightButton() {
-        mainPane.setStyle("-fx-background-color: #ffffff");
-        userNameLabel.setStyle("-fx-text-fill: #000000");
-        displayNameLabel.setStyle("-fx-text-fill: #000000");
-        followersBtn.opacityProperty().setValue(0.4);
-        followingBtn.opacityProperty().setValue(0.4);
-        profileBtn.opacityProperty().setValue(0.4);
-        settingsBtn.opacityProperty().setValue(0.4);
-        tootListView.setStyle("-fx-background-color: #ffffff");
-        accountListView.setStyle("-fx-background-color: #ffffff");
-    }
-
-    public void darkButton() {
-        mainPane.setStyle("-fx-background-color: #18181b");
-        userNameLabel.setStyle("-fx-text-fill: #ffffff");
-        displayNameLabel.setStyle("-fx-text-fill: #ffffff");
-        followersBtn.opacityProperty().setValue(1);
-        followingBtn.opacityProperty().setValue(1);
-        profileBtn.opacityProperty().setValue(1);
-        settingsBtn.opacityProperty().setValue(1);
-        tootListView.setStyle("-fx-background-color: #18181b");
-        accountListView.setStyle("-fx-background-color: #18181b");
-    }
-
     /**
      * Changes the profile to the given id
      *
      * @param account the account to update
      */
     public void setProfile(Account account) {
-
-        if (account.getId().equals(userAccount.getId())) {
-            profileBtn.setEffect(dropShadow);
-            profileBtn.setStyle("-fx-background-color: #212124");
-        } else {
-            profileBtn.setEffect(null);
-            profileBtn.setStyle("-fx-background-color: #18181b");
-        }
-
         if (account != currentAccount) {
             currentAccount = account;
             updateFollowingList();
             updateFollowersList();
             updateBanner();
             updateAccountToots();
+            updateFavourites();
             updateRelationshipCache();
         }
-
         switchView("PostedToots");
-
     }
 
     public void updateRelationshipCache() {

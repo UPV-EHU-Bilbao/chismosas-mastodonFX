@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -28,6 +29,9 @@ public class SettingsController {
 
     @FXML
     private RadioButton lightBtn;
+
+    @FXML
+    private ImageView homeImg;
 
     @FXML
     private Button usernameBtn;
@@ -54,16 +58,13 @@ public class SettingsController {
     @FXML
     public void selectDarkTheme(ActionEvent event) {
         lightBtn.setSelected(false);
-        MainController.getInstance().darkButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("dark.css").toExternalForm());
-
+        MainApplication.setTheme("dark");
     }
 
     @FXML
     public void selectLightTheme(ActionEvent event) {
         darkBtn.setSelected(false);
-        MainController.getInstance().lightButton();
-        //MainController.getInstance().getScene().getStylesheets().add(getClass().getResource("light.css").toExternalForm());
+        MainApplication.setTheme("light");
     }
 
     @FXML
