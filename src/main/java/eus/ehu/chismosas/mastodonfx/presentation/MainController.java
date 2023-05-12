@@ -333,9 +333,9 @@ public class MainController {
     public String showUnfollow(){
         String l = "sdkjkfhis";
         if (SettingsController.len.equals("eus_ES")){
-            l = "EzJarraitu";
+            l = "Jarraitzen";
         } else if (SettingsController.len.equals("es_ES")){
-            l = "Deseguir";
+            l = "Siguiendo";
         } else if (SettingsController.len.equals("eng_US")){
             l = "Unfollow";
         }
