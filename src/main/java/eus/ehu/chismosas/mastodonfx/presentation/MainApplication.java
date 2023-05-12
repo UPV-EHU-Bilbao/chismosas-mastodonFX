@@ -4,9 +4,9 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import social.bigbone.api.entity.Account;
-import social.bigbone.api.exception.BigBoneRequestException;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -110,6 +110,8 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         MainApplication.instance = this;
         this.mainStage = stage;
+        stage.getIcons().addAll(new Image(MainApplication.class.getResourceAsStream("logo/logo_16px.png")),
+                new Image(MainApplication.class.getResourceAsStream("logo/logo_32px.png")));
         currentTheme = darkTheme;
 
         FXMLLoader fxmlLoader = new FXMLLoader(
