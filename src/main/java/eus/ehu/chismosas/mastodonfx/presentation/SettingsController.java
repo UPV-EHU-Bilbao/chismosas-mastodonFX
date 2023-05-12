@@ -85,7 +85,7 @@ public class SettingsController {
      */
     @FXML
    public void chooseLenguage(ActionEvent event) {
-        Account account = BusinessLogic.getUserAccount();
+       // Account account = BusinessLogic.getUserAccount();
        if (lenguage.getValue() == "EUS"){
            len = "eus_ES";
            MainApplication.t(len);

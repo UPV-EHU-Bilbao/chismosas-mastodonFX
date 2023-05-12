@@ -71,18 +71,18 @@
                   <ToolBar prefHeight="69.0" prefWidth="220.0" GridPane.rowIndex="1">
                      <items>
                         <ImageView id="appearance" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="%Appearance:" textFill="WHITE">
+                        <Label text="%Lenguage:" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
                      </items>
                   </ToolBar>
-                  <Label text="WIP" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
+                  <ComboBox fx:id="lenguage" onAction="#chooseLenguage" prefHeight="25.0" prefWidth="265.0" promptText="%Choose a lenguage" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ComboBox>
                </children>
             </GridPane>
          </children>

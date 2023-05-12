@@ -53,6 +53,7 @@ public class MainApplication extends Application {
     }
 
    public static ResourceBundle t(String leng){
+
         return ResourceBundle.getBundle("strings", new Locale(leng));
     }
 
