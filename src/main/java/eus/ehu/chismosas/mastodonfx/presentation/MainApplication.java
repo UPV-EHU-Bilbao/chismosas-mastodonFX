@@ -36,7 +36,7 @@ public class MainApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add(currentTheme);
             instance.mainStage.setScene(scene);
-            instance.mainStage.setTitle("MastodonFX - @" + account.getUsername());
+            instance.mainStage.setTitle("+Chisme - @" + account.getUsername());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -51,7 +51,7 @@ public class MainApplication extends Application {
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add(currentTheme);
             instance.mainStage.setScene(scene);
-            instance.mainStage.setTitle("MastodonFX - Account selection");
+            instance.mainStage.setTitle("+Chisme - Account selection");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -112,6 +112,7 @@ public class MainApplication extends Application {
         this.mainStage = stage;
         stage.getIcons().addAll(new Image(MainApplication.class.getResourceAsStream("logo/logo_16px.png")),
                 new Image(MainApplication.class.getResourceAsStream("logo/logo_32px.png")));
+
         currentTheme = darkTheme;
 
         FXMLLoader fxmlLoader = new FXMLLoader(
@@ -119,7 +120,7 @@ public class MainApplication extends Application {
         ResourceBundle bundle = t(SettingsController.len);
 
         Scene scene = new Scene(fxmlLoader.load());
-        mainStage.setTitle(bundle.getString("MastodonFX - Account selection"));
+        mainStage.setTitle(bundle.getString("+Chisme - Account selection"));
         scene.getStylesheets().add(currentTheme);
 
         mainStage.setTitle("MastodonFX - Account selection");
