@@ -123,7 +123,6 @@ public class MainApplication extends Application {
         mainStage.setTitle(bundle.getString("+Chisme - Account selection"));
         scene.getStylesheets().add(currentTheme);
 
-        mainStage.setTitle("MastodonFX - Account selection");
         mainStage.setScene(scene);
         mainStage.show();
         mainStage.requestFocus();
