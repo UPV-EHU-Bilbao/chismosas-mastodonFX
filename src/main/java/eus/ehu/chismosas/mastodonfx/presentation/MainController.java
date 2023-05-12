@@ -2,6 +2,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -198,6 +199,15 @@ public class MainController {
     public void updateAccountToots() {
         try {
             accountToots = BusinessLogic.getStatuses(currentAccount);
+
+            var it = accountToots.listIterator();
+            while (it.hasNext()) {
+                var status = it.next();
+                if (status.getReblog() != null) {
+                    it.set(status.getReblog());
+                }
+
+            }
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -377,21 +387,22 @@ public class MainController {
     }
 
     /**
-     * Requests the status with the given id and updates it in the list
+     * Requests the status with the given id and updates it in the accountToots list
      *
      * @param id the id of the status to update
      */
-    public void updateStatus(String id) {
-        var iterator = tootListView.getItems().listIterator();
-        while (iterator.hasNext()) {
-            var status = iterator.next();
-            if (status.getId().equals(id)) {
+    public void updateAccountTootsStatus(String id) {
+        for (int i = 0; i < accountToots.size(); i++) {
+            if (accountToots.get(i).getId().equals(id)) {
                 try {
-                    var updatedStatus = BusinessLogic.getStatus(id);
-                    iterator.set(updatedStatus);
+                    accountToots.set(i, BusinessLogic.getStatus(id));
+                    Platform.runLater(() -> {
+                        tootListView.getItems().setAll(accountToots);
+                    });
                 } catch (BigBoneRequestException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             }
         }
     }

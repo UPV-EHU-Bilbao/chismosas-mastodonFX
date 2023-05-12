@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.events.MouseEvent;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -32,6 +31,8 @@ public class StatusCell extends ListCell<Status> {
     static final DateTimeFormatter timeParser = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
     static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.ENGLISH);
     static final DateTimeFormatter timeFormatterYear = DateTimeFormatter.ofPattern("MMMM d y", Locale.ENGLISH);
+
+    MainController mainController = MainController.getInstance();
 
 
     @FXML
@@ -73,16 +74,11 @@ public class StatusCell extends ListCell<Status> {
     @FXML
     private ImageView retweetBtn;
 
-
     private Status status;
-    private boolean isReblog;
     private Account account;
-    private boolean isLiked;
     private long likes;
-    private boolean isReblogged;
     private long reblogs;
     private Parent root;
-    private boolean isBookmarked;
 
 
     /**
@@ -102,16 +98,9 @@ public class StatusCell extends ListCell<Status> {
             return;
         }
 
-        if (status.getReblog() != null) {
-            status = status.getReblog();
-            isReblog = true;
-        }
         account = status.getAccount();
-        isLiked = status.isFavourited();
         likes = status.getFavouritesCount();
-        isReblogged = status.isReblogged();
         reblogs = status.getReblogsCount();
-        isBookmarked = status.isBookmarked();
 
         if (root == null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("status.fxml"));
@@ -135,16 +124,16 @@ public class StatusCell extends ListCell<Status> {
         avatar.setImage(ImageCache.get(account.getAvatar()));
 
         like.setText(String.valueOf(likes));
-        if (isLiked) likeBtn.setOpacity(1);
+        if (status.isFavourited()) likeBtn.setOpacity(1);
         else likeBtn.setOpacity(0.5);
 
         retweet.setText(String.valueOf(reblogs));
-        if (isReblogged) retweetBtn.setOpacity(1);
+        if (status.isReblogged()) retweetBtn.setOpacity(1);
         else retweetBtn.setOpacity(0.5);
 
         comment.setText(String.valueOf(status.getRepliesCount()));
 
-        if (isBookmarked) bookmarkBtn.setOpacity(1);
+        if (status.isBookmarked()) bookmarkBtn.setOpacity(1);
         else bookmarkBtn.setOpacity(0.5);
 
         setText(null);
@@ -155,16 +144,10 @@ public class StatusCell extends ListCell<Status> {
     @FXML
     private void onLikeBtn() {
 
-        if (isLiked) {
-            likeBtn.setOpacity(0.5);
-            like.setText(String.valueOf(--likes));
+        if (status.isFavourited()) {
             CompletableFuture.runAsync(this::unlike);
-            isLiked = false;
         } else {
-            likeBtn.setOpacity(1);
-            like.setText(String.valueOf(++likes));
             CompletableFuture.runAsync(this::like);
-            isLiked = true;
         }
 
     }
@@ -172,6 +155,7 @@ public class StatusCell extends ListCell<Status> {
     private void like() {
         try {
             BusinessLogic.favouriteStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -180,6 +164,7 @@ public class StatusCell extends ListCell<Status> {
     private void unlike() {
         try {
             BusinessLogic.unfavouriteStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -187,22 +172,17 @@ public class StatusCell extends ListCell<Status> {
 
     @FXML
     private void onRetootBtn() {
-        if (isReblogged) {
-            retweetBtn.setOpacity(0.5);
-            retweet.setText(String.valueOf(--reblogs));
+        if (status.isReblogged()) {
             CompletableFuture.runAsync(this::unreblog);
-            isReblogged = false;
         } else {
-            retweetBtn.setOpacity(1);
-            retweet.setText(String.valueOf(++reblogs));
             CompletableFuture.runAsync(this::reblog);
-            isReblogged = true;
         }
     }
 
     private void reblog() {
         try {
             BusinessLogic.reblogStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -211,6 +191,7 @@ public class StatusCell extends ListCell<Status> {
     private void unreblog() {
         try {
             BusinessLogic.unreblogStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -246,23 +227,19 @@ public class StatusCell extends ListCell<Status> {
      */
     @FXML
     void onBookmark() {
-        if (isBookmarked) {
-            bookmarkBtn.setOpacity(0.5);
+        if (status.isBookmarked()) {
             CompletableFuture.runAsync(this::unbookmark);
-            isBookmarked = true;
         }
         else {
-            bookmarkBtn.setOpacity(1);
             CompletableFuture.runAsync(this::bookmark);
-            isBookmarked = false;
         }
 
     }
 
-    @FXML
     private void bookmark()  {
         try {
             BusinessLogic.bookmarkStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -271,6 +248,7 @@ public class StatusCell extends ListCell<Status> {
     private void unbookmark()  {
         try {
             BusinessLogic.unbookmarkStatus(status.getId());
+            mainController.updateAccountTootsStatus(status.getId());
         } catch (BigBoneRequestException e) {
             throw new RuntimeException(e);
         }
@@ -282,7 +260,7 @@ public class StatusCell extends ListCell<Status> {
      */
     @FXML
     public void goAccount() {
-        MainController.getInstance().setProfile(account);
+        mainController.setProfile(account);
     }
 
 }
