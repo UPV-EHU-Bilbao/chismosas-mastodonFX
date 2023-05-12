@@ -156,11 +156,6 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.40.1.0</version>
         </dependency>
-        <dependency>
-            <groupId>eus.ehu.chismosas</groupId>
-            <artifactId>MastodonFX</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
