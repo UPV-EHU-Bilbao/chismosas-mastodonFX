@@ -25,7 +25,10 @@ public class MainApplication extends Application {
     private static final String darkTheme = MainApplication.class.getResource("styles/dark.css").toExternalForm();
     private static String currentTheme;
 
-
+    /**
+     * Logs In the user and show the main view
+     * @param account, the account of the user that wants to LogIn
+     */
     public static void login(Account account) {
         BusinessLogic.login(account);
         var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t(SettingsController.len));
@@ -38,7 +41,9 @@ public class MainApplication extends Application {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * Logs out the current user and shows the account selection view
+     */
     public static void logout() {
         BusinessLogic.logout();
         var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("account-selection.fxml"), t(SettingsController.len));
@@ -52,12 +57,20 @@ public class MainApplication extends Application {
         }
     }
 
+    /**
+     * Returns the instance of the main application
+     * @param leng, the language of the application
+     * @return a local specific object
+     */
    public static ResourceBundle t(String leng){
-
         return ResourceBundle.getBundle("strings", new Locale(leng));
     }
 
-
+    /**
+     * Changes the theme of the application
+     *
+     * @param theme the theme to change to
+     */
     public static void setTheme(String theme) {
         switch (theme) {
             case "light" -> currentTheme = lightTheme;
@@ -71,6 +84,9 @@ public class MainApplication extends Application {
         launch();
     }
 
+    /**
+     * Shows the main view on the screen
+     */
     public static void setProfile() {
         var fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"), t(SettingsController.len));
         try {
@@ -85,6 +101,11 @@ public class MainApplication extends Application {
         }
     }
 
+    /**
+     * Shows the main view on the screen
+     * @param stage, the stage of the application
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
         MainApplication.instance = this;
