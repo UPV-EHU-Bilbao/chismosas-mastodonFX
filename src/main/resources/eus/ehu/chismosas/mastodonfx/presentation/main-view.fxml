@@ -19,7 +19,7 @@
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="899.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.MainController">
    <right>
       <Pane prefHeight="318.0" prefWidth="216.0" BorderPane.alignment="CENTER">
-         <TextArea fx:id="newTootArea" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="%What are your thoughts?" />
+         <TextArea fx:id="newTootArea" focusTraversable="false" layoutX="19.0" layoutY="149.0" prefHeight="123.0" prefWidth="179.0" promptText="%What are your thoughts?" />
          <Button fx:id="postButton" layoutX="131.0" layoutY="286.0" mnemonicParsing="false" onAction="#postToot" styleClass="blueBtn" text="%Post!" textFill="WHITE" />
       </Pane>
    </right>

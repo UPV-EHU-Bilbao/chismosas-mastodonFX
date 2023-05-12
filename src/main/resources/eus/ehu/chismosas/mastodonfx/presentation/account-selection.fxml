@@ -10,7 +10,7 @@
 <Pane fx:id="loginPane" prefHeight="615.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eus.ehu.chismosas.mastodonfx.presentation.AccountSelection">
    <Label id="chooseText" layoutX="102.0" layoutY="78.0" prefHeight="47.0" prefWidth="444.0" text="%Choose an account to enter mastodon with" wrapText="true">
    </Label>
-   <ListView id="login-list" fx:id="accountsList" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" />
+   <ListView id="login-list" fx:id="accountsList" focusTraversable="false" layoutX="73.0" layoutY="125.0" prefHeight="294.0" prefWidth="454.0" />
    <ImageView id="selectorLogo" fitHeight="142.0" fitWidth="353.0" layoutX="229.0" layoutY="-27.0" preserveRatio="true" />
    <Button fx:id="chooseAccountBtn" layoutX="446.0" layoutY="498.0" onAction="#chooseAccount" styleClass="blueBtn" text="%Choose account" />
    <Button fx:id="AddAccountBtn" layoutX="139.0" layoutY="555.0" onAction="#addAccount" styleClass="blueBtn" text="%Add new account" />
