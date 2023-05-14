@@ -22,7 +22,7 @@
          <TextArea fx:id="newTootArea" focusTraversable="false" layoutX="19.0" layoutY="31.0" prefHeight="123.0" prefWidth="179.0" promptText="%What are your thoughts?" />
          <Button fx:id="postButton" layoutX="111.0" layoutY="167.0" mnemonicParsing="false" onAction="#postToot" prefHeight="31.0" prefWidth="87.0" styleClass="blueBtn" text="%Post!">
          </Button>
-         <ImageView fitHeight="69.0" fitWidth="47.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView fx:id="recentImage" fitHeight="106.0" fitWidth="161.0" layoutX="25.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true" />
          <ImageView id="clip" fitHeight="24.0" fitWidth="30.0" layoutX="24.0" layoutY="171.0" onMouseClicked="#selectImage" pickOnBounds="true" preserveRatio="true" />
       </Pane>
    </right>
