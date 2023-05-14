@@ -432,7 +432,7 @@ public class MainController {
      * @return l, the language selected in the settings
      */
     public String showFollow(){
-        String l = "sdkjkfhis";
+        String l = "Follow";
         if (SettingsController.len.equals("eus_ES")){
             l = "Jarraitu";
         } else if (SettingsController.len.equals("es_ES")){
@@ -447,7 +447,7 @@ public class MainController {
      * @return l, the language selected in the settings
      */
     public String showUnfollow(){
-        String l = "sdkjkfhis";
+        String l = "Unfollow";
         if (SettingsController.len.equals("eus_ES")){
             l = "Jarraitzen";
         } else if (SettingsController.len.equals("es_ES")){
