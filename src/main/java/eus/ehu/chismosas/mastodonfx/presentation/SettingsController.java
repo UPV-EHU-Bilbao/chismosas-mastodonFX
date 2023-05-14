@@ -49,9 +49,11 @@ public class SettingsController {
 
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         setUpComboBox();
     }
+
+
 
     private void setUpComboBox(){
         String[] lenguages = {"ES","EUS","ENG"};

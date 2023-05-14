@@ -204,7 +204,9 @@
 #user{
      -fx-image: url(../lightThemeIcons/user.png);
 }
-
+#clip {
+    -fx-image: url(../lightThemeIcons/clip.png);
+}
 #accountSelectionPane{
     -fx-stylesheets: url(light.css);
 }

@@ -195,6 +195,10 @@
      -fx-image: url(../darkThemeIcons/user.png);
 }
 
+#clip {
+    -fx-image: url(../darkThemeIcons/clip.png);
+}
+
 #accountSelectionPane{
     -fx-stylesheets: url(dark.css);
 }

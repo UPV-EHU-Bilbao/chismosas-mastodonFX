@@ -617,7 +617,7 @@ public class MainController {
     }
 
     @FXML
-    void selectImage(ActionEvent event) {
+    void selectImage() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
         fileChooser.getExtensionFilters().addAll(
