@@ -22,6 +22,8 @@ import static eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic.getLogged
 import static javafx.application.Application.launch;
 
 
+import java.io.File;
+
 public class SettingsController {
 
     @FXML
@@ -43,7 +45,7 @@ public class SettingsController {
     private ComboBox<String> lenguage;
 
 
-    static String len = Locale.getDefault().toString();
+    static String len = new Locale("eng_US").toString();
 
 
     @FXML
@@ -71,10 +73,12 @@ public class SettingsController {
     public void changeUsername(ActionEvent event) {
         String user = usernameField.getText();
         try {
+            if (user.length()<1) throw new Exception();
             BusinessLogic.changeDisplayName(user);
-            MainController.getInstance().updateBanner();
+            MainController.getInstance().setDisplayNameLabel(user);
         } catch (Exception e) {
-            usernameField.setText("Error");
+            usernameField.setText("");
+            usernameField.setPromptText("Error");
         }
     }
 
@@ -85,7 +89,6 @@ public class SettingsController {
      */
     @FXML
    public void chooseLenguage(ActionEvent event) {
-       // Account account = BusinessLogic.getUserAccount();
        if (lenguage.getValue() == "EUS"){
            len = "eus_ES";
            MainApplication.t(len);

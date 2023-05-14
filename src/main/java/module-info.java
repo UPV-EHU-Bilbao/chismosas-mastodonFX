@@ -5,6 +5,7 @@ module eus.ehu.chismosas.mastodonfx {
     requires org.jsoup;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires okhttp3;
 
 
     exports eus.ehu.chismosas.mastodonfx.presentation;

@@ -5,9 +5,7 @@ import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import social.bigbone.api.entity.Account;
 import social.bigbone.api.exception.BigBoneRequestException;
@@ -41,6 +39,7 @@ public class AccountCell extends ListCell<Account> {
     private Account account;
     private Parent root;
 
+    private Alert a = new Alert(Alert.AlertType.NONE);
 
     /**
      * Updates the account to be shown in the list
@@ -65,7 +64,12 @@ public class AccountCell extends ListCell<Account> {
             try {
                 root = loader.load();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                // set alert type
+                a.setAlertType(Alert.AlertType.ERROR);
+                // set content text
+                a.setContentText("Failed to update item");
+                // show the dialog
+                a.show();
             }
         }
 

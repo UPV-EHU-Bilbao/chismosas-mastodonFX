@@ -2,6 +2,7 @@ package eus.ehu.chismosas.mastodonfx.presentation;
 
 import eus.ehu.chismosas.mastodonfx.businesslogic.BusinessLogic;
 import eus.ehu.chismosas.mastodonfx.businesslogic.RelationshipCache;
+import javafx.event.ActionEvent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,15 +11,21 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import social.bigbone.api.Pageable;
 import social.bigbone.api.entity.Account;
+import social.bigbone.api.entity.MediaAttachment;
 import social.bigbone.api.entity.Status;
 import social.bigbone.api.exception.BigBoneRequestException;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import javafx.scene.control.Alert.AlertType;
 
 import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
 
@@ -28,6 +35,8 @@ import static eus.ehu.chismosas.mastodonfx.presentation.MainApplication.t;
  * @author Eider Fernández, Leire Gesteira, Unai Hernandez and Iñigo Imaña
  */
 public class MainController {
+
+    private Alert a = new Alert(AlertType.NONE);
     private final DropShadow dropShadow = new DropShadow();
     @FXML
     private ToolBar bookmarksBtn;
@@ -67,7 +76,12 @@ public class MainController {
     @FXML
     private Button postButton;
     @FXML
+    private Button selectImgButton;
+    @FXML
     private Button followBtn;
+
+    @FXML
+    private ImageView recentImage;
 
     private static MainController instance;
     private Account userAccount;
@@ -82,7 +96,7 @@ public class MainController {
     private Future<List<Account>> followingList;
     private Future<List<Status>> homeTimeline;
     private String currentView;
-
+    private ArrayList<String> mediaIds = new ArrayList<>();
 
     public static MainController getInstance() {return instance;}
 
@@ -101,6 +115,15 @@ public class MainController {
 
         postButton.disableProperty().bind((newTootArea.textProperty().isEmpty()));
 
+
+
+        //CompletableFuture.runAsync(() -> {
+        //    try {
+        //        homeTimeline = BusinessLogic.getHomeTimeline();
+        //    } catch (BigBoneRequestException e) {
+        //        throw new RuntimeException(e);
+        //    }
+        //});
         loadSettingsScene();
         updateHomeTimeline();
         setProfile(userAccount);
@@ -225,7 +248,12 @@ public class MainController {
 
             }
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't update the account's toots");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -236,6 +264,7 @@ public class MainController {
         tootListView.getItems().setAll(accountToots);
         tootListView.scrollTo(0);
         mainPane.setCenter(tootListView);
+        updateAccountToots();
     }
     /**
      * Updates the home view of the user
@@ -245,8 +274,14 @@ public class MainController {
             try {
                 return BusinessLogic.getHomeTimeline().getPart();
             } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
+                // set alert type
+                a.setAlertType(AlertType.ERROR);
+                // set content text
+                a.setContentText("We couldn't update the home timeline");
+                // show the dialog
+                a.show();
             }
+            return null;
         });
 
     }
@@ -259,7 +294,12 @@ public class MainController {
             tootListView.scrollTo(0);
             mainPane.setCenter(tootListView);
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't show the home timeline");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -278,8 +318,9 @@ public class MainController {
     /**
      * Shows the list of toots that the user has favourited.
      */
-    private void showFavourites() {
+    public void showFavourites() {
         if(favouritedToots!=null) {
+            updateFavourites();
             tootListView.getItems().setAll(favouritedToots);
             tootListView.scrollTo(0);
             mainPane.setCenter(tootListView);
@@ -294,8 +335,14 @@ public class MainController {
             try {
                 return BusinessLogic.getFollowing(currentAccount);
             } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
+                // set alert type
+                a.setAlertType(AlertType.ERROR);
+                // set content text
+                a.setContentText("We couldn't update the following list");
+                // show the dialog
+                a.show();
             }
+            return null;
         });
 
     }
@@ -308,7 +355,12 @@ public class MainController {
             accountListView.scrollTo(0);
             mainPane.setCenter(accountListView);
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't show the following list");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -321,8 +373,14 @@ public class MainController {
             try {
                 return BusinessLogic.getFollowers(currentAccount);
             } catch (BigBoneRequestException e) {
-                throw new RuntimeException(e);
+                // set alert type
+                a.setAlertType(AlertType.ERROR);
+                // set content text
+                a.setContentText("We couldn't update the followers list");
+                // show the dialog
+                a.show();
             }
+            return null;
         });
     }
     /**
@@ -334,7 +392,12 @@ public class MainController {
             accountListView.scrollTo(0);
             mainPane.setCenter(accountListView);
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't show the followers list");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -404,9 +467,18 @@ public class MainController {
         try {
             BusinessLogic.postStatus(toot);
             newTootArea.clear();
+            mediaIds.clear();
+            recentImage.setImage(null);
+            updateAccountToots();
+
             showAccountToots();
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't post the toot");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -455,7 +527,12 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"), t(SettingsController.len));
             settingsScene = new Scene(loader.load());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't load the settings scene");
+            // show the dialog
+            a.show();
         }
     }
 
@@ -487,7 +564,12 @@ public class MainController {
                 followersList.get();
                 RelationshipCache.processPending();
             } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
+                // set alert type
+                a.setAlertType(AlertType.ERROR);
+                // set content text
+                a.setContentText("We couldn't update the relationship cache");
+                // show the dialog
+                a.show();
             }
         });
     }
@@ -525,9 +607,48 @@ public class MainController {
             if (currentAccount == userAccount)
                 updateFollowingList();
         } catch (BigBoneRequestException e) {
-            throw new RuntimeException(e);
+            // set alert type
+            a.setAlertType(AlertType.ERROR);
+            // set content text
+            a.setContentText("We couldn't follow the account");
+            // show the dialog
+            a.show();
         }
     }
 
+    @FXML
+    void selectImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                MediaAttachment media = BusinessLogic.getImage(selectedFile);
+                addImageToList(media);
+            } catch (BigBoneRequestException e) {
+                // set alert type
+                a.setAlertType(AlertType.ERROR);
+                // set content text
+                a.setContentText("We couldn't select the image");
+                // show the dialog
+                a.show();
+            }
+        }
+    }
 
+    void addImageToList(MediaAttachment media) {
+        mediaIds.add(media.getId());
+        recentImage.setPreserveRatio(true);
+        recentImage.setImage(ImageCache.get(media.getPreviewUrl()));
+    }
+
+    public ArrayList<String> getMediaIds() {
+        return mediaIds;
+    }
+
+    public void setDisplayNameLabel(String displayName) {
+        displayNameLabel.setText(displayName);
+    }
 }
