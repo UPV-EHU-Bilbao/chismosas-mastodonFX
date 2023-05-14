@@ -96,10 +96,7 @@ public class MainController {
     private Future<List<Account>> followingList;
     private Future<List<Status>> homeTimeline;
     private String currentView;
-    private CompletableFuture<Pageable<Status>> homeTimeline;
-
     private ArrayList<String> mediaIds = new ArrayList<>();
-
 
     public static MainController getInstance() {return instance;}
 
@@ -267,6 +264,7 @@ public class MainController {
         tootListView.getItems().setAll(accountToots);
         tootListView.scrollTo(0);
         mainPane.setCenter(tootListView);
+        updateAccountToots();
     }
     /**
      * Updates the home view of the user
@@ -320,8 +318,9 @@ public class MainController {
     /**
      * Shows the list of toots that the user has favourited.
      */
-    private void showFavourites() {
+    public void showFavourites() {
         if(favouritedToots!=null) {
+            updateFavourites();
             tootListView.getItems().setAll(favouritedToots);
             tootListView.scrollTo(0);
             mainPane.setCenter(tootListView);
@@ -469,7 +468,9 @@ public class MainController {
             BusinessLogic.postStatus(toot);
             newTootArea.clear();
             mediaIds.clear();
+            recentImage.setImage(null);
             updateAccountToots();
+
             showAccountToots();
         } catch (BigBoneRequestException e) {
             // set alert type
@@ -645,5 +646,9 @@ public class MainController {
 
     public ArrayList<String> getMediaIds() {
         return mediaIds;
+    }
+
+    public void setDisplayNameLabel(String displayName) {
+        displayNameLabel.setText(displayName);
     }
 }

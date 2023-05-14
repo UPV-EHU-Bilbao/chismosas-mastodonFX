@@ -45,7 +45,7 @@ public class SettingsController {
     private ComboBox<String> lenguage;
 
 
-    static String len = Locale.getDefault().toString();
+    static String len = new Locale("eng_US").toString();
 
 
     @FXML
@@ -75,7 +75,7 @@ public class SettingsController {
         try {
             if (user.length()<1) throw new Exception();
             BusinessLogic.changeDisplayName(user);
-            MainController.getInstance().updateBanner();
+            MainController.getInstance().setDisplayNameLabel(user);
         } catch (Exception e) {
             usernameField.setText("");
             usernameField.setPromptText("Error");
@@ -89,7 +89,6 @@ public class SettingsController {
      */
     @FXML
    public void chooseLenguage(ActionEvent event) {
-       // Account account = BusinessLogic.getUserAccount();
        if (lenguage.getValue() == "EUS"){
            len = "eus_ES";
            MainApplication.t(len);
